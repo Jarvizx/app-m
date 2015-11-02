@@ -6,12 +6,15 @@ class Auth extends CI_Controller {
 	{
 		parent::__construct();
 		$this->load->database();
-		$this->load->library(array('ion_auth','form_validation'));
+		$this->load->library(array('ion_auth','form_validation', 'layout'));
 		$this->load->helper(array('url','language'));
 
 		$this->form_validation->set_error_delimiters($this->config->item('error_start_delimiter', 'ion_auth'), $this->config->item('error_end_delimiter', 'ion_auth'));
 
 		$this->lang->load('auth');
+		
+		// agregar esta linea en todas las vistas
+		$this->user = $this->ion_auth->user()->row();
 	}
 
 	// redirect if needed, otherwise display the user list
@@ -90,7 +93,8 @@ class Auth extends CI_Controller {
 				'type' => 'password',
 			);
 
-			$this->_render_page('auth/login', $this->data);
+			//$this->_render_page('auth/login', $this->data);
+			$this->load->view('auth/login', $this->data);
 		}
 	}
 
@@ -811,7 +815,7 @@ class Auth extends CI_Controller {
 
 		$this->viewdata = (empty($data)) ? $this->data: $data;
 
-		$view_html = $this->load->view($view, $this->viewdata, $returnhtml);
+		$view_html = $this->layout->view($view, $this->viewdata, $returnhtml);
 
 		if ($returnhtml) return $view_html;//This will return html on 3rd argument being true
 	}

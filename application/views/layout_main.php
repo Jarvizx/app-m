@@ -5,11 +5,13 @@
 	<title></title>
 	<link rel="stylesheet" type="text/css" href="/assets/css/bootstrap.min.css">
 	<link rel="stylesheet" type="text/css" href="/assets/css/jquery.dataTables.css">
+    <link rel="stylesheet" href="/assets/css/bootstrap-multiselect.css" type="text/css">
 	<script type="text/javascript" src="/assets/js/jquery-1.11.1.js"></script>
 	<script type="text/javascript" src="/assets/js/jquery.form.js"></script>
 	<script type="text/javascript" src="/assets/js/bootstrap.min.js"></script>
 	<script type="text/javascript" src="/assets/js/jquery.number.js"></script>
 	<script type="text/javascript" src="/assets/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="/assets/js/bootstrap-multiselect.js"></script>
 </head>
 <body>
 <div class="container-fluid">
@@ -34,42 +36,17 @@
 				/*
 					1 admin
 					2 coordinador
-					3 chinomatico
+					3 digitador
 				*/
-			/*$menu = array(
-								'Inicio' => array(
-													'url' => '/',
-													'hide' => array(1,2,3)),
-								'Agregar fuentes' => array(
-													'url' => '/variables/agregar/fuentes',
-													'hide' => array(3)),
-								'Variables del Sistema' => array(
-													'url' => '/variables',
-													'hide' => array(3)),
-								'Ingresar Medicamentos' => array(
-													'url' => '/medicamentos/agregar',
-													'hide' => array(3)),
-								'Asignar Datos' => array(
-													'url' => '/medicamentos/asignar'),
-								); */
 			?>
 
 				<li>
 					<a href="/">Inicio</a>
 				</li>
-				<?php // donde 1 es admin y 2 es cordinador
+				<?php // donde 1 es admin, 2 es cordinador  y 3 el digitador 
 
 						if(reset($this->ion_auth->get_users_groups($this->user->id)->result())->id == 1
 					  	|| reset($this->ion_auth->get_users_groups($this->user->id)->result())->id == 2): ?>
-				<li>
-					<a href="/variables/agregar_fuentes">Agregar fuentes</a>
-				</li>
-				<li>
-					<a href="/variables">Variables del Sistema</a>
-				</li>
-				<li>
-					<a href="/medicamentos/agregar">Ingresar Medicamentos</a>
-				</li>
 				<li>
 					<a href="/medicamentos/asignar">Asignar Datos</a>
 				</li>
@@ -94,11 +71,7 @@
 		</div>
 		<div class="col-md-10">
 			<!--content dinamic-->
-			<?php 					
-				echo "<pre>";
-				print_r($this->ion_auth->get_users_groups($this->user->id)->result());
-				echo "</pre>"; 
-			?>
+			
 			<?php echo $content_for_layout; ?>
 
 		</div>

@@ -1,1 +1,1 @@
-hola mundo
+<?php echo $titulo; ?>
