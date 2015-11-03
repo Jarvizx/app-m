@@ -24,9 +24,10 @@
 	<label for="asignar a">Asignar a:</label>
 	<div class="input-group">
 		<select class="form-control asignar_usuario" >
-			<?php foreach ($usuarios as $k_usuarios => $v_usuarios): ?>
-				<option value="<?php echo $v_usuarios['id']; ?>"><?php echo $v_usuarios['first_name']." ".$v_usuarios['last_name']; ?></option>	
-			<?php endforeach ?>
+			<option value="0"> --- </option>	
+				<?php foreach ($usuarios as $k_usuarios => $v_usuarios): ?>
+					<option value="<?php echo $v_usuarios['id']; ?>"><?php echo $v_usuarios['first_name']." ".$v_usuarios['last_name']; ?></option>	
+				<?php endforeach ?>
 		</select>
 		<span class="input-group-btn">
         	<button class="btn btn-primary boton_guardar_asignar_usuario" type="button">Guardar</button>
@@ -73,8 +74,14 @@
 		{
 			$(".boton_guardar_asignar_usuario").click(function(){
 				var usuario_asignado = $(".asignar_usuario").val();
-				//console.log(usuario_asignado);
+				
+				console.log(usuario_asignado);
 
+				if (usuario_asignado == 0) 
+				{
+					return false;
+				}
+			 	
 			 	var expedientes_seleccionados = new Array();
 		        $("input:checked").each(function() {
 		        	expedientes_seleccionados.push($(this).val());
