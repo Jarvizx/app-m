@@ -40,6 +40,7 @@
 			 	<input type="text" class="MarcaSignoDistintivoComercial form_app_m form-control" data-json='{"tabla":"tbl_rev_expedientes", "llave":"<?= $valores_tbl_rev_expedientes->id ?>", "valor_viejo":"<?= $valores_tbl_rev_expedientes->MarcaSignoDistintivoComercial; ?>", "campo":"MarcaSignoDistintivoComercial"}' name="MarcaSignoDistintivoComercial" value="<?= $valores_tbl_rev_expedientes->MarcaSignoDistintivoComercial; ?>">
 			 	<br>
 			 	<b>Invima: </b><?= $valores_tbl_invima_medicamento->nombre_del_producto; ?>
+			 	<input type="hidden" class="nombre_del_producto_invima" value="<?= $valores_tbl_invima_medicamento->nombre_del_producto; ?>">
 			 	<hr>
 			 	<?= ( ! empty($comentarios_MarcaSignoDistintivoComercial->texto)) ? $comentarios_MarcaSignoDistintivoComercial->texto : "";?>
 			</td>
@@ -414,7 +415,7 @@
     $(document).ready(function() {
         $('#select_via_administracion').multiselect();
         
-        var urlImagenGoogle = "https://ajax.googleapis.com/ajax/services/search/images?v=1.0&q="+$(".MarcaSignoDistintivoComercial").val();
+        var urlImagenGoogle = "https://ajax.googleapis.com/ajax/services/search/images?v=1.0&q="+$(".nombre_del_producto_invima").val();
         $.ajax({
 		  	type: 'GET',
 		  	contentType: "application/json",
