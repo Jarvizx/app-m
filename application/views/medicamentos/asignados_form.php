@@ -224,7 +224,9 @@
 		</tr>
 	</tbody>
 </table>
-<p><?php echo $tbl_invima_pa_homologado_texto->row()->texto;?></p>
+<div class="<?= $tbl_invima_pa_homologado_texto->row()->coincidencia; ?>">
+	<?= $tbl_invima_pa_homologado_texto->row()->texto;?>
+</div>
 <table class="table">
 	<thead>
 		<tr>
