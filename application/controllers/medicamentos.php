@@ -169,6 +169,10 @@ class Medicamentos extends CI_Controller {
 				$this->layout->view('medicamentos/no_existe_expediente',$parametro_expediente);
 			}
 		}
+		else
+		{
+			$this->layout->view('medicamentos/no_existe_expediente',array('NumeroExpediente'=>0));
+		}
 	}
 
 	public function asignados($num = null)

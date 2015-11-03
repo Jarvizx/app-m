@@ -1,9 +1,10 @@
 <?php $valores_tbl_rev_expedientes = $tbl_rev_expedientes->row(); ?>
 <?php $valores_tbl_invima_medicamento = $tbl_invima_medicamento->row(); ?>
-
-<img class="img-google-1">
-<img class="img-google-2">
-<img class="img-google-3">
+<div class="img-expediente">
+	<img class="img-google-1 img-thum">
+	<img class="img-google-2 img-thum">
+	<img class="img-google-3 img-thum">
+</div>
 <table class="table">
 	<tbody>
 		<tr>
@@ -45,7 +46,7 @@
 			<td>
 				<form>
 					<b>Comentario: </b><br>
-					<textarea rows="5" cols="40" class="form-control" name="comentario"></textarea><br>
+					<textarea rows="1" cols="40" class="form-control" name="comentario"></textarea><br>
 					<input type="radio" name="estado_revision" value="Ok"> Ok 
 					<input type="radio" name="estado_revision" value="Rev. Lab"> Rev. Lab 
 					<input type="radio" name="estado_revision" value="Rev. Super"> Rev. Super 
@@ -93,7 +94,7 @@
 			<td>
 				<?php //echo $valores_tbl_invima_medicamento->generico; ?>
 				<form>
-					<textarea rows="5" cols="40" class="form-control" name="comentario"></textarea><br>
+					<textarea rows="1" cols="40" class="form-control" name="comentario"></textarea><br>
 					<input type="radio" name="estado_revision" value="Ok"> Ok 
 					<input type="radio" name="estado_revision" value="Rev. Lab"> Rev. Lab 
 					<input type="radio" name="estado_revision" value="Rev. Super"> Rev. Super 
@@ -149,7 +150,7 @@
 			<td>
 				<form>
 					<b>Comentario: </b><br>
-					<textarea rows="5" cols="40" class="form-control" name="comentario"></textarea><br>
+					<textarea rows="1" cols="40" class="form-control" name="comentario"></textarea><br>
 					<input type="radio" name="estado_revision" value="Ok"> Ok 
 					<input type="radio" name="estado_revision" value="Rev. Lab"> Rev. Lab 
 					<input type="radio" name="estado_revision" value="Rev. Super"> Rev. Super 
@@ -213,7 +214,7 @@
 			<td>
 				<form>
 					<b>Comentario: </b><br>
-					<textarea rows="5" cols="40" class="form-control" name="comentario"></textarea><br>
+					<textarea rows="1" cols="40" class="form-control" name="comentario"></textarea><br>
 					<input type="radio" name="estado_revision" value="Ok"> Ok 
 					<input type="radio" name="estado_revision" value="Rev. Lab"> Rev. Lab 
 					<input type="radio" name="estado_revision" value="Rev. Super"> Rev. Super 
@@ -252,7 +253,7 @@
 					</p>
 					<form>
 						<b>Comentario: </b><br>
-						<textarea rows="5" cols="40" class="form-control" name="comentario"></textarea><br>
+						<textarea rows="1" cols="40" class="form-control" name="comentario"></textarea><br>
 						<input type="radio" name="estado_revision" value="Ok"> Ok 
 						<input type="radio" name="estado_revision" value="Rev. Lab"> Rev. Lab 
 						<input type="radio" name="estado_revision" value="Rev. Super"> Rev. Super 
@@ -279,14 +280,14 @@
 					</select>
 					<p>
 					<?php foreach ($comentarios_IdentificadorTipoConcentracionEstandarizada as $k_comentarios_IdentificadorTipoConcentracionEstandarizada => $v_comentarios_IdentificadorTipoConcentracionEstandarizada): ?>
-						<?php if ($v_tbl_rev_expediente_pa->id == $v_comentarios_NombrePrincipioActivo['llave']): ?>
-							<span><?= $v_comentarios_NombrePrincipioActivo['texto']; ?></span>
+						<?php if ($v_tbl_rev_expediente_pa->id == $v_comentarios_IdentificadorTipoConcentracionEstandarizada['llave']): ?>
+							<span><?= $v_comentarios_IdentificadorTipoConcentracionEstandarizada['texto']; ?></span>
 						<?php endif ?>
 					<?php endforeach ?>
 					</p>
 					<form>
 						<b>Comentario: </b><br>
-						<textarea rows="5" cols="40" class="form-control" name="comentario"></textarea><br>
+						<textarea rows="1" cols="40" class="form-control" name="comentario"></textarea><br>
 						<input type="radio" name="estado_revision" value="Ok"> Ok 
 						<input type="radio" name="estado_revision" value="Rev. Lab"> Rev. Lab 
 						<input type="radio" name="estado_revision" value="Rev. Super"> Rev. Super 
@@ -298,14 +299,14 @@
 					<input type="text" class="form_app_m" class="CantidadEstandarizadaPrincipioActivo" name="CantidadEstandarizadaPrincipioActivo" data-json='{"tabla":"tbl_rev_expediente_pa", "llave":"<?= $v_tbl_rev_expediente_pa->id ?>", "valor_viejo":"<?= $v_tbl_rev_expediente_pa->CantidadEstandarizadaPrincipioActivo; ?>", "campo":"CantidadEstandarizadaPrincipioActivo"}' value="<?= $v_tbl_rev_expediente_pa->CantidadEstandarizadaPrincipioActivo; ?>">
 					<p>
 					<?php foreach ($comentarios_CantidadEstandarizadaPrincipioActivo as $k_comentarios_CantidadEstandarizadaPrincipioActivo => $v_comentarios_CantidadEstandarizadaPrincipioActivo): ?>
-						<?php if ($v_tbl_rev_expediente_pa->id == $v_comentarios_NombrePrincipioActivo['llave']): ?>
-							<span><?= $v_comentarios_NombrePrincipioActivo['texto']; ?></span>
+						<?php if ($v_tbl_rev_expediente_pa->id == $v_comentarios_CantidadEstandarizadaPrincipioActivo['llave']): ?>
+							<span><?= $v_comentarios_CantidadEstandarizadaPrincipioActivo['texto']; ?></span>
 						<?php endif ?>
 					<?php endforeach ?>
 					</p>
 					<form>
 						<b>Comentario: </b><br>
-						<textarea rows="5" cols="40" class="form-control" name="comentario"></textarea><br>
+						<textarea rows="1" cols="40" class="form-control" name="comentario"></textarea><br>
 						<input type="radio" name="estado_revision" value="Ok"> Ok 
 						<input type="radio" name="estado_revision" value="Rev. Lab"> Rev. Lab 
 						<input type="radio" name="estado_revision" value="Rev. Super"> Rev. Super 
@@ -332,14 +333,14 @@
 					</select>
 					<p>
 					<?php foreach ($comentarios_CodigoUnidadMedidaEstandarizadaPrincipioActivo as $k_comentarios_CodigoUnidadMedidaEstandarizadaPrincipioActivo => $v_comentarios_CodigoUnidadMedidaEstandarizadaPrincipioActivo): ?>
-						<?php if ($v_tbl_rev_expediente_pa->id == $v_comentarios_NombrePrincipioActivo['llave']): ?>
-							<span><?= $v_comentarios_NombrePrincipioActivo['texto']; ?></span>
+						<?php if ($v_tbl_rev_expediente_pa->id == $v_comentarios_CodigoUnidadMedidaEstandarizadaPrincipioActivo['llave']): ?>
+							<span><?= $v_comentarios_CodigoUnidadMedidaEstandarizadaPrincipioActivo['texto']; ?></span>
 						<?php endif ?>
 					<?php endforeach ?>
 					</p>
 					<form>
 						<b>Comentario: </b><br>
-						<textarea rows="5" cols="40" class="form-control" name="comentario"></textarea><br>
+						<textarea rows="1" cols="40" class="form-control" name="comentario"></textarea><br>
 						<input type="radio" name="estado_revision" value="Ok"> Ok 
 						<input type="radio" name="estado_revision" value="Rev. Lab"> Rev. Lab 
 						<input type="radio" name="estado_revision" value="Rev. Super"> Rev. Super 
@@ -351,14 +352,14 @@
 					<input type="text" class="form_app_m" class="CantidadEstandarizadaMedicamentoContenidoPrincipioActivo" name="CantidadEstandarizadaMedicamentoContenidoPrincipioActivo" data-json='{"tabla":"tbl_rev_expediente_pa", "llave":"<?= $v_tbl_rev_expediente_pa->id ?>", "valor_viejo":"<?= $v_tbl_rev_expediente_pa->CantidadEstandarizadaMedicamentoContenidoPrincipioActivo; ?>", "campo":"CantidadEstandarizadaMedicamentoContenidoPrincipioActivo"}' value="<?= $v_tbl_rev_expediente_pa->CantidadEstandarizadaMedicamentoContenidoPrincipioActivo; ?>">
 					<p>
 					<?php foreach ($comentarios_CantidadEstandarizadaMedicamentoContenidoPrincipioActivo as $k_comentarios_CantidadEstandarizadaMedicamentoContenidoPrincipioActivo => $v_comentarios_CantidadEstandarizadaMedicamentoContenidoPrincipioActivo): ?>
-						<?php if ($v_tbl_rev_expediente_pa->id == $v_comentarios_NombrePrincipioActivo['llave']): ?>
-							<span><?= $v_comentarios_NombrePrincipioActivo['texto']; ?></span>
+						<?php if ($v_tbl_rev_expediente_pa->id == $k_comentarios_CantidadEstandarizadaMedicamentoContenidoPrincipioActivo['llave']): ?>
+							<span><?= $k_comentarios_CantidadEstandarizadaMedicamentoContenidoPrincipioActivo['texto']; ?></span>
 						<?php endif ?>
 					<?php endforeach ?>
 					</p>
 					<form>
 						<b>Comentario: </b><br>
-						<textarea rows="5" cols="40" class="form-control" name="comentario"></textarea><br>
+						<textarea rows="1" cols="40" class="form-control" name="comentario"></textarea><br>
 						<input type="radio" name="estado_revision" value="Ok"> Ok 
 						<input type="radio" name="estado_revision" value="Rev. Lab"> Rev. Lab 
 						<input type="radio" name="estado_revision" value="Rev. Super"> Rev. Super 
@@ -385,14 +386,14 @@
 					</select>
 					<p>
 					<?php foreach ($comentarios_CodigoUnidadMedidaEstandarizadaMedicamentoPrincipioActivo as $k_comentarios_CodigoUnidadMedidaEstandarizadaMedicamentoPrincipioActivo => $v_comentarios_CodigoUnidadMedidaEstandarizadaMedicamentoPrincipioActivo): ?>
-						<?php if ($v_tbl_rev_expediente_pa->id == $v_comentarios_NombrePrincipioActivo['llave']): ?>
-							<span><?= $v_comentarios_NombrePrincipioActivo['texto']; ?></span>
+						<?php if ($v_tbl_rev_expediente_pa->id == $k_comentarios_CodigoUnidadMedidaEstandarizadaMedicamentoPrincipioActivo['llave']): ?>
+							<span><?= $k_comentarios_CodigoUnidadMedidaEstandarizadaMedicamentoPrincipioActivo['texto']; ?></span>
 						<?php endif ?>
 					<?php endforeach ?>
 					</p>
 					<form>
 						<b>Comentario: </b><br>
-						<textarea rows="5" cols="40" class="form-control" name="comentario"></textarea><br>
+						<textarea rows="1" cols="40" class="form-control" name="comentario"></textarea><br>
 						<input type="radio" name="estado_revision" value="Ok"> Ok 
 						<input type="radio" name="estado_revision" value="Rev. Lab"> Rev. Lab 
 						<input type="radio" name="estado_revision" value="Rev. Super"> Rev. Super 
@@ -414,7 +415,7 @@
         $('#select_via_administracion').multiselect();
         
         var urlImagenGoogle = "https://ajax.googleapis.com/ajax/services/search/images?v=1.0&q="+$(".MarcaSignoDistintivoComercial").val();
-        /*$.ajax({
+        $.ajax({
 		  	type: 'GET',
 		  	contentType: "application/json",
 		  	dataType: 'jsonp',
@@ -425,7 +426,7 @@
 				$(".img-google-2").attr("src", respuesta.responseData.results[1].url);
 				$(".img-google-3").attr("src", respuesta.responseData.results[2].url);
 			}
-		});*/
+		});
 
 		// en este evento, el expediente queda como terminado
 		$(".expediente_terminado").click(function(){
@@ -641,5 +642,8 @@
 <style type="text/css">
 	select {
     	width: 100%;
+	}
+	.img-thum{
+		max-height: 150px;
 	}
 </style>
