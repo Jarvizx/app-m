@@ -36,7 +36,7 @@ class Tabla extends CI_Controller {
 
 			try {
 				$crud = new grocery_CRUD();
-				$crud->set_theme('datatables');
+				//$crud->set_theme('datatables');
 				$crud->set_table($nombre_tabla);
 				$output = $crud->render();
 				$this->_example_output($output);
