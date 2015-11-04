@@ -132,6 +132,12 @@ class Medicamentos extends CI_Controller {
 				);
 				$datos['tbl_rev_expediente_pa']	= $this->medicamentos_model->consultar_tbl_rev_expediente_pa($parametro_referencia);
 
+				// DCI (select principio activo)
+				$parametro_referencia = array(
+					'propiedad' => 'DCI'
+				);
+				$datos['tbl_referencia_dci']	= $this->medicamentos_model->consultar_tbl_referencia($parametro_referencia);
+
 				// UMM
 				$parametro_referencia = array(
 					'propiedad' => 'UMM' // Unidad & U.

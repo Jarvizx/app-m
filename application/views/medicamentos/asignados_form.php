@@ -244,7 +244,34 @@
 		<?php foreach ($tbl_rev_expediente_pa->result() as $k_tbl_rev_expediente_pa => $v_tbl_rev_expediente_pa): ?>
 			<tr>
 				<td>
-					<input type="text" class="form_app_m" class="NombrePrincipioActivo" name="NombrePrincipioActivo" data-json='{"tabla":"tbl_rev_expediente_pa", "llave":"<?= $v_tbl_rev_expediente_pa->id ?>", "valor_viejo":"<?= $v_tbl_rev_expediente_pa->NombrePrincipioActivo; ?>", "campo":"NombrePrincipioActivo"}' value="<?= $v_tbl_rev_expediente_pa->NombrePrincipioActivo; ?>">
+					<?php 
+						$coincide_nombre_codigo = false;
+						foreach ($tbl_referencia_dci->result_array() as $k_tbl_referencia_dci => $v_tbl_referencia_dci)
+						{
+							if ($v_tbl_rev_expediente_pa->NombrePrincipioActivo == $v_tbl_referencia_dci['nombre_codigo']) 
+								{
+									$select_NombrePrincipioActivo[] = sprintf('<option value="%s" selected> %s </option>', $v_tbl_referencia_dci['nombre_codigo'], $v_tbl_referencia_dci['nombre_codigo']);
+									//$valor_actual_CodigoFormaFarmaceutica = $valores_tbl_rev_expedientes->CodigoFormaFarmaceutica;
+									$coincide_nombre_codigo = true;
+								}
+								else
+								{
+									$select_NombrePrincipioActivo[] = sprintf('<option value="%s"> %s </option>', $v_tbl_referencia_dci['nombre_codigo'], $v_tbl_referencia_dci['nombre_codigo']);
+								}
+						} 
+					?>
+					<input type="hidden" nombre-tbl-rev-expediente-pa="<?= $v_tbl_rev_expediente_pa->NombrePrincipioActivo; ?>">
+					<?php if ( ! $coincide_nombre_codigo): ?>
+						<div class="bg-danger">
+							<?= $v_tbl_rev_expediente_pa->NombrePrincipioActivo; ?>
+						</div>
+					<?php endif ?>
+					<!--no estoy seguro, pero si no coincide, el select coge el primer valor-->
+					<select class="form_app_m NombrePrincipioActivo" name="NombrePrincipioActivo" data-json='{"tabla":"tbl_rev_expediente_pa", "llave":"<?= $v_tbl_rev_expediente_pa->id ?>", "valor_viejo":"<?= $v_tbl_rev_expediente_pa->NombrePrincipioActivo; ?>", "campo":"NombrePrincipioActivo"}' >
+						<?php foreach ($select_NombrePrincipioActivo as $k_select_NombrePrincipioActivo => $v_select_NombrePrincipioActivo): ?>
+							 	<?= $v_select_NombrePrincipioActivo; ?>
+						<?php endforeach ?> 
+					</select>
 					<p>
 					<?php foreach ($comentarios_NombrePrincipioActivo as $k_comentarios_NombrePrincipioActivo => $v_comentarios_NombrePrincipioActivo): ?>
 						<?php if ($v_tbl_rev_expediente_pa->id == $v_comentarios_NombrePrincipioActivo['llave']): ?>
@@ -297,7 +324,7 @@
 					</form>
 				</td>
 				<td>
-					<input type="text" class="form_app_m" class="CantidadEstandarizadaPrincipioActivo" name="CantidadEstandarizadaPrincipioActivo" data-json='{"tabla":"tbl_rev_expediente_pa", "llave":"<?= $v_tbl_rev_expediente_pa->id ?>", "valor_viejo":"<?= $v_tbl_rev_expediente_pa->CantidadEstandarizadaPrincipioActivo; ?>", "campo":"CantidadEstandarizadaPrincipioActivo"}' value="<?= $v_tbl_rev_expediente_pa->CantidadEstandarizadaPrincipioActivo; ?>">
+					<input type="text" class="form_app_m CantidadEstandarizadaPrincipioActivo" name="CantidadEstandarizadaPrincipioActivo" data-json='{"tabla":"tbl_rev_expediente_pa", "llave":"<?= $v_tbl_rev_expediente_pa->id ?>", "valor_viejo":"<?= $v_tbl_rev_expediente_pa->CantidadEstandarizadaPrincipioActivo; ?>", "campo":"CantidadEstandarizadaPrincipioActivo"}' value="<?= $v_tbl_rev_expediente_pa->CantidadEstandarizadaPrincipioActivo; ?>">
 					<p>
 					<?php foreach ($comentarios_CantidadEstandarizadaPrincipioActivo as $k_comentarios_CantidadEstandarizadaPrincipioActivo => $v_comentarios_CantidadEstandarizadaPrincipioActivo): ?>
 						<?php if ($v_tbl_rev_expediente_pa->id == $v_comentarios_CantidadEstandarizadaPrincipioActivo['llave']): ?>
@@ -350,7 +377,7 @@
 					</form>
 				</td>
 				<td>
-					<input type="text" class="form_app_m" class="CantidadEstandarizadaMedicamentoContenidoPrincipioActivo" name="CantidadEstandarizadaMedicamentoContenidoPrincipioActivo" data-json='{"tabla":"tbl_rev_expediente_pa", "llave":"<?= $v_tbl_rev_expediente_pa->id ?>", "valor_viejo":"<?= $v_tbl_rev_expediente_pa->CantidadEstandarizadaMedicamentoContenidoPrincipioActivo; ?>", "campo":"CantidadEstandarizadaMedicamentoContenidoPrincipioActivo"}' value="<?= $v_tbl_rev_expediente_pa->CantidadEstandarizadaMedicamentoContenidoPrincipioActivo; ?>">
+					<input type="text" class="form_app_m CantidadEstandarizadaMedicamentoContenidoPrincipioActivo" name="CantidadEstandarizadaMedicamentoContenidoPrincipioActivo" data-json='{"tabla":"tbl_rev_expediente_pa", "llave":"<?= $v_tbl_rev_expediente_pa->id ?>", "valor_viejo":"<?= $v_tbl_rev_expediente_pa->CantidadEstandarizadaMedicamentoContenidoPrincipioActivo; ?>", "campo":"CantidadEstandarizadaMedicamentoContenidoPrincipioActivo"}' value="<?= $v_tbl_rev_expediente_pa->CantidadEstandarizadaMedicamentoContenidoPrincipioActivo; ?>">
 					<p>
 					<?php foreach ($comentarios_CantidadEstandarizadaMedicamentoContenidoPrincipioActivo as $k_comentarios_CantidadEstandarizadaMedicamentoContenidoPrincipioActivo => $v_comentarios_CantidadEstandarizadaMedicamentoContenidoPrincipioActivo): ?>
 						<?php if ($v_tbl_rev_expediente_pa->id == $k_comentarios_CantidadEstandarizadaMedicamentoContenidoPrincipioActivo['llave']): ?>
@@ -422,7 +449,7 @@
 		  	dataType: 'jsonp',
 			url: urlImagenGoogle,
 			success: function(respuesta){
-				console.log( "success", respuesta );
+				//console.log( "success", respuesta );
 				$(".img-google-1").attr("src", respuesta.responseData.results[0].url);
 				$(".img-google-2").attr("src", respuesta.responseData.results[1].url);
 				$(".img-google-3").attr("src", respuesta.responseData.results[2].url);
@@ -436,7 +463,7 @@
 				url: "/medicamentos/expediente_terminado",
 				data: { expediente : $(".NumeroExpediente").val() }
 			}).done(function(respuesta){
-				console.log('respuesta terminado: ', respuesta);
+				//console.log('respuesta terminado: ', respuesta);
 				var url_host = window.location.origin;
 				var url_parametros = '/medicamentos/expediente/'+respuesta;
 				window.location.replace(url_host + url_parametros);
@@ -500,6 +527,9 @@
 				comentario: valoresComentario[0].value, // [0] comentario
 				expediente: $(".NumeroExpediente").val()
 			}
+
+			console.log('comentario', valoresEnvio);
+			return false;
 
 			$.ajax({
 				type: "POST",
@@ -596,16 +626,22 @@
 					}
 					
 					break;
+				case 'NombrePrincipioActivo':
+					console.log('NombrePrincipioActivo', objeto_actual);
+					valorJSON = objeto_actual.data("json");
+					valoresEnvio = {
+						valor_nuevo: objeto_actual.val(),
+						valores_JSON: valorJSON,
+						expediente: $(".NumeroExpediente").val()
+					}
+					
+					break;
 				
 				default:
 					// pasan por ahora los (p.a.)
 					/*
-						NombrePrincipioActivo
-						IdentificadorTipoConcentracionEstandarizada
 						CantidadEstandarizadaPrincipioActivo
-						CodigoUnidadMedidaEstandarizadaPrincipioActivo
 						CantidadEstandarizadaMedicamentoContenidoPrincipioActivo
-						CodigoUnidadMedidaEstandarizadaMedicamentoPrincipioActivo
 					*/
 					valorJSON = objeto_actual.data("json");
 					valoresEnvio = {
@@ -615,6 +651,9 @@
 					}
 					break;
 			}
+			console.log('valores nuevos', valorJSON, valoresEnvio);
+			return false;
+
 			$.ajax({
 				type: "POST",
 				url: "/medicamentos/guardar_expediente_asignado",
