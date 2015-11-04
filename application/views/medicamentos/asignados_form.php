@@ -528,8 +528,8 @@
 				expediente: $(".NumeroExpediente").val()
 			}
 
-			console.log('comentario', valoresEnvio);
-			return false;
+			//console.log('comentario', valoresEnvio);
+			//return false;
 
 			$.ajax({
 				type: "POST",
@@ -651,8 +651,8 @@
 					}
 					break;
 			}
-			console.log('valores nuevos', valorJSON, valoresEnvio);
-			return false;
+			//console.log('valores nuevos', valorJSON, valoresEnvio);
+			//return false;
 
 			$.ajax({
 				type: "POST",
