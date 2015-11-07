@@ -3,6 +3,7 @@
 class Medicamentos extends CI_Controller {
 
 	public $user;
+	private $correo_usuario_externo;
 
 	function __construct() 
 	{  
@@ -12,6 +13,10 @@ class Medicamentos extends CI_Controller {
 		$this->load->model('medicamentos_model');
 	
 	    $this->user = $this->ion_auth->user()->row();
+	    if ( ! empty($this->input->get('correo_usuario_externo')))
+	    {
+	    	$this->correo_usuario_externo = $this->input->get('correo_usuario_externo');
+	    }
 	}
 
 	private function is_login()
@@ -93,10 +98,21 @@ class Medicamentos extends CI_Controller {
 		}
 	}
 
-	public function expediente($expediente = null)
+	public function expediente($expediente = null, $es_anonimo = 0)
 	{
-		if ( ! empty($expediente)) 
+		
+		if ( ! empty($expediente))
 		{
+			if ( ! $this->ion_auth->logged_in() && empty($this->correo_usuario_externo))
+			{
+				$datos['mostrar_input_correo'] = true;
+			}
+			else
+			{
+				$datos['mostrar_input_correo'] = false;
+			}
+			$datos['es_anonimo'] = $es_anonimo;
+
 			// muy importante validar el numero de resultados y saber si existe ese expediente
 			// < >
 			$parametro_expediente = array(
@@ -191,7 +207,7 @@ class Medicamentos extends CI_Controller {
 		);
 
 		$registro_por_pagina = $this->uri->segment(4);
-		$registros = (!empty($registro_por_pagina)) ? $registro_por_pagina : 2; 
+		$registros = (!empty($registro_por_pagina)) ? $registro_por_pagina : 100; 
 		$config['base_url'] = base_url().'medicamentos/asignados//'; 
 		$config['total_rows'] = $this->medicamentos_model->numero_de_filas_asignadas($asignados)->total;
 		$config['per_page'] = $registros; //Número de registros mostrados por páginas
@@ -209,6 +225,8 @@ class Medicamentos extends CI_Controller {
 
 	public function guardar_expediente_asignado()
 	{
+		//echo "en guardar_expediente_asignado" . $this->correo_usuario_externo;
+		//exit();
 		if ($_POST) 
 		{
 			if ( $this->ion_auth->logged_in())
@@ -282,6 +300,8 @@ class Medicamentos extends CI_Controller {
 
 	public function guardar_comentario()
 	{
+		//echo "guardar_comentario" . $this->correo_usuario_externo;
+		//exit();
 		if ($_POST) 
 		{
 			/*
@@ -354,4 +374,50 @@ class Medicamentos extends CI_Controller {
 		$datos['texto'] = 'consolidado';
 		$this->layout->view('medicamentos/consolidado',$datos);
 	}
+
+	public function enviar_correo()
+	{
+		if (! empty($this->input->post('correo'))) 
+		{
+			$this->load->library('email');
+
+            $subject = 'This is a test';
+            $message = '<p>This message has been sent for testing purposes.</p>';
+
+            // Get full html:
+            $body =
+			'<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+			<html xmlns="http://www.w3.org/1999/xhtml">
+			<head>
+			    <meta http-equiv="Content-Type" content="text/html; charset='.strtolower(config_item('charset')).'" />
+			    <title>'.html_escape($subject).'</title>
+			    <style type="text/css">
+			        body {
+			            font-family: Arial, Verdana, Helvetica, sans-serif;
+			            font-size: 16px;
+			        }
+			    </style>
+			</head>
+			<body>
+			'.$message.'
+			</body>
+			</html>';
+            // Also, for getting full html you may use the following internal method:
+            //$body = $this->email->full_html($subject, $message);
+
+            $result = $this->email
+                ->from('robingomez05@gmail.com')
+                ->to('robinson.buitrago@cibercolegios.com')
+                ->subject($subject)
+                ->message($body)
+                ->send();
+
+            var_dump($result);
+            echo '<br />';
+            echo $this->email->print_debugger();
+
+            exit;
+		}
+	}
+
 }

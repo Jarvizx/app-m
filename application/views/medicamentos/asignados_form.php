@@ -1,3 +1,13 @@
+<?php 
+//echo '<br>mostrar_input_correo '.$mostrar_input_correo;
+//echo '<br>es_anonimo '.$es_anonimo;
+if ($mostrar_input_correo == true && $es_anonimo == 0) 
+{
+	// load view
+	$this->layout->view('medicamentos/inscribir_correo',null);
+	exit();
+}
+?>
 <?php $valores_tbl_rev_expedientes = $tbl_rev_expedientes->row(); ?>
 <?php $valores_tbl_invima_medicamento = $tbl_invima_medicamento->row(); ?>
 <div class="img-expediente">
