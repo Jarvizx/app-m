@@ -6,3 +6,4 @@ application/config/config.php
 no commit/a.php
 
 no_commit/a.php
+application/config/email.php
