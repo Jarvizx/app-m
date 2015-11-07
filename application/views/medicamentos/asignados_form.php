@@ -55,13 +55,13 @@ if ($mostrar_input_correo == true && $es_anonimo == 0)
 			 	<?= ( ! empty($comentarios_MarcaSignoDistintivoComercial->texto)) ? $comentarios_MarcaSignoDistintivoComercial->texto : "";?>
 			</td>
 			<td>
-				<form>
+				<form tipoComentario="comentario_en_td_solo">
 					<b>Comentario: </b><br>
 					<textarea rows="1" cols="40" class="form-control" name="comentario"></textarea><br>
-					<input type="radio" name="estado_revision" value="Ok"> Ok 
-					<input type="radio" name="estado_revision" value="Rev. Lab"> Rev. Lab 
-					<input type="radio" name="estado_revision" value="Rev. Super"> Rev. Super 
-					<input type="radio" name="estado_revision" value="Pendiente"> Pendiente 
+					<input class="r_nombre_del_producto_invima" type="radio" name="estado_revision" value="Ok"> Ok 
+					<input class="r_nombre_del_producto_invima" type="radio" name="estado_revision" value="Rev. Lab"> Rev. Lab 
+					<input class="r_nombre_del_producto_invima" type="radio" name="estado_revision" value="Rev. Super"> Rev. Super 
+					<input class="r_nombre_del_producto_invima" type="radio" name="estado_revision" value="Pendiente"> Pendiente 
 					<button class="btn btn-primary comentario" type="button" data-comentario='{"clase": "MarcaSignoDistintivoComercial"}'>Enviar</button>
 				</form>
 			</td>
@@ -104,7 +104,7 @@ if ($mostrar_input_correo == true && $es_anonimo == 0)
 			</td>
 			<td>
 				<?php //echo $valores_tbl_invima_medicamento->generico; ?>
-				<form>
+				<form tipoComentario="comentario_en_td_solo">
 					<textarea rows="1" cols="40" class="form-control" name="comentario"></textarea><br>
 					<input type="radio" name="estado_revision" value="Ok"> Ok 
 					<input type="radio" name="estado_revision" value="Rev. Lab"> Rev. Lab 
@@ -159,7 +159,7 @@ if ($mostrar_input_correo == true && $es_anonimo == 0)
 			 	<?= ( ! empty($comentarios_CodigoFormaFarmaceutica->texto)) ? $comentarios_CodigoFormaFarmaceutica->texto : "";?>
 			</td>
 			<td>
-				<form>
+				<form tipoComentario="comentario_en_td_solo">
 					<b>Comentario: </b><br>
 					<textarea rows="1" cols="40" class="form-control" name="comentario"></textarea><br>
 					<input type="radio" name="estado_revision" value="Ok"> Ok 
@@ -223,7 +223,7 @@ if ($mostrar_input_correo == true && $es_anonimo == 0)
 			 	<?= ( ! empty($comentarios_CodigoViaAdministracion->texto)) ? $comentarios_CodigoViaAdministracion->texto : "";?>
 			</td>
 			<td>
-				<form>
+				<form tipoComentario="comentario_en_td_solo">
 					<b>Comentario: </b><br>
 					<textarea rows="1" cols="40" class="form-control" name="comentario"></textarea><br>
 					<input type="radio" name="estado_revision" value="Ok"> Ok 
@@ -289,7 +289,7 @@ if ($mostrar_input_correo == true && $es_anonimo == 0)
 						<?php endif ?>
 					<?php endforeach ?>
 					</p>
-					<form>
+					<form tipoComentario="comentario_en_td_con_el_input">
 						<b>Comentario: </b><br>
 						<textarea rows="1" cols="40" class="form-control" name="comentario"></textarea><br>
 						<input type="radio" name="estado_revision" value="Ok"> Ok 
@@ -323,7 +323,7 @@ if ($mostrar_input_correo == true && $es_anonimo == 0)
 						<?php endif ?>
 					<?php endforeach ?>
 					</p>
-					<form>
+					<form tipoComentario="comentario_en_td_con_el_input">
 						<b>Comentario: </b><br>
 						<textarea rows="1" cols="40" class="form-control" name="comentario"></textarea><br>
 						<input type="radio" name="estado_revision" value="Ok"> Ok 
@@ -342,7 +342,7 @@ if ($mostrar_input_correo == true && $es_anonimo == 0)
 						<?php endif ?>
 					<?php endforeach ?>
 					</p>
-					<form>
+					<form tipoComentario="comentario_en_td_con_el_input">
 						<b>Comentario: </b><br>
 						<textarea rows="1" cols="40" class="form-control" name="comentario"></textarea><br>
 						<input type="radio" name="estado_revision" value="Ok"> Ok 
@@ -376,7 +376,7 @@ if ($mostrar_input_correo == true && $es_anonimo == 0)
 						<?php endif ?>
 					<?php endforeach ?>
 					</p>
-					<form>
+					<form tipoComentario="comentario_en_td_con_el_input">
 						<b>Comentario: </b><br>
 						<textarea rows="1" cols="40" class="form-control" name="comentario"></textarea><br>
 						<input type="radio" name="estado_revision" value="Ok"> Ok 
@@ -395,7 +395,7 @@ if ($mostrar_input_correo == true && $es_anonimo == 0)
 						<?php endif ?>
 					<?php endforeach ?>
 					</p>
-					<form>
+					<form tipoComentario="comentario_en_td_con_el_input">
 						<b>Comentario: </b><br>
 						<textarea rows="1" cols="40" class="form-control" name="comentario"></textarea><br>
 						<input type="radio" name="estado_revision" value="Ok"> Ok 
@@ -429,7 +429,7 @@ if ($mostrar_input_correo == true && $es_anonimo == 0)
 						<?php endif ?>
 					<?php endforeach ?>
 					</p>
-					<form>
+					<form tipoComentario="comentario_en_td_con_el_input">
 						<b>Comentario: </b><br>
 						<textarea rows="1" cols="40" class="form-control" name="comentario"></textarea><br>
 						<input type="radio" name="estado_revision" value="Ok"> Ok 
@@ -443,7 +443,358 @@ if ($mostrar_input_correo == true && $es_anonimo == 0)
 		<?php endforeach ?>
 	</tbody>
 </table>
-			 	 
+<!--presentacion comercial -->
+<h3>Presentación Comercial</h3>
+<table class="table">
+	<thead>
+		<tr>
+			<th>CUM</th>
+			<th>U.Contenido</th>
+			<th>Capacidad</th>
+			<th>U.Capacidad</th>
+			<th>Empaque</th>
+			<th>Cantidad U.</th>
+			<th>Muestra Medica</th>
+		</tr>
+	</thead>
+	<tbody>
+		<?php foreach ($tbl_rev_expediente_pc->result() as $k_tbl_rev_expediente_pc => $v_tbl_rev_expediente_pc): ?>
+		<tr>
+			<td colspan="7">
+
+				<?php 
+
+				// LEER ! 
+
+				// aqui comparo los valores de la tabla, para colocar algun color, verde de coincide y rojo si no. Por cada <td>
+
+				# CodigoUnidadContenido
+				foreach ($tbl_referencia_upr->result_array() as $k_tbl_referencia => $v_tbl_referencia)
+				{
+					if ($v_tbl_rev_expediente_pc->CodigoUnidadContenido == $v_tbl_referencia['codigo']) 
+					{
+						$selec_CodigoUnidadContenido[] = sprintf('<option value="%s" selected> %s </option>', $v_tbl_referencia['codigo'], $v_tbl_referencia['nombre_codigo']);
+						$valor_actual_CodigoUnidadContenido = $v_tbl_referencia['nombre_codigo'];
+					}
+					else
+					{
+						$selec_CodigoUnidadContenido[] = sprintf('<option value="%s"> %s </option>', $v_tbl_referencia['codigo'], $v_tbl_referencia['nombre_codigo']);
+					}
+				}
+
+				# CodigoUnidadCapacidad
+				foreach ($tbl_referencia_umm->result_array() as $k_tbl_referencia => $v_tbl_referencia)
+				{
+					if ($v_tbl_rev_expediente_pc->CodigoUnidadCapacidad == $v_tbl_referencia['codigo']) 
+					{
+						$selec_CodigoUnidadCapacidad[] = sprintf('<option value="%s" selected> %s </option>', $v_tbl_referencia['codigo'], $v_tbl_referencia['nombre_codigo']);
+						$valor_actual_CodigoUnidadCapacidad = $v_tbl_referencia['nombre_codigo'];
+					}
+					else
+					{
+						$selec_CodigoUnidadCapacidad[] = sprintf('<option value="%s"> %s </option>', $v_tbl_referencia['codigo'], $v_tbl_referencia['nombre_codigo']);
+					}
+				}
+
+				# CodigoEmpaque
+				foreach ($tbl_referencia_upr->result_array() as $k_tbl_referencia => $v_tbl_referencia)
+				{
+					if ($v_tbl_rev_expediente_pc->CodigoEmpaque == $v_tbl_referencia['codigo']) 
+					{
+						$select_CodigoEmpaque[] = sprintf('<option value="%s" selected> %s </option>', $v_tbl_referencia['codigo'], $v_tbl_referencia['nombre_codigo']);
+						$valor_actual_CodigoEmpaque = $v_tbl_referencia['nombre_codigo'];
+					}
+					else
+					{
+						$select_CodigoEmpaque[] = sprintf('<option value="%s"> %s </option>', $v_tbl_referencia['codigo'], $v_tbl_referencia['nombre_codigo']);
+					}
+				}
+
+				# IdentificadorCondicionEstarRegistradoComoMuestraMedica
+				foreach ($tbl_referencia_upr->result_array() as $k_tbl_referencia => $v_tbl_referencia)
+				{
+					if ($v_tbl_rev_expediente_pc->IdentificadorCondicionEstarRegistradoComoMuestraMedica == $v_tbl_referencia['codigo']) 
+					{
+						$select_IdentificadorCondicionEstarRegistradoComoMuestraMedica[] = sprintf('<option value="%s" selected> %s </option>', $v_tbl_referencia['codigo'], $v_tbl_referencia['nombre_codigo']);
+						$valor_actual_IdentificadorCondicionEstarRegistradoComoMuestraMedica = $v_tbl_referencia['nombre_codigo'];
+					}
+					else
+					{
+						$select_IdentificadorCondicionEstarRegistradoComoMuestraMedica[] = sprintf('<option value="%s"> %s </option>', $v_tbl_referencia['codigo'], $v_tbl_referencia['nombre_codigo']);
+					}
+				}
+
+				foreach ($tbl_invima_pc_texto->result() as $k_tbl_invima_pc_texto => $v_tbl_invima_pc_texto) 
+				{
+					if ($v_tbl_rev_expediente_pc->NumeroConsecutivoCUMPresentacionComercial == $v_tbl_invima_pc_texto->consecutivo) 
+					{
+						echo $v_tbl_invima_pc_texto->texto;
+						
+						# CAMBIAR TODOS ESTOS IF POR UNA FUNCION  !! 
+
+						# CodigoUnidadContenido
+						if (strpos($v_tbl_invima_pc_texto->texto, $valor_actual_CodigoUnidadContenido) !== false) 
+						{
+							$color_td_CodigoUnidadContenido = 'bg-success';
+						}
+						else
+						{
+							$color_td_CodigoUnidadContenido = 'bg-danger';
+						}
+
+						# CapacidadUnidadContenido
+						if (strpos($v_tbl_invima_pc_texto->texto, $v_tbl_rev_expediente_pc->CapacidadUnidadContenido) !== false)  
+						{
+							$color_td_CapacidadUnidadContenido = 'bg-success';
+						}
+						else
+						{
+							$color_td_CapacidadUnidadContenido = 'bg-danger';
+						}
+
+						# CodigoUnidadCapacidad
+						if (strpos($v_tbl_invima_pc_texto->texto, $valor_actual_CodigoUnidadCapacidad) !== false)  
+						{
+							$color_td_CodigoUnidadCapacidad = 'bg-success';
+						}
+						else
+						{
+							$color_td_CodigoUnidadCapacidad = 'bg-danger';
+						}
+
+						# CodigoEmpaque
+						if (strpos($v_tbl_invima_pc_texto->texto, $valor_actual_CodigoEmpaque) !== false)  
+						{
+							$color_td_CodigoEmpaque = 'bg-success';
+						}
+						else
+						{
+							$color_td_CodigoEmpaque = 'bg-danger';
+						}
+
+						# CantidadUnidadesContenidoEmpaque
+						if (strpos($v_tbl_invima_pc_texto->texto, $v_tbl_rev_expediente_pc->CantidadUnidadesContenidoEmpaque) !== false)  
+						{
+							$color_td_CantidadUnidadesContenidoEmpaque = 'bg-success';
+						}
+						else
+						{
+							$color_td_CantidadUnidadesContenidoEmpaque = 'bg-danger';
+						}
+
+						# IdentificadorCondicionEstarRegistradoComoMuestraMedica
+						if (strpos($v_tbl_invima_pc_texto->texto, $valor_actual_IdentificadorCondicionEstarRegistradoComoMuestraMedica) !== false)  
+						{
+							$color_td_IdentificadorCondicionEstarRegistradoComoMuestraMedica = 'bg-success';
+						}
+						else
+						{
+							$color_td_IdentificadorCondicionEstarRegistradoComoMuestraMedica = 'bg-danger';
+						}
+					}
+				}
+				?>
+			</td>
+		</tr>
+		<tr>
+			<td class="<?= $color_td_CodigoUnidadContenido; ?>">
+				<?= $v_tbl_rev_expediente_pc->NumeroConsecutivoCUMPresentacionComercial; ?>
+			</td>
+			<td class="<?= $color_td_CodigoUnidadContenido; ?>">
+				<select class="form_app_m" name="CodigoUnidadContenido" data-json='{"tabla":"tbl_rev_expediente_pc", "llave":"<?= $v_tbl_rev_expediente_pc->id ?>", "valor_viejo":"<?= $v_tbl_rev_expediente_pc->CodigoUnidadContenido; ?>", "campo":"CodigoUnidadContenido"}'>
+					<?php foreach ($selec_CodigoUnidadContenido as $k_selec_CodigoUnidadContenido => $v_selec_CodigoUnidadContenido): ?>
+						<?= $v_selec_CodigoUnidadContenido;?>
+					<?php endforeach ?>
+				</select>
+				<!-- <input type="text" class="form_app_m CodigoUnidadContenido" name="CodigoUnidadContenido" data-json='{"tabla":"tbl_rev_expediente_pc", "llave":"<?= $v_tbl_rev_expediente_pc->id ?>", "valor_viejo":"<?= $v_tbl_rev_expediente_pc->CodigoUnidadContenido; ?>", "campo":"CodigoUnidadContenido"}' value="<?= $v_tbl_rev_expediente_pc->CodigoUnidadContenido; ?>">-->
+				<p>
+				<?php foreach ($comentarios_CodigoUnidadContenido as $k_comentarios_CodigoUnidadContenido => $v_comentarios_CodigoUnidadContenido): ?>
+					<?php if ($v_tbl_rev_expediente_pc->id == $v_comentarios_CodigoUnidadContenido['llave']): ?>
+						<span><?= $v_comentarios_CodigoUnidadContenido['texto']; ?></span>
+					<?php endif ?>
+				<?php endforeach ?>
+				</p>
+				<form tipoComentario="comentario_en_td_con_el_input">
+					<b>Comentario: </b><br>
+					<textarea rows="1" cols="40" class="form-control" name="comentario"></textarea><br>
+					<input type="radio" name="estado_revision" value="Ok"> Ok 
+					<input type="radio" name="estado_revision" value="Rev. Lab"> Rev. Lab 
+					<input type="radio" name="estado_revision" value="Rev. Super"> Rev. Super 
+					<input type="radio" name="estado_revision" value="Pendiente"> Pendiente 
+					<button class="btn btn-primary comentario-pa" type="button" data-comentario-pa='{"clase": "CodigoUnidadContenido"}'>Enviar</button>
+				</form>
+			</td>
+			<td class="<?= $color_td_CapacidadUnidadContenido; ?>">
+				<input type="text" class="form_app_m CapacidadUnidadContenido" name="CapacidadUnidadContenido" data-json='{"tabla":"tbl_rev_expediente_pc", "llave":"<?= $v_tbl_rev_expediente_pc->id ?>", "valor_viejo":"<?= $v_tbl_rev_expediente_pc->CapacidadUnidadContenido; ?>", "campo":"CapacidadUnidadContenido"}' value="<?= $v_tbl_rev_expediente_pc->CapacidadUnidadContenido; ?>">
+				<p>
+				<?php foreach ($comentarios_CapacidadUnidadContenido as $k_comentarios_CapacidadUnidadContenido => $v_comentarios_CapacidadUnidadContenido): ?>
+					<?php if ($v_tbl_rev_expediente_pc->id == $v_comentarios_CapacidadUnidadContenido['llave']): ?>
+						<span><?= $v_comentarios_CapacidadUnidadContenido['texto']; ?></span>
+					<?php endif ?>
+				<?php endforeach ?>
+				</p>
+				<form tipoComentario="comentario_en_td_con_el_input">
+					<b>Comentario: </b><br>
+					<textarea rows="1" cols="40" class="form-control" name="comentario"></textarea><br>
+					<input type="radio" name="estado_revision" value="Ok"> Ok 
+					<input type="radio" name="estado_revision" value="Rev. Lab"> Rev. Lab 
+					<input type="radio" name="estado_revision" value="Rev. Super"> Rev. Super 
+					<input type="radio" name="estado_revision" value="Pendiente"> Pendiente 
+					<button class="btn btn-primary comentario-pa" type="button" data-comentario-pa='{"clase": "CapacidadUnidadContenido"}'>Enviar</button>
+				</form>
+			</td>
+			<td class="<?= $color_td_CodigoUnidadCapacidad;?>">
+				<select class="form_app_m" name="CodigoUnidadCapacidad" data-json='{"tabla":"tbl_rev_expediente_pc", "llave":"<?= $v_tbl_rev_expediente_pc->id ?>", "valor_viejo":"<?= $v_tbl_rev_expediente_pc->CodigoUnidadCapacidad; ?>", "campo":"CodigoUnidadCapacidad"}'>
+					<?php foreach ($selec_CodigoUnidadCapacidad as $k_selec_CodigoUnidadCapacidad => $v_selec_CodigoUnidadCapacidad): ?>
+						<?= $v_selec_CodigoUnidadCapacidad;?>
+					<?php endforeach ?>
+				</select>
+				<!--<input type="text" class="form_app_m IdentificadorCondicionEstarRegistradoComoMuestraMedica" name="IdentificadorCondicionEstarRegistradoComoMuestraMedica" data-json='{"tabla":"tbl_rev_expediente_pc", "llave":"<?= $v_tbl_rev_expediente_pc->id ?>", "valor_viejo":"<?= $v_tbl_rev_expediente_pc->IdentificadorCondicionEstarRegistradoComoMuestraMedica; ?>", "campo":"IdentificadorCondicionEstarRegistradoComoMuestraMedica"}' value="<?= $v_tbl_rev_expediente_pc->IdentificadorCondicionEstarRegistradoComoMuestraMedica; ?>">-->
+				<p>
+				<?php foreach ($comentarios_CodigoUnidadCapacidad as $k_comentarios_CodigoUnidadCapacidad => $v_comentarios_CodigoUnidadCapacidad): ?>
+					<?php if ($v_tbl_rev_expediente_pc->id == $v_comentarios_CodigoUnidadCapacidad['llave']): ?>
+						<span><?= $v_comentarios_CodigoUnidadCapacidad['texto']; ?></span>
+					<?php endif ?>
+				<?php endforeach ?>
+				</p>
+				<form tipoComentario="comentario_en_td_con_el_input">
+					<b>Comentario: </b><br>
+					<textarea rows="1" cols="40" class="form-control" name="comentario"></textarea><br>
+					<input type="radio" name="estado_revision" value="Ok"> Ok 
+					<input type="radio" name="estado_revision" value="Rev. Lab"> Rev. Lab 
+					<input type="radio" name="estado_revision" value="Rev. Super"> Rev. Super 
+					<input type="radio" name="estado_revision" value="Pendiente"> Pendiente 
+					<button class="btn btn-primary comentario-pa" type="button" data-comentario-pa='{"clase": "CodigoUnidadCapacidad"}'>Enviar</button>
+				</form>
+			</td>
+			<td class="<?= $color_td_CodigoEmpaque;?>">
+				<select class="form_app_m" name="CodigoEmpaque" data-json='{"tabla":"tbl_rev_expediente_pc", "llave":"<?= $v_tbl_rev_expediente_pc->id ?>", "valor_viejo":"<?= $v_tbl_rev_expediente_pc->CodigoEmpaque; ?>", "campo":"CodigoEmpaque"}'>
+					<?php foreach ($select_CodigoEmpaque as $k_select_CodigoEmpaque => $v_select_CodigoEmpaque): ?>
+						<?= $v_select_CodigoEmpaque;?>
+					<?php endforeach ?>
+				</select>
+				<!--<input type="text" class="form_app_m CodigoEmpaque" name="CodigoEmpaque" data-json='{"tabla":"tbl_rev_expediente_pc", "llave":"<?= $v_tbl_rev_expediente_pc->id ?>", "valor_viejo":"<?= $v_tbl_rev_expediente_pc->CodigoEmpaque; ?>", "campo":"CodigoEmpaque"}' value="<?= $v_tbl_rev_expediente_pc->CodigoEmpaque; ?>">-->
+				<p>
+				<?php foreach ($comentarios_CodigoEmpaque as $k_comentarios_CodigoEmpaque => $v_comentarios_CodigoEmpaque): ?>
+					<?php if ($v_tbl_rev_expediente_pc->id == $v_comentarios_CodigoEmpaque['llave']): ?>
+						<span><?= $v_comentarios_CodigoEmpaque['texto']; ?></span>
+					<?php endif ?>
+				<?php endforeach ?>
+				</p>
+				<form tipoComentario="comentario_en_td_con_el_input">
+					<b>Comentario: </b><br>
+					<textarea rows="1" cols="40" class="form-control" name="comentario"></textarea><br>
+					<input type="radio" name="estado_revision" value="Ok"> Ok 
+					<input type="radio" name="estado_revision" value="Rev. Lab"> Rev. Lab 
+					<input type="radio" name="estado_revision" value="Rev. Super"> Rev. Super 
+					<input type="radio" name="estado_revision" value="Pendiente"> Pendiente 
+					<button class="btn btn-primary comentario-pa" type="button" data-comentario-pa='{"clase": "CodigoEmpaque"}'>Enviar</button>
+				</form>
+			</td>
+			<td class="<?= $color_td_CantidadUnidadesContenidoEmpaque;?>">
+				<input type="text" class="form_app_m CantidadUnidadesContenidoEmpaque" name="CantidadUnidadesContenidoEmpaque" data-json='{"tabla":"tbl_rev_expediente_pc", "llave":"<?= $v_tbl_rev_expediente_pc->id ?>", "valor_viejo":"<?= $v_tbl_rev_expediente_pc->CantidadUnidadesContenidoEmpaque; ?>", "campo":"CantidadUnidadesContenidoEmpaque"}' value="<?= $v_tbl_rev_expediente_pc->CantidadUnidadesContenidoEmpaque; ?>">
+				<p>
+				<?php foreach ($comentarios_CantidadUnidadesContenidoEmpaque as $k_comentarios_CantidadUnidadesContenidoEmpaque => $v_comentarios_CantidadUnidadesContenidoEmpaque): ?>
+					<?php if ($v_tbl_rev_expediente_pc->id == $v_comentarios_CantidadUnidadesContenidoEmpaque['llave']): ?>
+						<span><?= $v_comentarios_CantidadUnidadesContenidoEmpaque['texto']; ?></span>
+					<?php endif ?>
+				<?php endforeach ?>
+				</p>
+				<form tipoComentario="comentario_en_td_con_el_input">
+					<b>Comentario: </b><br>
+					<textarea rows="1" cols="40" class="form-control" name="comentario"></textarea><br>
+					<input type="radio" name="estado_revision" value="Ok"> Ok 
+					<input type="radio" name="estado_revision" value="Rev. Lab"> Rev. Lab 
+					<input type="radio" name="estado_revision" value="Rev. Super"> Rev. Super 
+					<input type="radio" name="estado_revision" value="Pendiente"> Pendiente 
+					<button class="btn btn-primary comentario-pa" type="button" data-comentario-pa='{"clase": "CantidadUnidadesContenidoEmpaque"}'>Enviar</button>
+				</form>
+			</td>
+			<td class="<?= $color_td_IdentificadorCondicionEstarRegistradoComoMuestraMedica;?>">
+				<select class="form_app_m" name="IdentificadorCondicionEstarRegistradoComoMuestraMedica" data-json='{"tabla":"tbl_rev_expediente_pc", "llave":"<?= $v_tbl_rev_expediente_pc->id ?>", "valor_viejo":"<?= $v_tbl_rev_expediente_pc->IdentificadorCondicionEstarRegistradoComoMuestraMedica; ?>", "campo":"IdentificadorCondicionEstarRegistradoComoMuestraMedica"}'>
+					<?php foreach ($select_IdentificadorCondicionEstarRegistradoComoMuestraMedica as $k_select_IdentificadorCondicionEstarRegistradoComoMuestraMedica => $v_select_IdentificadorCondicionEstarRegistradoComoMuestraMedica): ?>
+						<?= $v_select_IdentificadorCondicionEstarRegistradoComoMuestraMedica;?>
+					<?php endforeach ?>
+				</select>
+				<!--<input type="text" class="form_app_m IdentificadorCondicionEstarRegistradoComoMuestraMedica" name="IdentificadorCondicionEstarRegistradoComoMuestraMedica" data-json='{"tabla":"tbl_rev_expediente_pc", "llave":"<?= $v_tbl_rev_expediente_pc->id ?>", "valor_viejo":"<?= $v_tbl_rev_expediente_pc->IdentificadorCondicionEstarRegistradoComoMuestraMedica; ?>", "campo":"IdentificadorCondicionEstarRegistradoComoMuestraMedica"}' value="<?= $v_tbl_rev_expediente_pc->IdentificadorCondicionEstarRegistradoComoMuestraMedica; ?>">-->
+				<p>
+				<?php foreach ($comentarios_IdentificadorCondicionEstarRegistradoComoMuestraMedica as $k_comentarios_IdentificadorCondicionEstarRegistradoComoMuestraMedica => $v_comentarios_IdentificadorCondicionEstarRegistradoComoMuestraMedica): ?>
+					<?php if ($v_tbl_rev_expediente_pc->id == $v_comentarios_IdentificadorCondicionEstarRegistradoComoMuestraMedica['llave']): ?>
+						<span><?= $v_comentarios_IdentificadorCondicionEstarRegistradoComoMuestraMedica['texto']; ?></span>
+					<?php endif ?>
+				<?php endforeach ?>
+				</p>
+				<form tipoComentario="comentario_en_td_con_el_input">
+					<b>Comentario: </b><br>
+					<textarea rows="1" cols="40" class="form-control" name="comentario"></textarea><br>
+					<input type="radio" name="estado_revision" value="Ok"> Ok 
+					<input type="radio" name="estado_revision" value="Rev. Lab"> Rev. Lab 
+					<input type="radio" name="estado_revision" value="Rev. Super"> Rev. Super 
+					<input type="radio" name="estado_revision" value="Pendiente"> Pendiente 
+					<button class="btn btn-primary comentario-pa" type="button" data-comentario-pa='{"clase": "IdentificadorCondicionEstarRegistradoComoMuestraMedica"}'>Enviar</button>
+				</form>
+			</td>
+		</tr>
+		<?php endforeach ?>
+	</tbody>
+</table>
+<h3>Presentación Comercial P.A.</h3>
+<!--presentacion comercial pricipio activo-->
+<table class="table">
+	<thead>
+		<tr>
+			<th>CUM - P.A.</th>
+			<th>Texto</th>
+			<th>Cantidad Calculada</th>
+			<th>Cantidad</th>
+		</tr>
+	</thead>
+	<tbody>
+		<?php foreach ($tbl_rev_expediente_pc_pa->result() as $k_tbl_rev_expediente_pc_pa => $v_tbl_rev_expediente_pc_pa): ?>
+		<tr>
+			<td>
+				<p><?= $v_tbl_rev_expediente_pc_pa->NumeroConsecutivoCUMPresentacionComercial; ?> - <?= $v_tbl_rev_expediente_pc_pa->NombrePrincipioActivo; ?></p>
+			</td>
+			<td>
+				<p><?= $v_tbl_rev_expediente_pc_pa->texto;?></p>
+			</td>
+			<td>
+				<p><?= $v_tbl_rev_expediente_pc_pa->cantidad_calculada;?></p>
+				<?php 
+					if ($v_tbl_rev_expediente_pc_pa->cantidad_calculada == $v_tbl_rev_expediente_pc_pa->CantidadPrincipioActivoPresentacionComercial) 
+					{
+						$color_td_CantidadPrincipioActivoPresentacionComercial = 'bg-success';	
+					}
+					else
+					{
+						$color_td_CantidadPrincipioActivoPresentacionComercial = 'bg-danger';
+					}
+				 ?>
+			</td>
+			<td class="<?= $color_td_CantidadPrincipioActivoPresentacionComercial;?>">
+				<input type="text" class="form_app_m CantidadPrincipioActivoPresentacionComercial" name="CantidadPrincipioActivoPresentacionComercial" data-json='{"tabla":"tbl_rev_expediente_pc_pa", "llave":"<?= $v_tbl_rev_expediente_pc_pa->id ?>", "valor_viejo":"<?= $v_tbl_rev_expediente_pc_pa->CantidadPrincipioActivoPresentacionComercial; ?>", "campo":"CantidadPrincipioActivoPresentacionComercial"}' value="<?= $v_tbl_rev_expediente_pc_pa->CantidadPrincipioActivoPresentacionComercial; ?>">
+				<p>
+				<?php foreach ($comentarios_CantidadPrincipioActivoPresentacionComercial as $k_comentarios_CantidadPrincipioActivoPresentacionComercial => $v_comentarios_CantidadPrincipioActivoPresentacionComercial): ?>
+					<?php if ($v_tbl_rev_expediente_pc_pa->id == $v_comentarios_CantidadPrincipioActivoPresentacionComercial['llave']): ?>
+						<span><?= $v_comentarios_CantidadPrincipioActivoPresentacionComercial['texto']; ?></span>
+					<?php endif ?>
+				<?php endforeach ?>
+				</p>
+				<form tipoComentario="comentario_en_td_con_el_input">
+					<b>Comentario: </b><br>
+					<textarea rows="1" cols="40" class="form-control" name="comentario"></textarea><br>
+					<input type="radio" name="estado_revision" value="Ok"> Ok 
+					<input type="radio" name="estado_revision" value="Rev. Lab"> Rev. Lab 
+					<input type="radio" name="estado_revision" value="Rev. Super"> Rev. Super 
+					<input type="radio" name="estado_revision" value="Pendiente"> Pendiente 
+					<button class="btn btn-primary comentario-pa" type="button" data-comentario-pa='{"clase": "CantidadPrincipioActivoPresentacionComercial"}'>Enviar</button>
+				</form>
+			</td>
+		</tr>
+		<?php endforeach ?>
+	</tbody>
+</table>
+<br> 	 	 
 <button class="btn btn-danger expediente_terminado" type="button">Terminado</button>
 
 <hr>
@@ -466,6 +817,74 @@ if ($mostrar_input_correo == true && $es_anonimo == 0)
 			}
 		});
 
+        $("input:radio").click(function(){
+        	// $(".r_nombre_del_producto_invima").click(function(){ console.log($(this)) });
+        	var objeto_actual = $(this); 
+        		if(objeto_actual.attr('name') == "estado_revision")
+        		{
+        			console.log(objeto_actual.parent());
+        			console.log(objeto_actual.parent().attr("tipoComentario"));
+        			var tipoForm = objeto_actual.parent().attr("tipoComentario");
+        			if (tipoForm == 'comentario_en_td_con_el_input') 
+        			{
+        				var valorJSON_campo_fomulario = objeto_actual.parent().prev().prev().data("json");
+						var valoresComentario = objeto_actual.parent().serializeArray();
+
+						// si el input type=radio es null
+						if (typeof valoresComentario[1] == "undefined") 
+						{
+							valoresComentario[1] = { value:'Pendiente'};
+						}
+
+						valoresEnvio = {
+							tabla: valorJSON_campo_fomulario.tabla,
+							llave: valorJSON_campo_fomulario.llave,
+							campo: valorJSON_campo_fomulario.campo,
+							valor: valorJSON_campo_fomulario.valor_viejo,
+							estado_revision: valoresComentario[1].value, // [1] es el input type=radio
+							comentario: valoresComentario[0].value, // [0] comentario
+							expediente: $(".NumeroExpediente").val()
+						}
+
+						//console.log('comentario', valoresEnvio);
+						//return false;
+
+        			} 
+        			else
+        			{
+						/*var valorJSON = objeto_actual.data("comentario");
+						var valorJSON_campo_fomulario = $("."+valorJSON.clase).data("json"); // error
+						
+						var valoresComentario = objeto_actual.parent().serializeArray();
+
+						// si el input type=radio es null
+						if (typeof valoresComentario[1] == "undefined") 
+						{
+							valoresComentario[1] = { value:'Pendiente'};
+						}
+
+						valoresEnvio = {
+							tabla: valorJSON_campo_fomulario.tabla,
+							llave: valorJSON_campo_fomulario.llave,
+							campo: valorJSON_campo_fomulario.campo,
+							valor: valorJSON_campo_fomulario.valor_viejo,
+							estado_revision: valoresComentario[1].value, // [1] es el input type=radio
+							comentario: valoresComentario[0].value, // [0] comentario
+							expediente: $(".NumeroExpediente").val()
+						}*/
+        			};
+					
+					console.log('el ajax se va con: ', valoresEnvio);
+					/*$.ajax({
+						type: "POST",
+						url: "/medicamentos/guardar_comentario",
+						data: valoresEnvio
+					}).done(function(respuesta){
+						console.log('respuesta comentario: ', respuesta);
+					});*/
+				//(parent) comentario_en_td_solo & comentario_en_td_con_el_input
+        		}
+        });
 		// en este evento, el expediente queda como terminado
 		$(".expediente_terminado").click(function(){
 			$.ajax({
