@@ -377,8 +377,8 @@ class Medicamentos extends CI_Controller {
 
 	public function enviar_correo()
 	{
-		if (! empty($this->input->post('correo'))) 
-		{
+		//if (! empty($this->input->post('correo'))) 
+		//{
 			$this->load->library('email');
 
             $subject = 'This is a test';
@@ -417,7 +417,7 @@ class Medicamentos extends CI_Controller {
             echo $this->email->print_debugger();
 
             exit;
-		}
+		//}
 	}
 
 }
