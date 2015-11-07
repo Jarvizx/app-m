@@ -13,6 +13,8 @@ class Medicamentos_model extends CI_Model
 	protected $vws_consolidado_edicion_agrupado;//vista
 	protected $tbl_invima_pa_homologado_texto;//vista
 	protected $vws_siguiente_expediente;//vista
+    protected $tbl_rev_expediente_pc;
+    protected $tbl_rev_expediente_pc_pa;
 
 	public function __construct()
 	{
@@ -29,6 +31,8 @@ class Medicamentos_model extends CI_Model
 		$this->vws_consolidado_edicion_agrupado = 'vws_consolidado_edicion_agrupado';//vista
 		$this->tbl_invima_pa_homologado_texto = 'tbl_invima_pa_homologado_texto';//vista
 		$this->vws_siguiente_expediente = 'vws_siguiente_expediente';//vista
+        $this->tbl_rev_expediente_pc = 'tbl_rev_expediente_pc';
+        $this->tbl_rev_expediente_pc_pa = 'tbl_rev_expediente_pc_pa';
 	    date_default_timezone_set('America/Bogota');
 	}
 
@@ -204,5 +208,21 @@ class Medicamentos_model extends CI_Model
 			//echo "SQL : " . $this->db->last_query();
 			return $this->db->affected_rows();
     	}
+    }
+
+    # consulta pc
+    public function consultar_tbl_rev_expediente_pc($expediente)
+    {
+        if ( ! empty($expediente)) 
+        {
+            return $this->db->get_where($this->tbl_rev_expediente_pc, $expediente);
+        }
+    }
+    public function consultar_tbl_rev_expediente_pc_pa($expediente)
+    {
+        if ( ! empty($expediente)) 
+        {
+            return $this->db->get_where($this->tbl_rev_expediente_pc_pa, $expediente);
+        }
     }
 }
