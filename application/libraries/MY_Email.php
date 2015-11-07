@@ -33,6 +33,7 @@ class MY_Email extends CI_Email {
 
     public function __construct($config = array()) {
 
+        date_default_timezone_set('America/Bogota');
         $this->_is_ci_3 = (bool) ((int) CI_VERSION >= 3);
 
         $this->CI = get_instance();
@@ -48,6 +49,7 @@ class MY_Email extends CI_Email {
         if (!isset($config['charset'])) {
             $config['charset'] = config_item('charset');
         }
+
 
         $this->initialize($config);
 
