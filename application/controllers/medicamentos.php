@@ -410,9 +410,9 @@ class Medicamentos extends CI_Controller {
 
 	public function enviar_correo()
 	{
-		//if (! empty($this->input->post('correo'))) 
-		//{
-			$this->load->library('email');
+		if (! empty($this->input->post('correo'))) 
+		{
+			/*$this->load->library('email');
 
             $subject = 'This is a test';
             $message = '<p>This message has been sent for testing purposes.</p>';
@@ -449,8 +449,8 @@ class Medicamentos extends CI_Controller {
             echo '<br />';
             echo $this->email->print_debugger();
 
-            exit;
-		//}
+            exit;*/
+		}
 	}
 
 }
