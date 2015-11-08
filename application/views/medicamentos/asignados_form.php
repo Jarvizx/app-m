@@ -3,7 +3,7 @@
 //echo '<br>es_anonimo '.$es_anonimo;
 if ($mostrar_input_correo == true && $es_anonimo == 0) 
 {
-	// load view
+	// Si no es usuario anomino y tampoco tiene algun correo por get, cargo esta vista
 	$this->layout->view('medicamentos/inscribir_correo',null);
 	exit();
 }
