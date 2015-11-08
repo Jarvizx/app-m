@@ -34,6 +34,9 @@ class Tabla extends CI_Controller {
 			// cualquier usuario logeado puede acceder
 			$this->is_login();
 
+			// correr el procedimiento almacenado
+			$this->load->model('tabla_model');
+			$this->tabla_model->correr_procedimiento_almacenado($nombre_tabla);
 			try {
 				$crud = new grocery_CRUD();
 				//$crud->set_theme('datatables');
@@ -45,7 +48,7 @@ class Tabla extends CI_Controller {
 			}
 		}
 		{
-			//redirect('/', 'refresh');
+			redirect('/', 'refresh');
 		}
 
 	}

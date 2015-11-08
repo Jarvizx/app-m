@@ -55,14 +55,13 @@ if ($mostrar_input_correo == true && $es_anonimo == 0)
 			 	<?= ( ! empty($comentarios_MarcaSignoDistintivoComercial->texto)) ? $comentarios_MarcaSignoDistintivoComercial->texto : "";?>
 			</td>
 			<td>
-				<form tipoComentario="comentario_en_td_solo">
+				<form tipoComentario="comentario_en_td_solo" data-comentario='{"clase": "MarcaSignoDistintivoComercial"}'>
 					<b>Comentario: </b><br>
 					<textarea rows="1" cols="40" class="form-control" name="comentario"></textarea><br>
 					<input class="r_nombre_del_producto_invima" type="radio" name="estado_revision" value="Ok"> Ok 
 					<input class="r_nombre_del_producto_invima" type="radio" name="estado_revision" value="Rev. Lab"> Rev. Lab 
 					<input class="r_nombre_del_producto_invima" type="radio" name="estado_revision" value="Rev. Super"> Rev. Super 
-					<input class="r_nombre_del_producto_invima" type="radio" name="estado_revision" value="Pendiente"> Pendiente 
-					<button class="btn btn-primary comentario" type="button" data-comentario='{"clase": "MarcaSignoDistintivoComercial"}'>Enviar</button>
+					<input class="r_nombre_del_producto_invima" type="radio" name="estado_revision" value="Pendiente"> Pendiente 					
 				</form>
 			</td>
 		</tr>
@@ -104,13 +103,12 @@ if ($mostrar_input_correo == true && $es_anonimo == 0)
 			</td>
 			<td>
 				<?php //echo $valores_tbl_invima_medicamento->generico; ?>
-				<form tipoComentario="comentario_en_td_solo">
+				<form tipoComentario="comentario_en_td_solo" data-comentario='{"clase": "IdentificadorFormaComercializacion"}'>
 					<textarea rows="1" cols="40" class="form-control" name="comentario"></textarea><br>
 					<input type="radio" name="estado_revision" value="Ok"> Ok 
 					<input type="radio" name="estado_revision" value="Rev. Lab"> Rev. Lab 
 					<input type="radio" name="estado_revision" value="Rev. Super"> Rev. Super 
-					<input type="radio" name="estado_revision" value="Pendiente"> Pendiente 
-					<button class="btn btn-primary comentario" type="button" data-comentario='{"clase": "IdentificadorFormaComercializacion"}'>Enviar</button>
+					<input type="radio" name="estado_revision" value="Pendiente"> Pendiente 					
 				</form>
 			</td>
 		</tr>
@@ -159,14 +157,13 @@ if ($mostrar_input_correo == true && $es_anonimo == 0)
 			 	<?= ( ! empty($comentarios_CodigoFormaFarmaceutica->texto)) ? $comentarios_CodigoFormaFarmaceutica->texto : "";?>
 			</td>
 			<td>
-				<form tipoComentario="comentario_en_td_solo">
+				<form tipoComentario="comentario_en_td_solo" data-comentario='{"clase": "CodigoFormaFarmaceutica"}'>
 					<b>Comentario: </b><br>
 					<textarea rows="1" cols="40" class="form-control" name="comentario"></textarea><br>
 					<input type="radio" name="estado_revision" value="Ok"> Ok 
 					<input type="radio" name="estado_revision" value="Rev. Lab"> Rev. Lab 
 					<input type="radio" name="estado_revision" value="Rev. Super"> Rev. Super 
-					<input type="radio" name="estado_revision" value="Pendiente"> Pendiente 
-					<button class="btn btn-primary comentario" type="button" data-comentario='{"clase": "CodigoFormaFarmaceutica"}'>Enviar</button>
+					<input type="radio" name="estado_revision" value="Pendiente"> Pendiente 					
 				</form>
 			</td>
 		</tr>
@@ -223,14 +220,13 @@ if ($mostrar_input_correo == true && $es_anonimo == 0)
 			 	<?= ( ! empty($comentarios_CodigoViaAdministracion->texto)) ? $comentarios_CodigoViaAdministracion->texto : "";?>
 			</td>
 			<td>
-				<form tipoComentario="comentario_en_td_solo">
+				<form tipoComentario="comentario_en_td_solo" data-comentario='{"clase": "codigo_via_administracion"}'>
 					<b>Comentario: </b><br>
 					<textarea rows="1" cols="40" class="form-control" name="comentario"></textarea><br>
 					<input type="radio" name="estado_revision" value="Ok"> Ok 
 					<input type="radio" name="estado_revision" value="Rev. Lab"> Rev. Lab 
 					<input type="radio" name="estado_revision" value="Rev. Super"> Rev. Super 
-					<input type="radio" name="estado_revision" value="Pendiente"> Pendiente 
-					<button class="btn btn-primary comentario" type="button" data-comentario='{"clase": "codigo_via_administracion"}'>Enviar</button>
+					<input type="radio" name="estado_revision" value="Pendiente"> Pendiente 					
 				</form>
 			</td>
 		</tr>
@@ -295,8 +291,7 @@ if ($mostrar_input_correo == true && $es_anonimo == 0)
 						<input type="radio" name="estado_revision" value="Ok"> Ok 
 						<input type="radio" name="estado_revision" value="Rev. Lab"> Rev. Lab 
 						<input type="radio" name="estado_revision" value="Rev. Super"> Rev. Super 
-						<input type="radio" name="estado_revision" value="Pendiente"> Pendiente 
-						<button class="btn btn-primary comentario-pa" type="button" data-comentario-pa='{"clase": "NombrePrincipioActivo"}'>Enviar</button>
+						<input type="radio" name="estado_revision" value="Pendiente"> Pendiente 						
 					</form>
 				</td>
 				<td>
@@ -329,8 +324,7 @@ if ($mostrar_input_correo == true && $es_anonimo == 0)
 						<input type="radio" name="estado_revision" value="Ok"> Ok 
 						<input type="radio" name="estado_revision" value="Rev. Lab"> Rev. Lab 
 						<input type="radio" name="estado_revision" value="Rev. Super"> Rev. Super 
-						<input type="radio" name="estado_revision" value="Pendiente"> Pendiente 
-						<button class="btn btn-primary comentario-pa" type="button" data-comentario-pa='{"clase": "IdentificadorTipoConcentracionEstandarizada"}'>Enviar</button>
+						<input type="radio" name="estado_revision" value="Pendiente"> Pendiente 						
 					</form>
 				</td>
 				<td>
@@ -348,8 +342,7 @@ if ($mostrar_input_correo == true && $es_anonimo == 0)
 						<input type="radio" name="estado_revision" value="Ok"> Ok 
 						<input type="radio" name="estado_revision" value="Rev. Lab"> Rev. Lab 
 						<input type="radio" name="estado_revision" value="Rev. Super"> Rev. Super 
-						<input type="radio" name="estado_revision" value="Pendiente"> Pendiente 
-						<button class="btn btn-primary comentario-pa" type="button" data-comentario-pa='{"clase": "CantidadEstandarizadaPrincipioActivo"}'>Enviar</button>
+						<input type="radio" name="estado_revision" value="Pendiente"> Pendiente 						
 					</form>
 				</td>
 				<td>
@@ -382,8 +375,7 @@ if ($mostrar_input_correo == true && $es_anonimo == 0)
 						<input type="radio" name="estado_revision" value="Ok"> Ok 
 						<input type="radio" name="estado_revision" value="Rev. Lab"> Rev. Lab 
 						<input type="radio" name="estado_revision" value="Rev. Super"> Rev. Super 
-						<input type="radio" name="estado_revision" value="Pendiente"> Pendiente 
-						<button class="btn btn-primary comentario-pa" type="button" data-comentario-pa='{"clase": "CodigoUnidadMedidaEstandarizadaPrincipioActivo"}'>Enviar</button>
+						<input type="radio" name="estado_revision" value="Pendiente"> Pendiente 						
 					</form>
 				</td>
 				<td>
@@ -401,8 +393,7 @@ if ($mostrar_input_correo == true && $es_anonimo == 0)
 						<input type="radio" name="estado_revision" value="Ok"> Ok 
 						<input type="radio" name="estado_revision" value="Rev. Lab"> Rev. Lab 
 						<input type="radio" name="estado_revision" value="Rev. Super"> Rev. Super 
-						<input type="radio" name="estado_revision" value="Pendiente"> Pendiente 
-						<button class="btn btn-primary comentario-pa" type="button" data-comentario-pa='{"clase": "CantidadEstandarizadaMedicamentoContenidoPrincipioActivo"}'>Enviar</button>
+						<input type="radio" name="estado_revision" value="Pendiente"> Pendiente 						
 					</form>
 				</td>
 				<td>
@@ -435,8 +426,7 @@ if ($mostrar_input_correo == true && $es_anonimo == 0)
 						<input type="radio" name="estado_revision" value="Ok"> Ok 
 						<input type="radio" name="estado_revision" value="Rev. Lab"> Rev. Lab 
 						<input type="radio" name="estado_revision" value="Rev. Super"> Rev. Super 
-						<input type="radio" name="estado_revision" value="Pendiente"> Pendiente 
-						<button class="btn btn-primary comentario-pa" type="button" data-comentario-pa='{"clase": "CodigoUnidadMedidaEstandarizadaMedicamentoPrincipioActivo"}'>Enviar</button>
+						<input type="radio" name="estado_revision" value="Pendiente"> Pendiente 						
 					</form>
 				</td>
 			</tr>
@@ -606,7 +596,7 @@ if ($mostrar_input_correo == true && $es_anonimo == 0)
 						<?= $v_selec_CodigoUnidadContenido;?>
 					<?php endforeach ?>
 				</select>
-				<!-- <input type="text" class="form_app_m CodigoUnidadContenido" name="CodigoUnidadContenido" data-json='{"tabla":"tbl_rev_expediente_pc", "llave":"<?= $v_tbl_rev_expediente_pc->id ?>", "valor_viejo":"<?= $v_tbl_rev_expediente_pc->CodigoUnidadContenido; ?>", "campo":"CodigoUnidadContenido"}' value="<?= $v_tbl_rev_expediente_pc->CodigoUnidadContenido; ?>">-->
+				
 				<p>
 				<?php foreach ($comentarios_CodigoUnidadContenido as $k_comentarios_CodigoUnidadContenido => $v_comentarios_CodigoUnidadContenido): ?>
 					<?php if ($v_tbl_rev_expediente_pc->id == $v_comentarios_CodigoUnidadContenido['llave']): ?>
@@ -620,8 +610,7 @@ if ($mostrar_input_correo == true && $es_anonimo == 0)
 					<input type="radio" name="estado_revision" value="Ok"> Ok 
 					<input type="radio" name="estado_revision" value="Rev. Lab"> Rev. Lab 
 					<input type="radio" name="estado_revision" value="Rev. Super"> Rev. Super 
-					<input type="radio" name="estado_revision" value="Pendiente"> Pendiente 
-					<button class="btn btn-primary comentario-pa" type="button" data-comentario-pa='{"clase": "CodigoUnidadContenido"}'>Enviar</button>
+					<input type="radio" name="estado_revision" value="Pendiente"> Pendiente 					
 				</form>
 			</td>
 			<td class="<?= $color_td_CapacidadUnidadContenido; ?>">
@@ -639,8 +628,7 @@ if ($mostrar_input_correo == true && $es_anonimo == 0)
 					<input type="radio" name="estado_revision" value="Ok"> Ok 
 					<input type="radio" name="estado_revision" value="Rev. Lab"> Rev. Lab 
 					<input type="radio" name="estado_revision" value="Rev. Super"> Rev. Super 
-					<input type="radio" name="estado_revision" value="Pendiente"> Pendiente 
-					<button class="btn btn-primary comentario-pa" type="button" data-comentario-pa='{"clase": "CapacidadUnidadContenido"}'>Enviar</button>
+					<input type="radio" name="estado_revision" value="Pendiente"> Pendiente 					
 				</form>
 			</td>
 			<td class="<?= $color_td_CodigoUnidadCapacidad;?>">
@@ -649,7 +637,7 @@ if ($mostrar_input_correo == true && $es_anonimo == 0)
 						<?= $v_selec_CodigoUnidadCapacidad;?>
 					<?php endforeach ?>
 				</select>
-				<!--<input type="text" class="form_app_m IdentificadorCondicionEstarRegistradoComoMuestraMedica" name="IdentificadorCondicionEstarRegistradoComoMuestraMedica" data-json='{"tabla":"tbl_rev_expediente_pc", "llave":"<?= $v_tbl_rev_expediente_pc->id ?>", "valor_viejo":"<?= $v_tbl_rev_expediente_pc->IdentificadorCondicionEstarRegistradoComoMuestraMedica; ?>", "campo":"IdentificadorCondicionEstarRegistradoComoMuestraMedica"}' value="<?= $v_tbl_rev_expediente_pc->IdentificadorCondicionEstarRegistradoComoMuestraMedica; ?>">-->
+				
 				<p>
 				<?php foreach ($comentarios_CodigoUnidadCapacidad as $k_comentarios_CodigoUnidadCapacidad => $v_comentarios_CodigoUnidadCapacidad): ?>
 					<?php if ($v_tbl_rev_expediente_pc->id == $v_comentarios_CodigoUnidadCapacidad['llave']): ?>
@@ -663,8 +651,7 @@ if ($mostrar_input_correo == true && $es_anonimo == 0)
 					<input type="radio" name="estado_revision" value="Ok"> Ok 
 					<input type="radio" name="estado_revision" value="Rev. Lab"> Rev. Lab 
 					<input type="radio" name="estado_revision" value="Rev. Super"> Rev. Super 
-					<input type="radio" name="estado_revision" value="Pendiente"> Pendiente 
-					<button class="btn btn-primary comentario-pa" type="button" data-comentario-pa='{"clase": "CodigoUnidadCapacidad"}'>Enviar</button>
+					<input type="radio" name="estado_revision" value="Pendiente"> Pendiente 					
 				</form>
 			</td>
 			<td class="<?= $color_td_CodigoEmpaque;?>">
@@ -673,7 +660,7 @@ if ($mostrar_input_correo == true && $es_anonimo == 0)
 						<?= $v_select_CodigoEmpaque;?>
 					<?php endforeach ?>
 				</select>
-				<!--<input type="text" class="form_app_m CodigoEmpaque" name="CodigoEmpaque" data-json='{"tabla":"tbl_rev_expediente_pc", "llave":"<?= $v_tbl_rev_expediente_pc->id ?>", "valor_viejo":"<?= $v_tbl_rev_expediente_pc->CodigoEmpaque; ?>", "campo":"CodigoEmpaque"}' value="<?= $v_tbl_rev_expediente_pc->CodigoEmpaque; ?>">-->
+				
 				<p>
 				<?php foreach ($comentarios_CodigoEmpaque as $k_comentarios_CodigoEmpaque => $v_comentarios_CodigoEmpaque): ?>
 					<?php if ($v_tbl_rev_expediente_pc->id == $v_comentarios_CodigoEmpaque['llave']): ?>
@@ -687,8 +674,7 @@ if ($mostrar_input_correo == true && $es_anonimo == 0)
 					<input type="radio" name="estado_revision" value="Ok"> Ok 
 					<input type="radio" name="estado_revision" value="Rev. Lab"> Rev. Lab 
 					<input type="radio" name="estado_revision" value="Rev. Super"> Rev. Super 
-					<input type="radio" name="estado_revision" value="Pendiente"> Pendiente 
-					<button class="btn btn-primary comentario-pa" type="button" data-comentario-pa='{"clase": "CodigoEmpaque"}'>Enviar</button>
+					<input type="radio" name="estado_revision" value="Pendiente"> Pendiente 					
 				</form>
 			</td>
 			<td class="<?= $color_td_CantidadUnidadesContenidoEmpaque;?>">
@@ -706,8 +692,7 @@ if ($mostrar_input_correo == true && $es_anonimo == 0)
 					<input type="radio" name="estado_revision" value="Ok"> Ok 
 					<input type="radio" name="estado_revision" value="Rev. Lab"> Rev. Lab 
 					<input type="radio" name="estado_revision" value="Rev. Super"> Rev. Super 
-					<input type="radio" name="estado_revision" value="Pendiente"> Pendiente 
-					<button class="btn btn-primary comentario-pa" type="button" data-comentario-pa='{"clase": "CantidadUnidadesContenidoEmpaque"}'>Enviar</button>
+					<input type="radio" name="estado_revision" value="Pendiente"> Pendiente 					
 				</form>
 			</td>
 			<td class="<?= $color_td_IdentificadorCondicionEstarRegistradoComoMuestraMedica;?>">
@@ -716,7 +701,7 @@ if ($mostrar_input_correo == true && $es_anonimo == 0)
 						<?= $v_select_IdentificadorCondicionEstarRegistradoComoMuestraMedica;?>
 					<?php endforeach ?>
 				</select>
-				<!--<input type="text" class="form_app_m IdentificadorCondicionEstarRegistradoComoMuestraMedica" name="IdentificadorCondicionEstarRegistradoComoMuestraMedica" data-json='{"tabla":"tbl_rev_expediente_pc", "llave":"<?= $v_tbl_rev_expediente_pc->id ?>", "valor_viejo":"<?= $v_tbl_rev_expediente_pc->IdentificadorCondicionEstarRegistradoComoMuestraMedica; ?>", "campo":"IdentificadorCondicionEstarRegistradoComoMuestraMedica"}' value="<?= $v_tbl_rev_expediente_pc->IdentificadorCondicionEstarRegistradoComoMuestraMedica; ?>">-->
+				
 				<p>
 				<?php foreach ($comentarios_IdentificadorCondicionEstarRegistradoComoMuestraMedica as $k_comentarios_IdentificadorCondicionEstarRegistradoComoMuestraMedica => $v_comentarios_IdentificadorCondicionEstarRegistradoComoMuestraMedica): ?>
 					<?php if ($v_tbl_rev_expediente_pc->id == $v_comentarios_IdentificadorCondicionEstarRegistradoComoMuestraMedica['llave']): ?>
@@ -730,8 +715,7 @@ if ($mostrar_input_correo == true && $es_anonimo == 0)
 					<input type="radio" name="estado_revision" value="Ok"> Ok 
 					<input type="radio" name="estado_revision" value="Rev. Lab"> Rev. Lab 
 					<input type="radio" name="estado_revision" value="Rev. Super"> Rev. Super 
-					<input type="radio" name="estado_revision" value="Pendiente"> Pendiente 
-					<button class="btn btn-primary comentario-pa" type="button" data-comentario-pa='{"clase": "IdentificadorCondicionEstarRegistradoComoMuestraMedica"}'>Enviar</button>
+					<input type="radio" name="estado_revision" value="Pendiente"> Pendiente 					
 				</form>
 			</td>
 		</tr>
@@ -786,8 +770,7 @@ if ($mostrar_input_correo == true && $es_anonimo == 0)
 					<input type="radio" name="estado_revision" value="Ok"> Ok 
 					<input type="radio" name="estado_revision" value="Rev. Lab"> Rev. Lab 
 					<input type="radio" name="estado_revision" value="Rev. Super"> Rev. Super 
-					<input type="radio" name="estado_revision" value="Pendiente"> Pendiente 
-					<button class="btn btn-primary comentario-pa" type="button" data-comentario-pa='{"clase": "CantidadPrincipioActivoPresentacionComercial"}'>Enviar</button>
+					<input type="radio" name="estado_revision" value="Pendiente"> Pendiente 					
 				</form>
 			</td>
 		</tr>
@@ -804,13 +787,12 @@ if ($mostrar_input_correo == true && $es_anonimo == 0)
         $('#select_via_administracion').multiselect();
         
         var urlImagenGoogle = "https://ajax.googleapis.com/ajax/services/search/images?v=1.0&q="+$(".nombre_del_producto_invima").val();
-        $.ajax({
+       	$.ajax({
 		  	type: 'GET',
 		  	contentType: "application/json",
 		  	dataType: 'jsonp',
 			url: urlImagenGoogle,
 			success: function(respuesta){
-				//console.log( "success", respuesta );
 				$(".img-google-1").attr("src", respuesta.responseData.results[0].url);
 				$(".img-google-2").attr("src", respuesta.responseData.results[1].url);
 				$(".img-google-3").attr("src", respuesta.responseData.results[2].url);
@@ -818,154 +800,88 @@ if ($mostrar_input_correo == true && $es_anonimo == 0)
 		});
 
         $("input:radio").click(function(){
-        	// $(".r_nombre_del_producto_invima").click(function(){ console.log($(this)) });
         	var objeto_actual = $(this); 
-        		if(objeto_actual.attr('name') == "estado_revision")
-        		{
-        			console.log(objeto_actual.parent());
-        			console.log(objeto_actual.parent().attr("tipoComentario"));
-        			var tipoForm = objeto_actual.parent().attr("tipoComentario");
-        			if (tipoForm == 'comentario_en_td_con_el_input') 
-        			{
-        				var valorJSON_campo_fomulario = objeto_actual.parent().prev().prev().data("json");
-						var valoresComentario = objeto_actual.parent().serializeArray();
+    		if(objeto_actual.attr('name') == "estado_revision")
+    		{
+    			console.log(objeto_actual.parent());
+    			console.log(objeto_actual.parent().attr("tipoComentario"));
+    			var tipoForm = objeto_actual.parent().attr("tipoComentario");
+    			// cada if tiene un ajax, por que segun la ubicacion del comentario se agregara tambien la respuesta asincronica
+    			if (tipoForm == 'comentario_en_td_con_el_input') 
+    			{
+    				var valorJSON_campo_fomulario = objeto_actual.parent().prev().prev().data("json");
+					var valoresComentario = objeto_actual.parent().serializeArray();
 
-						// si el input type=radio es null
-						if (typeof valoresComentario[1] == "undefined") 
-						{
-							valoresComentario[1] = { value:'Pendiente'};
-						}
+					// si el input type=radio es null
+					/*if (typeof valoresComentario[1] == "undefined") 
+					{
+						valoresComentario[1] = { value:'Pendiente'};
+					}*/
 
-						valoresEnvio = {
-							tabla: valorJSON_campo_fomulario.tabla,
-							llave: valorJSON_campo_fomulario.llave,
-							campo: valorJSON_campo_fomulario.campo,
-							valor: valorJSON_campo_fomulario.valor_viejo,
-							estado_revision: valoresComentario[1].value, // [1] es el input type=radio
-							comentario: valoresComentario[0].value, // [0] comentario
-							expediente: $(".NumeroExpediente").val()
-						}
+					valoresEnvio = {
+						tabla: valorJSON_campo_fomulario.tabla,
+						llave: valorJSON_campo_fomulario.llave,
+						campo: valorJSON_campo_fomulario.campo,
+						valor: valorJSON_campo_fomulario.valor_viejo,
+						estado_revision: valoresComentario[1].value, // [1] es el input type=radio
+						comentario: valoresComentario[0].value, // [0] comentario
+						expediente: $(".NumeroExpediente").val()
+					}
 
-						//console.log('comentario', valoresEnvio);
-						//return false;
-
-        			} 
-        			else
-        			{
-						/*var valorJSON = objeto_actual.data("comentario");
-						var valorJSON_campo_fomulario = $("."+valorJSON.clase).data("json"); // error
-						
-						var valoresComentario = objeto_actual.parent().serializeArray();
-
-						// si el input type=radio es null
-						if (typeof valoresComentario[1] == "undefined") 
-						{
-							valoresComentario[1] = { value:'Pendiente'};
-						}
-
-						valoresEnvio = {
-							tabla: valorJSON_campo_fomulario.tabla,
-							llave: valorJSON_campo_fomulario.llave,
-							campo: valorJSON_campo_fomulario.campo,
-							valor: valorJSON_campo_fomulario.valor_viejo,
-							estado_revision: valoresComentario[1].value, // [1] es el input type=radio
-							comentario: valoresComentario[0].value, // [0] comentario
-							expediente: $(".NumeroExpediente").val()
-						}*/
-        			};
-					
-					console.log('el ajax se va con: ', valoresEnvio);
-					/*$.ajax({
+					console.log('comentario comentario_en_td_con_el_input', valoresEnvio);
+					$(".img-preload").show();
+					$.ajax({
 						type: "POST",
 						url: "/medicamentos/guardar_comentario",
 						data: valoresEnvio
 					}).done(function(respuesta){
+						$(".img-preload").hide();
 						console.log('respuesta comentario: ', respuesta);
-					});*/
-				//(parent) comentario_en_td_solo & comentario_en_td_con_el_input
-        		}
+					});
+
+    			} 
+    			else
+    			{
+					var valorJSON = objeto_actual.parent().data("comentario");
+					var valorJSON_campo_fomulario = $("."+valorJSON.clase).data("json"); // error
+					
+					var valoresComentario = objeto_actual.parent().serializeArray();
+
+					valoresEnvio = {
+						tabla: valorJSON_campo_fomulario.tabla,
+						llave: valorJSON_campo_fomulario.llave,
+						campo: valorJSON_campo_fomulario.campo,
+						valor: valorJSON_campo_fomulario.valor_viejo,
+						estado_revision: valoresComentario[1].value, // [1] es el input type=radio
+						comentario: valoresComentario[0].value, // [0] comentario
+						expediente: $(".NumeroExpediente").val()
+					}
+					console.log('comentario comentario_en_td', valoresEnvio);
+					$(".img-preload").show();
+					$.ajax({
+						type: "POST",
+						url: "/medicamentos/guardar_comentario",
+						data: valoresEnvio
+					}).done(function(respuesta){
+						$(".img-preload").hide();
+						console.log('respuesta comentario: ', respuesta);
+					});
+    			};
+        	}
         });
 		// en este evento, el expediente queda como terminado
 		$(".expediente_terminado").click(function(){
+			$(".img-preload").show();
+			// agregar una validacion aqui
 			$.ajax({
 				type: "POST",
 				url: "/medicamentos/expediente_terminado",
 				data: { expediente : $(".NumeroExpediente").val() }
 			}).done(function(respuesta){
-				//console.log('respuesta terminado: ', respuesta);
 				var url_host = window.location.origin;
 				var url_parametros = '/medicamentos/expediente/'+respuesta;
+				$(".img-preload").hide();
 				window.location.replace(url_host + url_parametros);
-			});
-		});
-
-		// js para los comentarios de invima
-		$(".comentario").click(function(){
-			var objeto_actual = $(this);
-			var valorJSON = objeto_actual.data("comentario");
-			var valorJSON_campo_fomulario = $("."+valorJSON.clase).data("json"); // error
-			
-			var valoresComentario = objeto_actual.parent().serializeArray();
-
-			// si el input type=radio es null
-			if (typeof valoresComentario[1] == "undefined") 
-			{
-				valoresComentario[1] = { value:'Pendiente'};
-			}
-
-			valoresEnvio = {
-				tabla: valorJSON_campo_fomulario.tabla,
-				llave: valorJSON_campo_fomulario.llave,
-				campo: valorJSON_campo_fomulario.campo,
-				valor: valorJSON_campo_fomulario.valor_viejo,
-				estado_revision: valoresComentario[1].value, // [1] es el input type=radio
-				comentario: valoresComentario[0].value, // [0] comentario
-				expediente: $(".NumeroExpediente").val()
-			}
-
-			$.ajax({
-				type: "POST",
-				url: "/medicamentos/guardar_comentario",
-				data: valoresEnvio
-			}).done(function(respuesta){
-				console.log('respuesta comentario: ', respuesta);
-			});
-		});
-
-		// js para los comentarios de principio activo (lista dinamica)
-		$(".comentario-pa").click(function(){
-			var objeto_actual = $(this);
-			//var valorJSON = objeto_actual.data("comentario-pa");
-			
-			var valorJSON_campo_fomulario = objeto_actual.parent().prev().prev().data("json");
-
-			var valoresComentario = objeto_actual.parent().serializeArray();
-
-			// si el input type=radio es null
-			if (typeof valoresComentario[1] == "undefined") 
-			{
-				valoresComentario[1] = { value:'Pendiente'};
-			}
-
-			valoresEnvio = {
-				tabla: valorJSON_campo_fomulario.tabla,
-				llave: valorJSON_campo_fomulario.llave,
-				campo: valorJSON_campo_fomulario.campo,
-				valor: valorJSON_campo_fomulario.valor_viejo,
-				estado_revision: valoresComentario[1].value, // [1] es el input type=radio
-				comentario: valoresComentario[0].value, // [0] comentario
-				expediente: $(".NumeroExpediente").val()
-			}
-
-			//console.log('comentario', valoresEnvio);
-			//return false;
-
-			$.ajax({
-				type: "POST",
-				url: "/medicamentos/guardar_comentario",
-				data: valoresEnvio
-			}).done(function(respuesta){
-				console.log('respuesta comentario: ', respuesta);
 			});
 		});
 
@@ -974,7 +890,6 @@ if ($mostrar_input_correo == true && $es_anonimo == 0)
 			var valorJSON;
 			var valoresEnvio;
 			var es_selector_multimple = false;
-			//console.log(objeto_actual.attr("name").toString(), ' : ', objeto_actual.val());
 			//return false;
 			/*
 			si son mas tablas seria: { "tabla": "tbl_rev_expedientes, tbl_nueva_tabla", "llave" ... ! solo si conserva el mismo ID o llave ! 
@@ -988,7 +903,6 @@ if ($mostrar_input_correo == true && $es_anonimo == 0)
 			*/
 			switch (objeto_actual.attr("name").toString()) {
 				case 'MarcaSignoDistintivoComercial':
-					//console.log('MarcaSignoDistintivoComercial');
 					valorJSON = objeto_actual.data("json");
 					valoresEnvio = {
 						valor_nuevo: objeto_actual.val(),
@@ -997,7 +911,6 @@ if ($mostrar_input_correo == true && $es_anonimo == 0)
 					}
 					break;
 				case 'IdentificadorFormaComercializacion':
-					//console.log('IdentificadorFormaComercializacion');
 					valorJSON = $(".IdentificadorFormaComercializacion").data("json");
 					valoresEnvio = {
 						valor_nuevo: objeto_actual.val(),
@@ -1006,7 +919,6 @@ if ($mostrar_input_correo == true && $es_anonimo == 0)
 					}
 					break;
 				case 'CodigoFormaFarmaceutica':
-					//console.log('CodigoFormaFarmaceutica');
 					valorJSON = $(".CodigoFormaFarmaceutica").data("json");
 					valoresEnvio = {
 						valor_nuevo: objeto_actual.val(),
@@ -1015,9 +927,7 @@ if ($mostrar_input_correo == true && $es_anonimo == 0)
 					}
 					break;
 				case 'codigo_via_administracion':
-					//console.log('codigo_via_administracion');
 					valorJSON = $('.codigo_via_administracion').data("json");
-					//console.log(objeto_actual.val().join('&'));
 					valoresEnvio = {
 						valor_nuevo: objeto_actual.val().join('&'),
 						valores_JSON: valorJSON,
@@ -1080,18 +990,17 @@ if ($mostrar_input_correo == true && $es_anonimo == 0)
 					}
 					break;
 			}
-			//console.log('valores nuevos', valorJSON, valoresEnvio);
-			//return false;
-
+			$(".img-preload").show();
+			
 			$.ajax({
 				type: "POST",
 				url: "/medicamentos/guardar_expediente_asignado",
 				data: valoresEnvio
 			}).done(function(respuesta){
+				$(".img-preload").hide();
 				console.log('respuesta: ', respuesta);
 			});
 			
-			//console.log('nuevo valor', objeto_actual.val());
 			// actualizo el nuevo valor viejo (despues del ajax)
 			if (es_selector_multimple) 
 			{
@@ -1102,17 +1011,23 @@ if ($mostrar_input_correo == true && $es_anonimo == 0)
 				valorJSON.valor_viejo = objeto_actual.val();
 			}
 
-			//console.log('nuevo valorJSON:', valorJSON);
 		});
 
     });
 </script>
-
+<img class="img-preload" src="/assets/images/preload.gif">
 <style type="text/css">
 	select {
     	width: 100%;
 	}
 	.img-thum{
 		max-height: 150px;
+	}
+	.img-preload{
+		display: none;
+		position: fixed;
+	    top: 1em;
+	    right: 1em;
+	    width: 2.5em;
 	}
 </style>
