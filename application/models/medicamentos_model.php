@@ -133,8 +133,18 @@ class Medicamentos_model extends CI_Model
     # consultar historial de comentarios del expediente de una vista
     public function consultar_historial_comentarios($expediente)
     {
+        if ( ! empty($expediente)) 
+        {
+            return $this->db->get_where($this->vws_consolidado_edicion_agrupado, $expediente);
+        }
+    }
+
+    # consultar historial de comentarios del expediente de una vista...
+    public function consultar_historial_comentario_x_campo($expediente)
+    {
     	if ( ! empty($expediente)) 
     	{
+            $this->db->select('texto');
     		return $this->db->get_where($this->vws_consolidado_edicion_agrupado, $expediente);
     	}
     }

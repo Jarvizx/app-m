@@ -52,7 +52,9 @@ if ($mostrar_input_correo == true && $es_anonimo == 0)
 			 	<b>Invima: </b><?= $valores_tbl_invima_medicamento->nombre_del_producto; ?>
 			 	<input type="hidden" class="nombre_del_producto_invima" value="<?= $valores_tbl_invima_medicamento->nombre_del_producto; ?>">
 			 	<hr>
-			 	<?= ( ! empty($comentarios_MarcaSignoDistintivoComercial->texto)) ? $comentarios_MarcaSignoDistintivoComercial->texto : "";?>
+			 	<div class="comentario">
+			 		<?= ( ! empty($comentarios_MarcaSignoDistintivoComercial->texto)) ? $comentarios_MarcaSignoDistintivoComercial->texto : "";?>
+			 	</div>
 			</td>
 			<td>
 				<form tipoComentario="comentario_en_td_solo" data-comentario='{"clase": "MarcaSignoDistintivoComercial"}'>
@@ -99,7 +101,9 @@ if ($mostrar_input_correo == true && $es_anonimo == 0)
 				<?php endforeach ?>
 				<input type="hidden" class="IdentificadorFormaComercializacion" data-json='{"tabla":"tbl_rev_expedientes", "llave":"<?= $valores_tbl_rev_expedientes->id ?>", "valor_viejo":"<?= $valor_actual_IdentificadorFormaComercializacion; ?>", "campo":"IdentificadorFormaComercializacion"}' value='{"tabla":"tbl_rev_expedientes", "llave":"<?= $valores_tbl_rev_expedientes->id ?>", "valor_viejo":"<?= $valor_actual_IdentificadorFormaComercializacion; ?>", "campo":"IdentificadorFormaComercializacion"}'>
 				<hr>
-			 	<?= ( ! empty($comentarios_IdentificadorFormaComercializacion->texto)) ? $comentarios_IdentificadorFormaComercializacion->texto : "";?>
+				<div class="comentario">
+			 		<?= ( ! empty($comentarios_IdentificadorFormaComercializacion->texto)) ? $comentarios_IdentificadorFormaComercializacion->texto : "";?>
+				</div>
 			</td>
 			<td>
 				<?php //echo $valores_tbl_invima_medicamento->generico; ?>
@@ -154,7 +158,9 @@ if ($mostrar_input_correo == true && $es_anonimo == 0)
 				<br>
 				<b>Invima: </b><?php echo $valores_tbl_invima_medicamento->forma_farmaceutica; ?>
 				<hr>
-			 	<?= ( ! empty($comentarios_CodigoFormaFarmaceutica->texto)) ? $comentarios_CodigoFormaFarmaceutica->texto : "";?>
+				<div class="comentario">
+			 		<?= ( ! empty($comentarios_CodigoFormaFarmaceutica->texto)) ? $comentarios_CodigoFormaFarmaceutica->texto : "";?>
+				</div>
 			</td>
 			<td>
 				<form tipoComentario="comentario_en_td_solo" data-comentario='{"clase": "CodigoFormaFarmaceutica"}'>
@@ -217,7 +223,9 @@ if ($mostrar_input_correo == true && $es_anonimo == 0)
 				<br>
 				<b>Invima: </b><?php echo $valores_tbl_invima_medicamento->ViasAdministracion; ?>
 				<hr>
-			 	<?= ( ! empty($comentarios_CodigoViaAdministracion->texto)) ? $comentarios_CodigoViaAdministracion->texto : "";?>
+				<div class="comentario">
+			 		<?= ( ! empty($comentarios_CodigoViaAdministracion->texto)) ? $comentarios_CodigoViaAdministracion->texto : "";?>
+				</div>
 			</td>
 			<td>
 				<form tipoComentario="comentario_en_td_solo" data-comentario='{"clase": "codigo_via_administracion"}'>
@@ -273,12 +281,13 @@ if ($mostrar_input_correo == true && $es_anonimo == 0)
 						</div>
 					<?php endif ?>
 					<!--no estoy seguro, pero si no coincide, el select coge el primer valor-->
+					<!-- Este select consume MUCHA! memoria, se incremento de 128M a 512M -->
 					<select class="form_app_m NombrePrincipioActivo" name="NombrePrincipioActivo" data-json='{"tabla":"tbl_rev_expediente_pa", "llave":"<?= $v_tbl_rev_expediente_pa->id ?>", "valor_viejo":"<?= $v_tbl_rev_expediente_pa->NombrePrincipioActivo; ?>", "campo":"NombrePrincipioActivo"}' >
 						<?php foreach ($select_NombrePrincipioActivo as $k_select_NombrePrincipioActivo => $v_select_NombrePrincipioActivo): ?>
 							 	<?= $v_select_NombrePrincipioActivo; ?>
 						<?php endforeach ?> 
 					</select>
-					<p>
+					<p class="comentario">
 					<?php foreach ($comentarios_NombrePrincipioActivo as $k_comentarios_NombrePrincipioActivo => $v_comentarios_NombrePrincipioActivo): ?>
 						<?php if ($v_tbl_rev_expediente_pa->id == $v_comentarios_NombrePrincipioActivo['llave']): ?>
 							<span><?= $v_comentarios_NombrePrincipioActivo['texto']; ?></span>
@@ -311,7 +320,7 @@ if ($mostrar_input_correo == true && $es_anonimo == 0)
 							}
 						?>
 					</select>
-					<p>
+					<p class="comentario">
 					<?php foreach ($comentarios_IdentificadorTipoConcentracionEstandarizada as $k_comentarios_IdentificadorTipoConcentracionEstandarizada => $v_comentarios_IdentificadorTipoConcentracionEstandarizada): ?>
 						<?php if ($v_tbl_rev_expediente_pa->id == $v_comentarios_IdentificadorTipoConcentracionEstandarizada['llave']): ?>
 							<span><?= $v_comentarios_IdentificadorTipoConcentracionEstandarizada['texto']; ?></span>
@@ -329,7 +338,7 @@ if ($mostrar_input_correo == true && $es_anonimo == 0)
 				</td>
 				<td>
 					<input type="text" class="form_app_m CantidadEstandarizadaPrincipioActivo" name="CantidadEstandarizadaPrincipioActivo" data-json='{"tabla":"tbl_rev_expediente_pa", "llave":"<?= $v_tbl_rev_expediente_pa->id ?>", "valor_viejo":"<?= $v_tbl_rev_expediente_pa->CantidadEstandarizadaPrincipioActivo; ?>", "campo":"CantidadEstandarizadaPrincipioActivo"}' value="<?= $v_tbl_rev_expediente_pa->CantidadEstandarizadaPrincipioActivo; ?>">
-					<p>
+					<p class="comentario">
 					<?php foreach ($comentarios_CantidadEstandarizadaPrincipioActivo as $k_comentarios_CantidadEstandarizadaPrincipioActivo => $v_comentarios_CantidadEstandarizadaPrincipioActivo): ?>
 						<?php if ($v_tbl_rev_expediente_pa->id == $v_comentarios_CantidadEstandarizadaPrincipioActivo['llave']): ?>
 							<span><?= $v_comentarios_CantidadEstandarizadaPrincipioActivo['texto']; ?></span>
@@ -362,7 +371,7 @@ if ($mostrar_input_correo == true && $es_anonimo == 0)
 							}
 						?>
 					</select>
-					<p>
+					<p class="comentario">
 					<?php foreach ($comentarios_CodigoUnidadMedidaEstandarizadaPrincipioActivo as $k_comentarios_CodigoUnidadMedidaEstandarizadaPrincipioActivo => $v_comentarios_CodigoUnidadMedidaEstandarizadaPrincipioActivo): ?>
 						<?php if ($v_tbl_rev_expediente_pa->id == $v_comentarios_CodigoUnidadMedidaEstandarizadaPrincipioActivo['llave']): ?>
 							<span><?= $v_comentarios_CodigoUnidadMedidaEstandarizadaPrincipioActivo['texto']; ?></span>
@@ -380,7 +389,7 @@ if ($mostrar_input_correo == true && $es_anonimo == 0)
 				</td>
 				<td>
 					<input type="text" class="form_app_m CantidadEstandarizadaMedicamentoContenidoPrincipioActivo" name="CantidadEstandarizadaMedicamentoContenidoPrincipioActivo" data-json='{"tabla":"tbl_rev_expediente_pa", "llave":"<?= $v_tbl_rev_expediente_pa->id ?>", "valor_viejo":"<?= $v_tbl_rev_expediente_pa->CantidadEstandarizadaMedicamentoContenidoPrincipioActivo; ?>", "campo":"CantidadEstandarizadaMedicamentoContenidoPrincipioActivo"}' value="<?= $v_tbl_rev_expediente_pa->CantidadEstandarizadaMedicamentoContenidoPrincipioActivo; ?>">
-					<p>
+					<p class="comentario">
 					<?php foreach ($comentarios_CantidadEstandarizadaMedicamentoContenidoPrincipioActivo as $k_comentarios_CantidadEstandarizadaMedicamentoContenidoPrincipioActivo => $v_comentarios_CantidadEstandarizadaMedicamentoContenidoPrincipioActivo): ?>
 						<?php if ($v_tbl_rev_expediente_pa->id == $k_comentarios_CantidadEstandarizadaMedicamentoContenidoPrincipioActivo['llave']): ?>
 							<span><?= $k_comentarios_CantidadEstandarizadaMedicamentoContenidoPrincipioActivo['texto']; ?></span>
@@ -413,7 +422,7 @@ if ($mostrar_input_correo == true && $es_anonimo == 0)
 							}
 						?>
 					</select>
-					<p>
+					<p class="comentario">
 					<?php foreach ($comentarios_CodigoUnidadMedidaEstandarizadaMedicamentoPrincipioActivo as $k_comentarios_CodigoUnidadMedidaEstandarizadaMedicamentoPrincipioActivo => $v_comentarios_CodigoUnidadMedidaEstandarizadaMedicamentoPrincipioActivo): ?>
 						<?php if ($v_tbl_rev_expediente_pa->id == $k_comentarios_CodigoUnidadMedidaEstandarizadaMedicamentoPrincipioActivo['llave']): ?>
 							<span><?= $k_comentarios_CodigoUnidadMedidaEstandarizadaMedicamentoPrincipioActivo['texto']; ?></span>
@@ -445,6 +454,8 @@ if ($mostrar_input_correo == true && $es_anonimo == 0)
 			<th>Empaque</th>
 			<th>Cantidad U.</th>
 			<th>Muestra Medica</th>
+			<th></th>
+			<th></th>
 		</tr>
 	</thead>
 	<tbody>
@@ -597,7 +608,7 @@ if ($mostrar_input_correo == true && $es_anonimo == 0)
 					<?php endforeach ?>
 				</select>
 				
-				<p>
+				<p class="comentario">
 				<?php foreach ($comentarios_CodigoUnidadContenido as $k_comentarios_CodigoUnidadContenido => $v_comentarios_CodigoUnidadContenido): ?>
 					<?php if ($v_tbl_rev_expediente_pc->id == $v_comentarios_CodigoUnidadContenido['llave']): ?>
 						<span><?= $v_comentarios_CodigoUnidadContenido['texto']; ?></span>
@@ -615,7 +626,7 @@ if ($mostrar_input_correo == true && $es_anonimo == 0)
 			</td>
 			<td class="<?= $color_td_CapacidadUnidadContenido; ?>">
 				<input type="text" class="form_app_m CapacidadUnidadContenido" name="CapacidadUnidadContenido" data-json='{"tabla":"tbl_rev_expediente_pc", "llave":"<?= $v_tbl_rev_expediente_pc->id ?>", "valor_viejo":"<?= $v_tbl_rev_expediente_pc->CapacidadUnidadContenido; ?>", "campo":"CapacidadUnidadContenido"}' value="<?= $v_tbl_rev_expediente_pc->CapacidadUnidadContenido; ?>">
-				<p>
+				<p class="comentario">
 				<?php foreach ($comentarios_CapacidadUnidadContenido as $k_comentarios_CapacidadUnidadContenido => $v_comentarios_CapacidadUnidadContenido): ?>
 					<?php if ($v_tbl_rev_expediente_pc->id == $v_comentarios_CapacidadUnidadContenido['llave']): ?>
 						<span><?= $v_comentarios_CapacidadUnidadContenido['texto']; ?></span>
@@ -638,7 +649,7 @@ if ($mostrar_input_correo == true && $es_anonimo == 0)
 					<?php endforeach ?>
 				</select>
 				
-				<p>
+				<p class="comentario">
 				<?php foreach ($comentarios_CodigoUnidadCapacidad as $k_comentarios_CodigoUnidadCapacidad => $v_comentarios_CodigoUnidadCapacidad): ?>
 					<?php if ($v_tbl_rev_expediente_pc->id == $v_comentarios_CodigoUnidadCapacidad['llave']): ?>
 						<span><?= $v_comentarios_CodigoUnidadCapacidad['texto']; ?></span>
@@ -661,7 +672,7 @@ if ($mostrar_input_correo == true && $es_anonimo == 0)
 					<?php endforeach ?>
 				</select>
 				
-				<p>
+				<p class="comentario">
 				<?php foreach ($comentarios_CodigoEmpaque as $k_comentarios_CodigoEmpaque => $v_comentarios_CodigoEmpaque): ?>
 					<?php if ($v_tbl_rev_expediente_pc->id == $v_comentarios_CodigoEmpaque['llave']): ?>
 						<span><?= $v_comentarios_CodigoEmpaque['texto']; ?></span>
@@ -679,7 +690,7 @@ if ($mostrar_input_correo == true && $es_anonimo == 0)
 			</td>
 			<td class="<?= $color_td_CantidadUnidadesContenidoEmpaque;?>">
 				<input type="text" class="form_app_m CantidadUnidadesContenidoEmpaque" name="CantidadUnidadesContenidoEmpaque" data-json='{"tabla":"tbl_rev_expediente_pc", "llave":"<?= $v_tbl_rev_expediente_pc->id ?>", "valor_viejo":"<?= $v_tbl_rev_expediente_pc->CantidadUnidadesContenidoEmpaque; ?>", "campo":"CantidadUnidadesContenidoEmpaque"}' value="<?= $v_tbl_rev_expediente_pc->CantidadUnidadesContenidoEmpaque; ?>">
-				<p>
+				<p class="comentario">
 				<?php foreach ($comentarios_CantidadUnidadesContenidoEmpaque as $k_comentarios_CantidadUnidadesContenidoEmpaque => $v_comentarios_CantidadUnidadesContenidoEmpaque): ?>
 					<?php if ($v_tbl_rev_expediente_pc->id == $v_comentarios_CantidadUnidadesContenidoEmpaque['llave']): ?>
 						<span><?= $v_comentarios_CantidadUnidadesContenidoEmpaque['texto']; ?></span>
@@ -702,7 +713,7 @@ if ($mostrar_input_correo == true && $es_anonimo == 0)
 					<?php endforeach ?>
 				</select>
 				
-				<p>
+				<p class="comentario">
 				<?php foreach ($comentarios_IdentificadorCondicionEstarRegistradoComoMuestraMedica as $k_comentarios_IdentificadorCondicionEstarRegistradoComoMuestraMedica => $v_comentarios_IdentificadorCondicionEstarRegistradoComoMuestraMedica): ?>
 					<?php if ($v_tbl_rev_expediente_pc->id == $v_comentarios_IdentificadorCondicionEstarRegistradoComoMuestraMedica['llave']): ?>
 						<span><?= $v_comentarios_IdentificadorCondicionEstarRegistradoComoMuestraMedica['texto']; ?></span>
@@ -757,7 +768,7 @@ if ($mostrar_input_correo == true && $es_anonimo == 0)
 			</td>
 			<td class="<?= $color_td_CantidadPrincipioActivoPresentacionComercial;?>">
 				<input type="text" class="form_app_m CantidadPrincipioActivoPresentacionComercial" name="CantidadPrincipioActivoPresentacionComercial" data-json='{"tabla":"tbl_rev_expediente_pc_pa", "llave":"<?= $v_tbl_rev_expediente_pc_pa->id ?>", "valor_viejo":"<?= $v_tbl_rev_expediente_pc_pa->CantidadPrincipioActivoPresentacionComercial; ?>", "campo":"CantidadPrincipioActivoPresentacionComercial"}' value="<?= $v_tbl_rev_expediente_pc_pa->CantidadPrincipioActivoPresentacionComercial; ?>">
-				<p>
+				<p class="comentario">
 				<?php foreach ($comentarios_CantidadPrincipioActivoPresentacionComercial as $k_comentarios_CantidadPrincipioActivoPresentacionComercial => $v_comentarios_CantidadPrincipioActivoPresentacionComercial): ?>
 					<?php if ($v_tbl_rev_expediente_pc_pa->id == $v_comentarios_CantidadPrincipioActivoPresentacionComercial['llave']): ?>
 						<span><?= $v_comentarios_CantidadPrincipioActivoPresentacionComercial['texto']; ?></span>
@@ -836,7 +847,9 @@ if ($mostrar_input_correo == true && $es_anonimo == 0)
 						data: valoresEnvio
 					}).done(function(respuesta){
 						$(".img-preload").hide();
-						console.log('respuesta comentario: ', respuesta);
+						console.log('respuesta comentario (1): ', respuesta);
+						console.log('mapa del comentario', objeto_actual);
+						objeto_actual.parent().parent().find('.comentario').html(respuesta);
 					});
 
     			} 
@@ -864,7 +877,8 @@ if ($mostrar_input_correo == true && $es_anonimo == 0)
 						data: valoresEnvio
 					}).done(function(respuesta){
 						$(".img-preload").hide();
-						console.log('respuesta comentario: ', respuesta);
+						console.log('respuesta comentario (2): ');
+						objeto_actual.parent().parent().prev().find(".comentario").html(respuesta);
 					});
     			};
         	}

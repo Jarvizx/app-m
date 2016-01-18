@@ -378,8 +378,15 @@ class Medicamentos extends CI_Controller {
 				'expediente'	=> $this->input->post('expediente')
 			);
 
+
 			$id_ultimo_comentario = $this->medicamentos_model->guardar_tbl_comentarios($comentario_por_guardar);
-			echo "comentario registrado id: ". $id_ultimo_comentario;
+			$comentario = $this->medicamentos_model->consultar_historial_comentarios(array(
+				'expediente' => $this->input->post('expediente'), 
+				'campo' 	 => $this->input->post('campo')
+			))->row();
+			// select * from vws_consolidado_edicion_agrupado where campo = 'MarcaSignoDistintivoComercial' and expediente = 2202
+			//echo "comentario registrado id: ". $id_ultimo_comentario, $comentario->texto;
+			echo $comentario->texto;
 		}
 	}
 
