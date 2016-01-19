@@ -165,7 +165,7 @@ class Medicamentos extends CI_Controller {
 					'propiedad' => 'TipoEstandarParaCantidadYUnidadMedida'
 				);
 				$datos['tbl_referencia_tepcyum']	= $this->medicamentos_model->consultar_tbl_referencia($parametro_referencia);
-
+ 
 
 				# historial de los comentarios invima
 				$datos['comentarios_MarcaSignoDistintivoComercial'] = $this->medicamentos_model->consultar_historial_comentarios(array('expediente' => $expediente, 'campo' => 'MarcaSignoDistintivoComercial'))->row();
@@ -188,7 +188,8 @@ class Medicamentos extends CI_Controller {
 
 				// UPR
 				$parametro_referencia = array(
-					'propiedad' => 'UPR' // Unidad & U.
+					//'propiedad' => 'UPR' // Unidad & U. 
+					'propiedad' => 'IndicadorMuestraMedica_old'
 				);
 				$datos['tbl_referencia_upr']	= $this->medicamentos_model->consultar_tbl_referencia($parametro_referencia);
 
@@ -198,17 +199,25 @@ class Medicamentos extends CI_Controller {
 				);
 				$datos['tbl_referencia_identificadormm']	= $this->medicamentos_model->consultar_tbl_referencia($parametro_referencia);
 
+				// IdentificadorMarca
+				$parametro_referencia = array(
+					'propiedad' => 'IdentificadorMarca'
+				);
+				$datos['tbl_referencia_identificadorMarca']	= $this->medicamentos_model->consultar_tbl_referencia($parametro_referencia);
+
 				# consulta tbl_invima_pc_texto
 				
 				$datos['tbl_invima_pc_texto'] = $this->medicamentos_model->consultar_tbl_invima_pc_texto(array('expediente'=>$expediente));
 
 				# comentario presentación comercial
-				$datos['comentarios_CodigoUnidadContenido'] = $this->medicamentos_model->consultar_historial_comentarios(array('expediente'=>$expediente, 'campo' => 'CodigoUnidadContenido'))->result_array();
-				$datos['comentarios_CapacidadUnidadContenido'] = $this->medicamentos_model->consultar_historial_comentarios(array('expediente'=>$expediente, 'campo' => 'CapacidadUnidadContenido'))->result_array();
-				$datos['comentarios_CodigoEmpaque'] = $this->medicamentos_model->consultar_historial_comentarios(array('expediente'=>$expediente, 'campo' => 'CodigoEmpaque'))->result_array();
+				$datos['comentarios_CodigoUnidadContenido'] 	= $this->medicamentos_model->consultar_historial_comentarios(array('expediente'=>$expediente, 'campo' => 'CodigoUnidadContenido'))->result_array();
+				$datos['comentarios_CapacidadUnidadContenido'] 	= $this->medicamentos_model->consultar_historial_comentarios(array('expediente'=>$expediente, 'campo' => 'CapacidadUnidadContenido'))->result_array();
+				$datos['comentarios_CodigoEmpaque'] 			= $this->medicamentos_model->consultar_historial_comentarios(array('expediente'=>$expediente, 'campo' => 'CodigoEmpaque'))->result_array();
 				$datos['comentarios_CantidadUnidadesContenidoEmpaque'] = $this->medicamentos_model->consultar_historial_comentarios(array('expediente'=>$expediente, 'campo' => 'CantidadUnidadesContenidoEmpaque'))->result_array();
 				$datos['comentarios_IdentificadorCondicionEstarRegistradoComoMuestraMedica'] = $this->medicamentos_model->consultar_historial_comentarios(array('expediente'=>$expediente, 'campo' => 'IdentificadorCondicionEstarRegistradoComoMuestraMedica'))->result_array();
-				$datos['comentarios_CodigoUnidadCapacidad'] = $this->medicamentos_model->consultar_historial_comentarios(array('expediente'=>$expediente, 'campo' => 'CodigoUnidadCapacidad'))->result_array();
+				$datos['comentarios_DispositivosAsociados'] 	= $this->medicamentos_model->consultar_historial_comentarios(array('expediente'=>$expediente, 'campo' => 'DispositivosAsociados'))->result_array();
+				$datos['comentarios_CodigoUnidadCapacidad'] 	= $this->medicamentos_model->consultar_historial_comentarios(array('expediente'=>$expediente, 'campo' => 'CodigoUnidadCapacidad'))->result_array();
+				$datos['comentarios_IdentificadorMarca'] 		= $this->medicamentos_model->consultar_historial_comentarios(array('expediente'=>$expediente, 'campo' => 'IdentificadorMarca'))->result_array();
 
 				# presentación comercial principio activo
 				$datos['tbl_rev_expediente_pc_pa'] = $this->medicamentos_model->consultar_tbl_rev_expediente_pc_pa($parametro_expediente);

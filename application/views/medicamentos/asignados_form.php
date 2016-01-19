@@ -454,8 +454,8 @@ if ($mostrar_input_correo == true && $es_anonimo == 0)
 			<th>Empaque</th>
 			<th>Cantidad U.</th>
 			<th>Muestra Medica</th>
-			<th></th>
-			<th></th>
+			<th>Dispositivo</th>
+			<th>Marca</th>
 		</tr>
 	</thead>
 	<tbody>
@@ -525,6 +525,29 @@ if ($mostrar_input_correo == true && $es_anonimo == 0)
 					}
 				}
 
+				# IdentificadorMarca, Nuevo 19 enero, dispositivo
+				if ( $tbl_referencia_identificadorMarca->num_rows() > 0 ) 
+				{
+					foreach ($tbl_referencia_identificadorMarca->results_array() as $k_tbl_referencia => $v_tbl_referencia) 
+					{
+						if ($v_tbl_rev_expediente_pc->IdentificadorMarca == $v_tbl_referencia['codigo']) 
+						{
+							$select_IdentificadorMarca[] = sprintf('<option value="%s" selected> %s </option>', $v_tbl_referencia['codigo'], $v_tbl_referencia['nombre_codigo']);
+							$valor_actual_IdentificadorMarca = $v_tbl_referencia['nombre_codigo'];
+						}
+						else
+						{
+							$select_IdentificadorMarca[] = sprintf('<option value="%s"> %s </option>', $v_tbl_referencia['codigo'], $v_tbl_referencia['nombre_codigo']);
+						}
+					}
+				}
+				else
+				{
+					$select_IdentificadorMarca[] = sprintf('<option value="%s" selected> %s </option>', '0', 'Sin Valores');
+					$valor_actual_IdentificadorMarca = null;
+				}
+
+				# este foreach revisa los datos de la tabla del invima para encontrar coincidencias
 				foreach ($tbl_invima_pc_texto->result() as $k_tbl_invima_pc_texto => $v_tbl_invima_pc_texto) 
 				{
 					if ($v_tbl_rev_expediente_pc->NumeroConsecutivoCUMPresentacionComercial == $v_tbl_invima_pc_texto->consecutivo) 
@@ -591,6 +614,26 @@ if ($mostrar_input_correo == true && $es_anonimo == 0)
 						else
 						{
 							$color_td_IdentificadorCondicionEstarRegistradoComoMuestraMedica = 'bg-danger';
+						}
+
+						# Aqui agregar dispositivo nuevo 19 de enero
+						if (strpos($v_tbl_invima_pc_texto->texto, $v_tbl_rev_expediente_pc->DispositivosAsociados) !== false)  
+						{
+							$color_td_DispositivosAsociados = 'bg-success';
+						}
+						else
+						{
+							$color_td_DispositivosAsociados = 'bg-danger';
+						}
+
+						# IdentificadorCondicionEstarRegistradoComoMuestraMedica
+						if (strpos($v_tbl_invima_pc_texto->texto, $valor_actual_IdentificadorMarca) !== false)  
+						{
+							$color_td_IdentificadorMarca = 'bg-success';
+						}
+						else
+						{
+							$color_td_IdentificadorMarca = 'bg-danger';
 						}
 					}
 				}
@@ -729,6 +772,51 @@ if ($mostrar_input_correo == true && $es_anonimo == 0)
 					<input type="radio" name="estado_revision" value="Pendiente"> Pendiente 					
 				</form>
 			</td>
+			<!-- Nuevo 19 enero, dispositivo -->
+			<td class="<?= $color_td_DispositivosAsociados; ?>">
+				<input type="text" class="form_app_m DispositivosAsociados" name="DispositivosAsociados" data-json='{"tabla":"tbl_rev_expediente_pc", "llave":"<?= $v_tbl_rev_expediente_pc->id ?>", "valor_viejo":"<?= $v_tbl_rev_expediente_pc->DispositivosAsociados; ?>", "campo":"DispositivosAsociados"}' value="<?= $v_tbl_rev_expediente_pc->DispositivosAsociados; ?>">
+				<p class="comentario">
+				<?php foreach ($comentarios_DispositivosAsociados as $k_comentarios_DispositivosAsociados => $v_comentarios_DispositivosAsociados): ?>
+					<?php if ($v_tbl_rev_expediente_pc->id == $v_comentarios_DispositivosAsociados['llave']): ?>
+						<span><?= $v_comentarios_DispositivosAsociados['texto']; ?></span>
+					<?php endif ?>
+				<?php endforeach ?>
+				</p>
+				<form tipoComentario="comentario_en_td_con_el_input">
+					<b>Comentario: </b><br>
+					<textarea rows="1" cols="40" class="form-control" name="comentario"></textarea><br>
+					<input type="radio" name="estado_revision" value="Ok"> Ok 
+					<input type="radio" name="estado_revision" value="Rev. Lab"> Rev. Lab 
+					<input type="radio" name="estado_revision" value="Rev. Super"> Rev. Super 
+					<input type="radio" name="estado_revision" value="Pendiente"> Pendiente 					
+				</form>
+			</td>
+			<!-- IdentificadorMarca -->
+			<td class="<?= $color_td_IdentificadorMarca;?>">
+				<select class="form_app_m" name="IdentificadorMarca" data-json='{"tabla":"tbl_rev_expediente_pc", "llave":"<?= $v_tbl_rev_expediente_pc->id ?>", "valor_viejo":"<?= $v_tbl_rev_expediente_pc->IdentificadorMarca; ?>", "campo":"IdentificadorMarca"}'>
+					<?php foreach ($select_IdentificadorMarca as $k_select_IdentificadorMarca => $v_select_IdentificadorMarca): ?>
+						<?= $v_select_IdentificadorMarca;?>
+					<?php endforeach ?>
+				</select>
+				
+				<p class="comentario">
+				<?php foreach ($comentarios_IdentificadorMarca as $k_comentarios_IdentificadorMarca => $v_comentarios_IdentificadorMarca): ?>
+					<?php if ($v_tbl_rev_expediente_pc->id == $v_comentarios_IdentificadorMarca['llave']): ?>
+						<span><?= $v_comentarios_IdentificadorMarca['texto']; ?></span>
+					<?php endif ?>
+				<?php endforeach ?>
+				</p>
+				<form tipoComentario="comentario_en_td_con_el_input">
+					<b>Comentario: </b><br>
+					<textarea rows="1" cols="40" class="form-control" name="comentario"></textarea><br>
+					<input type="radio" name="estado_revision" value="Ok"> Ok 
+					<input type="radio" name="estado_revision" value="Rev. Lab"> Rev. Lab 
+					<input type="radio" name="estado_revision" value="Rev. Super"> Rev. Super 
+					<input type="radio" name="estado_revision" value="Pendiente"> Pendiente 					
+				</form>
+			</td>
+			<!-- /19 enero -->
+
 		</tr>
 		<?php endforeach ?>
 	</tbody>
@@ -850,6 +938,8 @@ if ($mostrar_input_correo == true && $es_anonimo == 0)
 						console.log('respuesta comentario (1): ', respuesta);
 						console.log('mapa del comentario', objeto_actual);
 						objeto_actual.parent().parent().find('.comentario').html(respuesta);
+						// limpio formulario comentario
+						objeto_actual.parent()[0].reset();
 					});
 
     			} 
@@ -879,8 +969,11 @@ if ($mostrar_input_correo == true && $es_anonimo == 0)
 						$(".img-preload").hide();
 						console.log('respuesta comentario (2): ');
 						objeto_actual.parent().parent().prev().find(".comentario").html(respuesta);
+    					// limpio formulario comentario
+						objeto_actual.parent()[0].reset();
 					});
     			};
+    			//console.log();
         	}
         });
 		// en este evento, el expediente queda como terminado
