@@ -528,7 +528,7 @@ if ($mostrar_input_correo == true && $es_anonimo == 0)
 				# IdentificadorMarca, Nuevo 19 enero, dispositivo
 				if ( $tbl_referencia_identificadorMarca->num_rows() > 0 ) 
 				{
-					foreach ($tbl_referencia_identificadorMarca->results_array() as $k_tbl_referencia => $v_tbl_referencia) 
+					foreach ($tbl_referencia_identificadorMarca->result_array() as $k_tbl_referencia => $v_tbl_referencia) 
 					{
 						if ($v_tbl_rev_expediente_pc->IdentificadorMarca == $v_tbl_referencia['codigo']) 
 						{
