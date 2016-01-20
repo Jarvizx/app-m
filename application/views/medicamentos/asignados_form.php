@@ -10,11 +10,11 @@ if ($mostrar_input_correo == true && $es_anonimo == 0)
 ?>
 <?php $valores_tbl_rev_expedientes = $tbl_rev_expedientes->row(); ?>
 <?php $valores_tbl_invima_medicamento = $tbl_invima_medicamento->row(); ?>
-<div class="img-expediente">
+<!--<div class="img-expediente">
 	<img class="img-google-1 img-thum">
 	<img class="img-google-2 img-thum">
 	<img class="img-google-3 img-thum">
-</div>
+</div>-->
 <table class="table">
 	<tbody>
 		<tr>
@@ -83,6 +83,7 @@ if ($mostrar_input_correo == true && $es_anonimo == 0)
 					else
 					{
 						$IdentificadorFormaComercializacion[] = sprintf('<input type="radio" class="form_app_m" name="IdentificadorFormaComercializacion" value="%s"> %s <br>', $v_tbl_referencia['codigo'], $v_tbl_referencia['nombre_codigo']);
+						$valor_actual_IdentificadorFormaComercializacion = null;
 					}
 				}
 
@@ -122,17 +123,18 @@ if ($mostrar_input_correo == true && $es_anonimo == 0)
 				Forma Farmaceutica
 			</th>
 			<?php 
+
 				foreach ($tbl_referencia_ffm->result_array() as $k_tbl_referencia => $v_tbl_referencia)
 				{
 					if ($valores_tbl_rev_expedientes->CodigoFormaFarmaceutica == $v_tbl_referencia['codigo']) 
 					{
 						$option_CodigoFormaFarmaceutica[] = sprintf('<option value="%s" selected> %s </option>', $v_tbl_referencia['codigo'], $v_tbl_referencia['nombre_codigo']);
 						$valor_actual_CodigoFormaFarmaceutica = $valores_tbl_rev_expedientes->CodigoFormaFarmaceutica;
-
 					}
 					else
 					{
 						$option_CodigoFormaFarmaceutica[] = sprintf('<option value="%s"> %s </option>', $v_tbl_referencia['codigo'], $v_tbl_referencia['nombre_codigo']);
+						$valor_actual_CodigoFormaFarmaceutica = null;
 					}
 				}
 				if (strpos($valores_tbl_invima_medicamento->CodigoFormaFarmaceutica_homologado, $valor_actual_CodigoFormaFarmaceutica) !== false ) 
@@ -150,6 +152,7 @@ if ($mostrar_input_correo == true && $es_anonimo == 0)
 			?>
 			<td class="<?=$color;?>">
 				<select class="form_app_m" name="CodigoFormaFarmaceutica">
+					<option value="">Seleccione una opción</option>
 					<?php foreach ($option_CodigoFormaFarmaceutica as $k_option_CodigoFormaFarmaceutica => $v_option_CodigoFormaFarmaceutica): ?>
 						<?= $v_option_CodigoFormaFarmaceutica;?>
 					<?php endforeach ?>
@@ -184,6 +187,7 @@ if ($mostrar_input_correo == true && $es_anonimo == 0)
 			 	<?php 
 			 		$i = 0;
 			 		$nuevo_array_codigo_via_administracion = array();
+			 		// Robin arregla esto!!!
 					foreach ($CodigoViaAdministracion as $k_CodigoViaAdministracion => $v_CodigoViaAdministracion)
 					{
 						foreach ($tbl_referencia_vad->result_array() as $k_tbl_referencia_vad => $v_tbl_referencia_vad)
@@ -305,6 +309,7 @@ if ($mostrar_input_correo == true && $es_anonimo == 0)
 				</td>
 				<td>
 					<select class="form_app_m" name="IdentificadorTipoConcentracionEstandarizada" data-json='{"tabla":"tbl_rev_expediente_pa", "llave":"<?= $v_tbl_rev_expediente_pa->id ?>", "valor_viejo":"<?= $v_tbl_rev_expediente_pa->IdentificadorTipoConcentracionEstandarizada; ?>", "campo":"IdentificadorTipoConcentracionEstandarizada"}'>
+						<option value="">Seleccione una opción</option>
 						<?php 
 							foreach ($tbl_referencia_tepcyum->result_array() as $k_tbl_referencia => $v_tbl_referencia)
 							{
@@ -356,6 +361,7 @@ if ($mostrar_input_correo == true && $es_anonimo == 0)
 				</td>
 				<td>
 					<select class="form_app_m" name="CodigoUnidadMedidaEstandarizadaPrincipioActivo" data-json='{"tabla":"tbl_rev_expediente_pa", "llave":"<?= $v_tbl_rev_expediente_pa->id ?>", "valor_viejo":"<?= $v_tbl_rev_expediente_pa->CodigoUnidadMedidaEstandarizadaPrincipioActivo; ?>", "campo":"CodigoUnidadMedidaEstandarizadaPrincipioActivo"}'>
+						<option value="">Seleccione una opción</option>
 						<?php 
 							foreach ($tbl_referencia_umm->result_array() as $k_tbl_referencia => $v_tbl_referencia)
 							{
@@ -407,6 +413,7 @@ if ($mostrar_input_correo == true && $es_anonimo == 0)
 				</td>
 				<td>
 					<select class="form_app_m" name="CodigoUnidadMedidaEstandarizadaMedicamentoPrincipioActivo" data-json='{"tabla":"tbl_rev_expediente_pa", "llave":"<?= $v_tbl_rev_expediente_pa->id ?>", "valor_viejo":"<?= $v_tbl_rev_expediente_pa->CodigoUnidadMedidaEstandarizadaMedicamentoPrincipioActivo; ?>", "campo":"CodigoUnidadMedidaEstandarizadaMedicamentoPrincipioActivo"}'>
+						<option value="">Seleccione una opción</option>
 						<?php 
 							foreach ($tbl_referencia_umm->result_array() as $k_tbl_referencia => $v_tbl_referencia)
 							{
@@ -461,7 +468,7 @@ if ($mostrar_input_correo == true && $es_anonimo == 0)
 	<tbody>
 		<?php foreach ($tbl_rev_expediente_pc->result() as $k_tbl_rev_expediente_pc => $v_tbl_rev_expediente_pc): ?>
 		<tr>
-			<td colspan="7">
+			<td colspan="9">
 
 				<?php 
 
@@ -480,6 +487,7 @@ if ($mostrar_input_correo == true && $es_anonimo == 0)
 					else
 					{
 						$selec_CodigoUnidadContenido[] = sprintf('<option value="%s"> %s </option>', $v_tbl_referencia['codigo'], $v_tbl_referencia['nombre_codigo']);
+						$valor_actual_CodigoUnidadContenido = null;
 					}
 				}
 
@@ -494,6 +502,7 @@ if ($mostrar_input_correo == true && $es_anonimo == 0)
 					else
 					{
 						$selec_CodigoUnidadCapacidad[] = sprintf('<option value="%s"> %s </option>', $v_tbl_referencia['codigo'], $v_tbl_referencia['nombre_codigo']);
+						$valor_actual_CodigoUnidadCapacidad = null;
 					}
 				}
 
@@ -508,11 +517,12 @@ if ($mostrar_input_correo == true && $es_anonimo == 0)
 					else
 					{
 						$select_CodigoEmpaque[] = sprintf('<option value="%s"> %s </option>', $v_tbl_referencia['codigo'], $v_tbl_referencia['nombre_codigo']);
+						$valor_actual_CodigoEmpaque = null;
 					}
 				}
 
 				# IdentificadorCondicionEstarRegistradoComoMuestraMedica
-				foreach ($tbl_referencia_upr->result_array() as $k_tbl_referencia => $v_tbl_referencia)
+				foreach ($tbl_referencia_mm->result_array() as $k_tbl_referencia => $v_tbl_referencia)
 				{
 					if ($v_tbl_rev_expediente_pc->IdentificadorCondicionEstarRegistradoComoMuestraMedica == $v_tbl_referencia['codigo']) 
 					{
@@ -522,6 +532,7 @@ if ($mostrar_input_correo == true && $es_anonimo == 0)
 					else
 					{
 						$select_IdentificadorCondicionEstarRegistradoComoMuestraMedica[] = sprintf('<option value="%s"> %s </option>', $v_tbl_referencia['codigo'], $v_tbl_referencia['nombre_codigo']);
+						$valor_actual_IdentificadorCondicionEstarRegistradoComoMuestraMedica = null;
 					}
 				}
 
@@ -538,6 +549,7 @@ if ($mostrar_input_correo == true && $es_anonimo == 0)
 						else
 						{
 							$select_IdentificadorMarca[] = sprintf('<option value="%s"> %s </option>', $v_tbl_referencia['codigo'], $v_tbl_referencia['nombre_codigo']);
+							$valor_actual_IdentificadorMarca = null;
 						}
 					}
 				}
@@ -646,6 +658,7 @@ if ($mostrar_input_correo == true && $es_anonimo == 0)
 			</td>
 			<td class="<?= $color_td_CodigoUnidadContenido; ?>">
 				<select class="form_app_m" name="CodigoUnidadContenido" data-json='{"tabla":"tbl_rev_expediente_pc", "llave":"<?= $v_tbl_rev_expediente_pc->id ?>", "valor_viejo":"<?= $v_tbl_rev_expediente_pc->CodigoUnidadContenido; ?>", "campo":"CodigoUnidadContenido"}'>
+					<option value="">Seleccione una opción</option>
 					<?php foreach ($selec_CodigoUnidadContenido as $k_selec_CodigoUnidadContenido => $v_selec_CodigoUnidadContenido): ?>
 						<?= $v_selec_CodigoUnidadContenido;?>
 					<?php endforeach ?>
@@ -687,6 +700,7 @@ if ($mostrar_input_correo == true && $es_anonimo == 0)
 			</td>
 			<td class="<?= $color_td_CodigoUnidadCapacidad;?>">
 				<select class="form_app_m" name="CodigoUnidadCapacidad" data-json='{"tabla":"tbl_rev_expediente_pc", "llave":"<?= $v_tbl_rev_expediente_pc->id ?>", "valor_viejo":"<?= $v_tbl_rev_expediente_pc->CodigoUnidadCapacidad; ?>", "campo":"CodigoUnidadCapacidad"}'>
+					<option value="">Seleccione una opción</option>
 					<?php foreach ($selec_CodigoUnidadCapacidad as $k_selec_CodigoUnidadCapacidad => $v_selec_CodigoUnidadCapacidad): ?>
 						<?= $v_selec_CodigoUnidadCapacidad;?>
 					<?php endforeach ?>
@@ -710,6 +724,7 @@ if ($mostrar_input_correo == true && $es_anonimo == 0)
 			</td>
 			<td class="<?= $color_td_CodigoEmpaque;?>">
 				<select class="form_app_m" name="CodigoEmpaque" data-json='{"tabla":"tbl_rev_expediente_pc", "llave":"<?= $v_tbl_rev_expediente_pc->id ?>", "valor_viejo":"<?= $v_tbl_rev_expediente_pc->CodigoEmpaque; ?>", "campo":"CodigoEmpaque"}'>
+					<option value="">Seleccione una opción</option>
 					<?php foreach ($select_CodigoEmpaque as $k_select_CodigoEmpaque => $v_select_CodigoEmpaque): ?>
 						<?= $v_select_CodigoEmpaque;?>
 					<?php endforeach ?>
@@ -751,6 +766,7 @@ if ($mostrar_input_correo == true && $es_anonimo == 0)
 			</td>
 			<td class="<?= $color_td_IdentificadorCondicionEstarRegistradoComoMuestraMedica;?>">
 				<select class="form_app_m" name="IdentificadorCondicionEstarRegistradoComoMuestraMedica" data-json='{"tabla":"tbl_rev_expediente_pc", "llave":"<?= $v_tbl_rev_expediente_pc->id ?>", "valor_viejo":"<?= $v_tbl_rev_expediente_pc->IdentificadorCondicionEstarRegistradoComoMuestraMedica; ?>", "campo":"IdentificadorCondicionEstarRegistradoComoMuestraMedica"}'>
+					<option value="">Seleccione una opción</option>
 					<?php foreach ($select_IdentificadorCondicionEstarRegistradoComoMuestraMedica as $k_select_IdentificadorCondicionEstarRegistradoComoMuestraMedica => $v_select_IdentificadorCondicionEstarRegistradoComoMuestraMedica): ?>
 						<?= $v_select_IdentificadorCondicionEstarRegistradoComoMuestraMedica;?>
 					<?php endforeach ?>
@@ -794,6 +810,7 @@ if ($mostrar_input_correo == true && $es_anonimo == 0)
 			<!-- IdentificadorMarca -->
 			<td class="<?= $color_td_IdentificadorMarca;?>">
 				<select class="form_app_m" name="IdentificadorMarca" data-json='{"tabla":"tbl_rev_expediente_pc", "llave":"<?= $v_tbl_rev_expediente_pc->id ?>", "valor_viejo":"<?= $v_tbl_rev_expediente_pc->IdentificadorMarca; ?>", "campo":"IdentificadorMarca"}'>
+					<option value="">Seleccione una opción</option>
 					<?php foreach ($select_IdentificadorMarca as $k_select_IdentificadorMarca => $v_select_IdentificadorMarca): ?>
 						<?= $v_select_IdentificadorMarca;?>
 					<?php endforeach ?>
@@ -885,7 +902,7 @@ if ($mostrar_input_correo == true && $es_anonimo == 0)
     $(document).ready(function() {
         $('#select_via_administracion').multiselect();
         
-        var urlImagenGoogle = "https://ajax.googleapis.com/ajax/services/search/images?v=1.0&q="+$(".nombre_del_producto_invima").val();
+        /*var urlImagenGoogle = "https://ajax.googleapis.com/ajax/services/search/images?v=1.0&q="+$(".nombre_del_producto_invima").val();
        	$.ajax({
 		  	type: 'GET',
 		  	contentType: "application/json",
@@ -896,7 +913,7 @@ if ($mostrar_input_correo == true && $es_anonimo == 0)
 				$(".img-google-2").attr("src", respuesta.responseData.results[1].url);
 				$(".img-google-3").attr("src", respuesta.responseData.results[2].url);
 			}
-		});
+		});*/
 
         $("input:radio").click(function(){
         	var objeto_actual = $(this); 

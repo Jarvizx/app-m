@@ -160,6 +160,12 @@ class Medicamentos extends CI_Controller {
 				);
 				$datos['tbl_referencia_umm']	= $this->medicamentos_model->consultar_tbl_referencia($parametro_referencia);
 
+				// Para IdentificadorCondicionEstarRegistradoComoMuestraMedica IndicadorMuestraMedica_old
+				$parametro_referencia = array(
+					'propiedad' => 'IndicadorMuestraMedica_old' // Unidad & U.
+				);
+				$datos['tbl_referencia_mm']	= $this->medicamentos_model->consultar_tbl_referencia($parametro_referencia);
+
 				// TipoEstandarParaCantidadYUnidadMedida
 				$parametro_referencia = array(
 					'propiedad' => 'TipoEstandarParaCantidadYUnidadMedida'
@@ -188,12 +194,14 @@ class Medicamentos extends CI_Controller {
 
 				// UPR
 				$parametro_referencia = array(
+					
 					//'propiedad' => 'UPR' // Unidad & U. 
-					'propiedad' => 'IndicadorMuestraMedica_old'
+					'propiedad' => 'UPR' // Unidad & U. 
 				);
 				$datos['tbl_referencia_upr']	= $this->medicamentos_model->consultar_tbl_referencia($parametro_referencia);
 
-				// IndicadorMuestraMedica
+				// IndicadorMuestraMedica 
+				// estas 4 lineas parece que no se usan
 				$parametro_referencia = array(
 					'propiedad' => 'IndicadorMuestraMedica' // Unidad & U.
 				);
@@ -201,7 +209,7 @@ class Medicamentos extends CI_Controller {
 
 				// IdentificadorMarca
 				$parametro_referencia = array(
-					'propiedad' => 'IdentificadorMarca'
+					'propiedad' => 'IdentificadorMarca' // Unidad & U.
 				);
 				$datos['tbl_referencia_identificadorMarca']	= $this->medicamentos_model->consultar_tbl_referencia($parametro_referencia);
 
