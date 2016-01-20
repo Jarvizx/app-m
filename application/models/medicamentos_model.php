@@ -115,7 +115,7 @@ class Medicamentos_model extends CI_Model
     public function consultar_tbl_referencia($parametros = array())
     {
 		$this->db->select('codigo, nombre_codigo');
-		return $this->db->get_where($this->tbl_referencia, $parametros);
+		return $this->db->order_by('nombre_codigo', 'ASC')->get_where($this->tbl_referencia, $parametros);
     }
 
     # + invima
@@ -239,10 +239,16 @@ class Medicamentos_model extends CI_Model
     }
     # consultar_tbl_invima_pc_texto
     public function consultar_tbl_invima_pc_texto($expediente)
-        {
+    {
         if ( ! empty($expediente)) 
         {
             return $this->db->get_where($this->tbl_invima_pc_texto, $expediente);
         }
+    }
+
+    # consultar_expedientes para el buscador
+    public function consultar_expedientes()
+    {
+        return 0;
     }
 }
