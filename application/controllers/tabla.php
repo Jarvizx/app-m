@@ -47,6 +47,7 @@ class Tabla extends CI_Controller {
 				echo "el nombre de tabla no es valida";
 			}
 		}
+		else
 		{
 			redirect('/', 'refresh');
 		}
