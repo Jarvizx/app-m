@@ -11,7 +11,16 @@ class Medicamentos extends CI_Controller {
 		$this->load->library(array('ion_auth', 'layout', 'session', 'pagination'));
 	    $this->load->helper(array('form', 'url'));
 		$this->load->model('medicamentos_model');
-	
+
+		// debug
+		
+		/*$sections = array(
+		    'queries' => TRUE
+	    );
+		$this->output->set_profiler_sections($sections);
+		$this->output->enable_profiler(TRUE);*/
+		// /debug
+
 	    $this->user = $this->ion_auth->user()->row();
 	    if ( ! empty($this->input->get('correo_usuario_externo')))
 	    {
@@ -174,18 +183,18 @@ class Medicamentos extends CI_Controller {
  
 
 				# historial de los comentarios invima
-				$datos['comentarios_MarcaSignoDistintivoComercial'] = $this->medicamentos_model->consultar_historial_comentarios(array('expediente' => $expediente, 'campo' => 'MarcaSignoDistintivoComercial'))->row();
-				$datos['comentarios_IdentificadorFormaComercializacion'] = $this->medicamentos_model->consultar_historial_comentarios(array('expediente' => $expediente, 'campo' => 'IdentificadorFormaComercializacion'))->row();
-				$datos['comentarios_CodigoFormaFarmaceutica'] = $this->medicamentos_model->consultar_historial_comentarios(array('expediente' => $expediente, 'campo' => 'CodigoFormaFarmaceutica'))->row();
-				$datos['comentarios_CodigoViaAdministracion'] = $this->medicamentos_model->consultar_historial_comentarios(array('expediente' => $expediente, 'campo' => 'CodigoViaAdministracion'))->row();
+				//$datos['comentarios_MarcaSignoDistintivoComercial'] = $this->medicamentos_model->consultar_historial_comentarios(array('expediente' => $expediente, 'campo' => 'MarcaSignoDistintivoComercial'))->row();
+				//$datos['comentarios_IdentificadorFormaComercializacion'] = $this->medicamentos_model->consultar_historial_comentarios(array('expediente' => $expediente, 'campo' => 'IdentificadorFormaComercializacion'))->row();
+				//$datos['comentarios_CodigoFormaFarmaceutica'] = $this->medicamentos_model->consultar_historial_comentarios(array('expediente' => $expediente, 'campo' => 'CodigoFormaFarmaceutica'))->row();
+				//$datos['comentarios_CodigoViaAdministracion'] = $this->medicamentos_model->consultar_historial_comentarios(array('expediente' => $expediente, 'campo' => 'CodigoViaAdministracion'))->row();
 				
 				# historial de los comentarios (p.a.)
-				$datos['comentarios_NombrePrincipioActivo'] = $this->medicamentos_model->consultar_historial_comentarios(array('expediente'=>$expediente, 'campo' => 'NombrePrincipioActivo'))->result_array();
-				$datos['comentarios_IdentificadorTipoConcentracionEstandarizada'] = $this->medicamentos_model->consultar_historial_comentarios(array('expediente'=>$expediente, 'campo' => 'IdentificadorTipoConcentracionEstandarizada'))->result_array();
-				$datos['comentarios_CantidadEstandarizadaPrincipioActivo'] = $this->medicamentos_model->consultar_historial_comentarios(array('expediente'=>$expediente, 'campo' => 'CantidadEstandarizadaPrincipioActivo'))->result_array();
-				$datos['comentarios_CodigoUnidadMedidaEstandarizadaPrincipioActivo'] = $this->medicamentos_model->consultar_historial_comentarios(array('expediente'=>$expediente, 'campo' => 'CodigoUnidadMedidaEstandarizadaPrincipioActivo'))->result_array();
-				$datos['comentarios_CantidadEstandarizadaMedicamentoContenidoPrincipioActivo'] = $this->medicamentos_model->consultar_historial_comentarios(array('expediente'=>$expediente, 'campo' => 'CantidadEstandarizadaMedicamentoContenidoPrincipioActivo'))->result_array();
-				$datos['comentarios_CodigoUnidadMedidaEstandarizadaMedicamentoPrincipioActivo'] = $this->medicamentos_model->consultar_historial_comentarios(array('expediente'=>$expediente, 'campo' => 'CodigoUnidadMedidaEstandarizadaMedicamentoPrincipioActivo'))->result_array();
+				//$datos['comentarios_NombrePrincipioActivo'] = $this->medicamentos_model->consultar_historial_comentarios(array('expediente'=>$expediente, 'campo' => 'NombrePrincipioActivo'))->result_array();
+				//$datos['comentarios_IdentificadorTipoConcentracionEstandarizada'] = $this->medicamentos_model->consultar_historial_comentarios(array('expediente'=>$expediente, 'campo' => 'IdentificadorTipoConcentracionEstandarizada'))->result_array();
+				//$datos['comentarios_CantidadEstandarizadaPrincipioActivo'] = $this->medicamentos_model->consultar_historial_comentarios(array('expediente'=>$expediente, 'campo' => 'CantidadEstandarizadaPrincipioActivo'))->result_array();
+				//$datos['comentarios_CodigoUnidadMedidaEstandarizadaPrincipioActivo'] = $this->medicamentos_model->consultar_historial_comentarios(array('expediente'=>$expediente, 'campo' => 'CodigoUnidadMedidaEstandarizadaPrincipioActivo'))->result_array();
+				//$datos['comentarios_CantidadEstandarizadaMedicamentoContenidoPrincipioActivo'] = $this->medicamentos_model->consultar_historial_comentarios(array('expediente'=>$expediente, 'campo' => 'CantidadEstandarizadaMedicamentoContenidoPrincipioActivo'))->result_array();
+				//$datos['comentarios_CodigoUnidadMedidaEstandarizadaMedicamentoPrincipioActivo'] = $this->medicamentos_model->consultar_historial_comentarios(array('expediente'=>$expediente, 'campo' => 'CodigoUnidadMedidaEstandarizadaMedicamentoPrincipioActivo'))->result_array();
 
 				$datos['tbl_invima_pa_homologado_texto'] = $this->medicamentos_model->consultar_tbl_invima_pa_homologado_texto(array('expediente' => $expediente));
 
@@ -218,20 +227,31 @@ class Medicamentos extends CI_Controller {
 				$datos['tbl_invima_pc_texto'] = $this->medicamentos_model->consultar_tbl_invima_pc_texto(array('expediente'=>$expediente));
 
 				# comentario presentación comercial
-				$datos['comentarios_CodigoUnidadContenido'] 	= $this->medicamentos_model->consultar_historial_comentarios(array('expediente'=>$expediente, 'campo' => 'CodigoUnidadContenido'))->result_array();
-				$datos['comentarios_CapacidadUnidadContenido'] 	= $this->medicamentos_model->consultar_historial_comentarios(array('expediente'=>$expediente, 'campo' => 'CapacidadUnidadContenido'))->result_array();
-				$datos['comentarios_CodigoEmpaque'] 			= $this->medicamentos_model->consultar_historial_comentarios(array('expediente'=>$expediente, 'campo' => 'CodigoEmpaque'))->result_array();
-				$datos['comentarios_CantidadUnidadesContenidoEmpaque'] = $this->medicamentos_model->consultar_historial_comentarios(array('expediente'=>$expediente, 'campo' => 'CantidadUnidadesContenidoEmpaque'))->result_array();
-				$datos['comentarios_IdentificadorCondicionEstarRegistradoComoMuestraMedica'] = $this->medicamentos_model->consultar_historial_comentarios(array('expediente'=>$expediente, 'campo' => 'IdentificadorCondicionEstarRegistradoComoMuestraMedica'))->result_array();
-				$datos['comentarios_DispositivosAsociados'] 	= $this->medicamentos_model->consultar_historial_comentarios(array('expediente'=>$expediente, 'campo' => 'DispositivosAsociados'))->result_array();
-				$datos['comentarios_CodigoUnidadCapacidad'] 	= $this->medicamentos_model->consultar_historial_comentarios(array('expediente'=>$expediente, 'campo' => 'CodigoUnidadCapacidad'))->result_array();
-				$datos['comentarios_IdentificadorMarca'] 		= $this->medicamentos_model->consultar_historial_comentarios(array('expediente'=>$expediente, 'campo' => 'IdentificadorMarca'))->result_array();
+				//$datos['comentarios_CodigoUnidadContenido'] 	= $this->medicamentos_model->consultar_historial_comentarios(array('expediente'=>$expediente, 'campo' => 'CodigoUnidadContenido'))->result_array();
+				//$datos['comentarios_CapacidadUnidadContenido'] 	= $this->medicamentos_model->consultar_historial_comentarios(array('expediente'=>$expediente, 'campo' => 'CapacidadUnidadContenido'))->result_array();
+				//$datos['comentarios_CodigoEmpaque'] 			= $this->medicamentos_model->consultar_historial_comentarios(array('expediente'=>$expediente, 'campo' => 'CodigoEmpaque'))->result_array();
+				//$datos['comentarios_CantidadUnidadesContenidoEmpaque'] = $this->medicamentos_model->consultar_historial_comentarios(array('expediente'=>$expediente, 'campo' => 'CantidadUnidadesContenidoEmpaque'))->result_array();
+				//$datos['comentarios_IdentificadorCondicionEstarRegistradoComoMuestraMedica'] = $this->medicamentos_model->consultar_historial_comentarios(array('expediente'=>$expediente, 'campo' => 'IdentificadorCondicionEstarRegistradoComoMuestraMedica'))->result_array();
+				//$datos['comentarios_DispositivosAsociados'] 	= $this->medicamentos_model->consultar_historial_comentarios(array('expediente'=>$expediente, 'campo' => 'DispositivosAsociados'))->result_array();
+				//$datos['comentarios_CodigoUnidadCapacidad'] 	= $this->medicamentos_model->consultar_historial_comentarios(array('expediente'=>$expediente, 'campo' => 'CodigoUnidadCapacidad'))->result_array();
+				//$datos['comentarios_IdentificadorMarca'] 		= $this->medicamentos_model->consultar_historial_comentarios(array('expediente'=>$expediente, 'campo' => 'IdentificadorMarca'))->result_array();
 
 				# presentación comercial principio activo
 				$datos['tbl_rev_expediente_pc_pa'] = $this->medicamentos_model->consultar_tbl_rev_expediente_pc_pa($parametro_expediente);
 				# comentario presentación comercial principio activo
-				$datos['comentarios_CantidadPrincipioActivoPresentacionComercial'] = $this->medicamentos_model->consultar_historial_comentarios(array('expediente'=>$expediente, 'campo' => 'CantidadPrincipioActivoPresentacionComercial'))->result_array();
+				//$datos['comentarios_CantidadPrincipioActivoPresentacionComercial'] = $this->medicamentos_model->consultar_historial_comentarios(array('expediente'=>$expediente, 'campo' => 'CantidadPrincipioActivoPresentacionComercial'))->result_array();
 
+				// 1 sola consulta para los comentarios
+				
+				$comentarios = $this->medicamentos_model->consultar_historial_comentarios(array(
+					'expediente' => $expediente, 
+				))->result();
+				
+				$datos['comentarios'] = null;
+				foreach ($comentarios as $k_comentarios => $v_comentarios) 
+				{
+					$datos['comentarios'][$v_comentarios->campo][] = $v_comentarios;
+				}
 
 				$this->layout->view('medicamentos/asignados_form',$datos);
 			}
@@ -256,17 +276,17 @@ class Medicamentos extends CI_Controller {
 			'estado'	=> 'Asignado'
 		);
 
-		$registro_por_pagina = $this->uri->segment(4);
-		$registros = (!empty($registro_por_pagina)) ? $registro_por_pagina : 100; 
-		$config['base_url'] = base_url().'medicamentos/asignados//'; 
-		$config['total_rows'] = $this->medicamentos_model->numero_de_filas_asignadas($asignados)->total;
-		$config['per_page'] = $registros; //Número de registros mostrados por páginas
-        $config['num_links'] = 10; //Número de links mostrados en la paginación
- 		$config['first_link'] = 'Primera';
-		$config['last_link'] = 'Última';
-        $config["uri_segment"] = 3;//el segmento de la paginación
-		$config['next_link'] = 'Siguiente';
-		$config['prev_link'] = 'Anterior';
+		$registro_por_pagina 	= $this->uri->segment(4);
+		$registros 				= (!empty($registro_por_pagina)) ? $registro_por_pagina : 100; 
+		$config['base_url'] 	= base_url().'medicamentos/asignados//'; 
+		$config['total_rows'] 	= $this->medicamentos_model->numero_de_filas_asignadas($asignados)->total;
+		$config['per_page'] 	= $registros; //Número de registros mostrados por páginas
+        $config['num_links'] 	= 10; //Número de links mostrados en la paginación
+ 		$config['first_link'] 	= 'Primera';
+		$config['last_link'] 	= 'Última';
+        $config["uri_segment"] 	= 3;//el segmento de la paginación
+		$config['next_link'] 	= 'Siguiente';
+		$config['prev_link'] 	= 'Anterior';
 		$this->pagination->initialize($config); //inicializamos la paginación	
 		$datos["lista_asignados"] = $this->medicamentos_model->consultar_asignacion($asignados, $config['per_page'], $this->uri->segment(3))->result();
 		// la vista
@@ -430,6 +450,35 @@ class Medicamentos extends CI_Controller {
 	{
 		$datos['texto'] = 'consolidado';
 		$this->layout->view('medicamentos/consolidado',$datos);
+	}
+
+	public function buscador($num = null)
+	{
+		$parametro = ( ! empty($this->input->get('parametro', true))) ? $this->input->get('parametro', true) : null;
+
+		
+		$registro_por_pagina 	= $this->uri->segment(4);
+		$registros 				= (!empty($registro_por_pagina)) ? $registro_por_pagina : 100; 
+		$config['base_url'] 	= base_url().'medicamentos/asignados//?parametro='.$parametro; 
+		$config['total_rows'] 	= $this->medicamentos_model->numero_de_filas_vws_listado()->total;
+		// $config['total_rows'] 	= 500;
+		$config['per_page'] 	= $registros; 	// Número de registros mostrados por páginas
+        $config['num_links'] 	= 10; 			// Número de links mostrados en la paginación
+ 		$config['first_link'] 	= 'Primera';
+		$config['last_link'] 	= 'Última';
+        $config["uri_segment"] 	= 3;			// el segmento de la paginación
+		$config['next_link'] 	= 'Siguiente';
+		$config['prev_link'] 	= 'Anterior';
+		$this->pagination->initialize($config); // inicializamos la paginación	
+
+		$parametro = array();
+		
+		$datos["expedientes"] 	= $this->medicamentos_model->consultar_vws_listado($parametro, $config['per_page'], $this->uri->segment(3))->result();
+
+		
+		// la vista
+		$this->layout->view('medicamentos/buscador', $datos);
+		
 	}
 
 	public function enviar_correo()

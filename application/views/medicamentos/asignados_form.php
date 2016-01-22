@@ -7,14 +7,44 @@ if ($mostrar_input_correo == true && $es_anonimo == 0)
 	$this->layout->view('medicamentos/inscribir_correo',null);
 	exit();
 }
+
+/* 
+	funcion mostrar_texto_comentarios, por cada campo del formulario se consulta si tiene un comentario
+	$comentarios 			array
+	$nombre_campo 			string
+	$es_array_multiple		bool
+	$llave					int
+*/
+	function mostrar_texto_comentarios($comentarios, $nombre_campo, $es_array_multiple = false, $llave)
+	{
+		if ( ! empty($comentarios[$nombre_campo])) 
+		{
+			if ($es_array_multiple) 
+			{
+				foreach ($comentarios[$nombre_campo] as $k_comentario => $v_comentario) 
+				{
+					if ($llave == $v_comentario->llave) 
+					{
+						return $v_comentario->texto;
+					} 
+				}
+			}
+			else
+			{
+				return current($comentarios[$nombre_campo])->texto;	
+			}
+		}
+	}
 ?>
 <?php $valores_tbl_rev_expedientes = $tbl_rev_expedientes->row(); ?>
 <?php $valores_tbl_invima_medicamento = $tbl_invima_medicamento->row(); ?>
-<!--<div class="img-expediente">
+<div class="img-expediente">
 	<img class="img-google-1 img-thum">
 	<img class="img-google-2 img-thum">
 	<img class="img-google-3 img-thum">
-</div>-->
+</div>
+<pre>
+</pre>
 <table class="table">
 	<tbody>
 		<tr>
@@ -53,7 +83,7 @@ if ($mostrar_input_correo == true && $es_anonimo == 0)
 			 	<input type="hidden" class="nombre_del_producto_invima" value="<?= $valores_tbl_invima_medicamento->nombre_del_producto; ?>">
 			 	<hr>
 			 	<div class="comentario">
-			 		<?= ( ! empty($comentarios_MarcaSignoDistintivoComercial->texto)) ? $comentarios_MarcaSignoDistintivoComercial->texto : "";?>
+			 		<?= mostrar_texto_comentarios($comentarios,'MarcaSignoDistintivoComercial', false, null); ?>
 			 	</div>
 			</td>
 			<td>
@@ -103,7 +133,7 @@ if ($mostrar_input_correo == true && $es_anonimo == 0)
 				<input type="hidden" class="IdentificadorFormaComercializacion" data-json='{"tabla":"tbl_rev_expedientes", "llave":"<?= $valores_tbl_rev_expedientes->id ?>", "valor_viejo":"<?= $valor_actual_IdentificadorFormaComercializacion; ?>", "campo":"IdentificadorFormaComercializacion"}' value='{"tabla":"tbl_rev_expedientes", "llave":"<?= $valores_tbl_rev_expedientes->id ?>", "valor_viejo":"<?= $valor_actual_IdentificadorFormaComercializacion; ?>", "campo":"IdentificadorFormaComercializacion"}'>
 				<hr>
 				<div class="comentario">
-			 		<?= ( ! empty($comentarios_IdentificadorFormaComercializacion->texto)) ? $comentarios_IdentificadorFormaComercializacion->texto : "";?>
+			 		<?= mostrar_texto_comentarios($comentarios,'IdentificadorFormaComercializacion', false, null); ?>
 				</div>
 			</td>
 			<td>
@@ -162,7 +192,7 @@ if ($mostrar_input_correo == true && $es_anonimo == 0)
 				<b>Invima: </b><?php echo $valores_tbl_invima_medicamento->forma_farmaceutica; ?>
 				<hr>
 				<div class="comentario">
-			 		<?= ( ! empty($comentarios_CodigoFormaFarmaceutica->texto)) ? $comentarios_CodigoFormaFarmaceutica->texto : "";?>
+			 		<?= mostrar_texto_comentarios($comentarios,'CodigoFormaFarmaceutica', false, null); ?>
 				</div>
 			</td>
 			<td>
@@ -228,7 +258,7 @@ if ($mostrar_input_correo == true && $es_anonimo == 0)
 				<b>Invima: </b><?php echo $valores_tbl_invima_medicamento->ViasAdministracion; ?>
 				<hr>
 				<div class="comentario">
-			 		<?= ( ! empty($comentarios_CodigoViaAdministracion->texto)) ? $comentarios_CodigoViaAdministracion->texto : "";?>
+			 		<?= mostrar_texto_comentarios($comentarios,'CodigoViaAdministracion', false, null); ?>
 				</div>
 			</td>
 			<td>
@@ -292,11 +322,7 @@ if ($mostrar_input_correo == true && $es_anonimo == 0)
 						<?php endforeach ?> 
 					</select>
 					<p class="comentario">
-					<?php foreach ($comentarios_NombrePrincipioActivo as $k_comentarios_NombrePrincipioActivo => $v_comentarios_NombrePrincipioActivo): ?>
-						<?php if ($v_tbl_rev_expediente_pa->id == $v_comentarios_NombrePrincipioActivo['llave']): ?>
-							<span><?= $v_comentarios_NombrePrincipioActivo['texto']; ?></span>
-						<?php endif ?>
-					<?php endforeach ?>
+					<?= mostrar_texto_comentarios($comentarios,'NombrePrincipioActivo', true, $v_tbl_rev_expediente_pa->id); ?>	
 					</p>
 					<form tipoComentario="comentario_en_td_con_el_input">
 						<b>Comentario: </b><br>
@@ -326,11 +352,7 @@ if ($mostrar_input_correo == true && $es_anonimo == 0)
 						?>
 					</select>
 					<p class="comentario">
-					<?php foreach ($comentarios_IdentificadorTipoConcentracionEstandarizada as $k_comentarios_IdentificadorTipoConcentracionEstandarizada => $v_comentarios_IdentificadorTipoConcentracionEstandarizada): ?>
-						<?php if ($v_tbl_rev_expediente_pa->id == $v_comentarios_IdentificadorTipoConcentracionEstandarizada['llave']): ?>
-							<span><?= $v_comentarios_IdentificadorTipoConcentracionEstandarizada['texto']; ?></span>
-						<?php endif ?>
-					<?php endforeach ?>
+					<?= mostrar_texto_comentarios($comentarios,'IdentificadorTipoConcentracionEstandarizada', true, $v_tbl_rev_expediente_pa->id); ?>	
 					</p>
 					<form tipoComentario="comentario_en_td_con_el_input">
 						<b>Comentario: </b><br>
@@ -344,11 +366,7 @@ if ($mostrar_input_correo == true && $es_anonimo == 0)
 				<td>
 					<input type="text" class="form_app_m CantidadEstandarizadaPrincipioActivo" name="CantidadEstandarizadaPrincipioActivo" data-json='{"tabla":"tbl_rev_expediente_pa", "llave":"<?= $v_tbl_rev_expediente_pa->id ?>", "valor_viejo":"<?= $v_tbl_rev_expediente_pa->CantidadEstandarizadaPrincipioActivo; ?>", "campo":"CantidadEstandarizadaPrincipioActivo"}' value="<?= $v_tbl_rev_expediente_pa->CantidadEstandarizadaPrincipioActivo; ?>">
 					<p class="comentario">
-					<?php foreach ($comentarios_CantidadEstandarizadaPrincipioActivo as $k_comentarios_CantidadEstandarizadaPrincipioActivo => $v_comentarios_CantidadEstandarizadaPrincipioActivo): ?>
-						<?php if ($v_tbl_rev_expediente_pa->id == $v_comentarios_CantidadEstandarizadaPrincipioActivo['llave']): ?>
-							<span><?= $v_comentarios_CantidadEstandarizadaPrincipioActivo['texto']; ?></span>
-						<?php endif ?>
-					<?php endforeach ?>
+					<?= mostrar_texto_comentarios($comentarios,'CantidadEstandarizadaPrincipioActivo', true, $v_tbl_rev_expediente_pa->id); ?>	
 					</p>
 					<form tipoComentario="comentario_en_td_con_el_input">
 						<b>Comentario: </b><br>
@@ -378,11 +396,7 @@ if ($mostrar_input_correo == true && $es_anonimo == 0)
 						?>
 					</select>
 					<p class="comentario">
-					<?php foreach ($comentarios_CodigoUnidadMedidaEstandarizadaPrincipioActivo as $k_comentarios_CodigoUnidadMedidaEstandarizadaPrincipioActivo => $v_comentarios_CodigoUnidadMedidaEstandarizadaPrincipioActivo): ?>
-						<?php if ($v_tbl_rev_expediente_pa->id == $v_comentarios_CodigoUnidadMedidaEstandarizadaPrincipioActivo['llave']): ?>
-							<span><?= $v_comentarios_CodigoUnidadMedidaEstandarizadaPrincipioActivo['texto']; ?></span>
-						<?php endif ?>
-					<?php endforeach ?>
+					<?= mostrar_texto_comentarios($comentarios,'CodigoUnidadMedidaEstandarizadaPrincipioActivo', true, $v_tbl_rev_expediente_pa->id); ?>	
 					</p>
 					<form tipoComentario="comentario_en_td_con_el_input">
 						<b>Comentario: </b><br>
@@ -396,11 +410,7 @@ if ($mostrar_input_correo == true && $es_anonimo == 0)
 				<td>
 					<input type="text" class="form_app_m CantidadEstandarizadaMedicamentoContenidoPrincipioActivo" name="CantidadEstandarizadaMedicamentoContenidoPrincipioActivo" data-json='{"tabla":"tbl_rev_expediente_pa", "llave":"<?= $v_tbl_rev_expediente_pa->id ?>", "valor_viejo":"<?= $v_tbl_rev_expediente_pa->CantidadEstandarizadaMedicamentoContenidoPrincipioActivo; ?>", "campo":"CantidadEstandarizadaMedicamentoContenidoPrincipioActivo"}' value="<?= $v_tbl_rev_expediente_pa->CantidadEstandarizadaMedicamentoContenidoPrincipioActivo; ?>">
 					<p class="comentario">
-					<?php foreach ($comentarios_CantidadEstandarizadaMedicamentoContenidoPrincipioActivo as $k_comentarios_CantidadEstandarizadaMedicamentoContenidoPrincipioActivo => $v_comentarios_CantidadEstandarizadaMedicamentoContenidoPrincipioActivo): ?>
-						<?php if ($v_tbl_rev_expediente_pa->id == $k_comentarios_CantidadEstandarizadaMedicamentoContenidoPrincipioActivo['llave']): ?>
-							<span><?= $k_comentarios_CantidadEstandarizadaMedicamentoContenidoPrincipioActivo['texto']; ?></span>
-						<?php endif ?>
-					<?php endforeach ?>
+					<?= mostrar_texto_comentarios($comentarios,'CantidadEstandarizadaMedicamentoContenidoPrincipioActivo', true, $v_tbl_rev_expediente_pa->id); ?>	
 					</p>
 					<form tipoComentario="comentario_en_td_con_el_input">
 						<b>Comentario: </b><br>
@@ -430,11 +440,7 @@ if ($mostrar_input_correo == true && $es_anonimo == 0)
 						?>
 					</select>
 					<p class="comentario">
-					<?php foreach ($comentarios_CodigoUnidadMedidaEstandarizadaMedicamentoPrincipioActivo as $k_comentarios_CodigoUnidadMedidaEstandarizadaMedicamentoPrincipioActivo => $v_comentarios_CodigoUnidadMedidaEstandarizadaMedicamentoPrincipioActivo): ?>
-						<?php if ($v_tbl_rev_expediente_pa->id == $k_comentarios_CodigoUnidadMedidaEstandarizadaMedicamentoPrincipioActivo['llave']): ?>
-							<span><?= $k_comentarios_CodigoUnidadMedidaEstandarizadaMedicamentoPrincipioActivo['texto']; ?></span>
-						<?php endif ?>
-					<?php endforeach ?>
+					<?= mostrar_texto_comentarios($comentarios,'CodigoUnidadMedidaEstandarizadaMedicamentoPrincipioActivo', true, $v_tbl_rev_expediente_pa->id); ?>	
 					</p>
 					<form tipoComentario="comentario_en_td_con_el_input">
 						<b>Comentario: </b><br>
@@ -665,11 +671,7 @@ if ($mostrar_input_correo == true && $es_anonimo == 0)
 				</select>
 				
 				<p class="comentario">
-				<?php foreach ($comentarios_CodigoUnidadContenido as $k_comentarios_CodigoUnidadContenido => $v_comentarios_CodigoUnidadContenido): ?>
-					<?php if ($v_tbl_rev_expediente_pc->id == $v_comentarios_CodigoUnidadContenido['llave']): ?>
-						<span><?= $v_comentarios_CodigoUnidadContenido['texto']; ?></span>
-					<?php endif ?>
-				<?php endforeach ?>
+					<?= mostrar_texto_comentarios($comentarios,'CodigoUnidadContenido', true, $v_tbl_rev_expediente_pc->id); ?>
 				</p>
 				<form tipoComentario="comentario_en_td_con_el_input">
 					<b>Comentario: </b><br>
@@ -683,11 +685,7 @@ if ($mostrar_input_correo == true && $es_anonimo == 0)
 			<td class="<?= $color_td_CapacidadUnidadContenido; ?>">
 				<input type="text" class="form_app_m CapacidadUnidadContenido" name="CapacidadUnidadContenido" data-json='{"tabla":"tbl_rev_expediente_pc", "llave":"<?= $v_tbl_rev_expediente_pc->id ?>", "valor_viejo":"<?= $v_tbl_rev_expediente_pc->CapacidadUnidadContenido; ?>", "campo":"CapacidadUnidadContenido"}' value="<?= $v_tbl_rev_expediente_pc->CapacidadUnidadContenido; ?>">
 				<p class="comentario">
-				<?php foreach ($comentarios_CapacidadUnidadContenido as $k_comentarios_CapacidadUnidadContenido => $v_comentarios_CapacidadUnidadContenido): ?>
-					<?php if ($v_tbl_rev_expediente_pc->id == $v_comentarios_CapacidadUnidadContenido['llave']): ?>
-						<span><?= $v_comentarios_CapacidadUnidadContenido['texto']; ?></span>
-					<?php endif ?>
-				<?php endforeach ?>
+					<?= mostrar_texto_comentarios($comentarios,'CapacidadUnidadContenido', true, $v_tbl_rev_expediente_pc->id); ?>
 				</p>
 				<form tipoComentario="comentario_en_td_con_el_input">
 					<b>Comentario: </b><br>
@@ -707,11 +705,7 @@ if ($mostrar_input_correo == true && $es_anonimo == 0)
 				</select>
 				
 				<p class="comentario">
-				<?php foreach ($comentarios_CodigoUnidadCapacidad as $k_comentarios_CodigoUnidadCapacidad => $v_comentarios_CodigoUnidadCapacidad): ?>
-					<?php if ($v_tbl_rev_expediente_pc->id == $v_comentarios_CodigoUnidadCapacidad['llave']): ?>
-						<span><?= $v_comentarios_CodigoUnidadCapacidad['texto']; ?></span>
-					<?php endif ?>
-				<?php endforeach ?>
+					<?= mostrar_texto_comentarios($comentarios,'CodigoUnidadCapacidad', true, $v_tbl_rev_expediente_pc->id); ?>
 				</p>
 				<form tipoComentario="comentario_en_td_con_el_input">
 					<b>Comentario: </b><br>
@@ -731,11 +725,7 @@ if ($mostrar_input_correo == true && $es_anonimo == 0)
 				</select>
 				
 				<p class="comentario">
-				<?php foreach ($comentarios_CodigoEmpaque as $k_comentarios_CodigoEmpaque => $v_comentarios_CodigoEmpaque): ?>
-					<?php if ($v_tbl_rev_expediente_pc->id == $v_comentarios_CodigoEmpaque['llave']): ?>
-						<span><?= $v_comentarios_CodigoEmpaque['texto']; ?></span>
-					<?php endif ?>
-				<?php endforeach ?>
+					<?= mostrar_texto_comentarios($comentarios,'CodigoEmpaque', true, $v_tbl_rev_expediente_pc->id); ?>
 				</p>
 				<form tipoComentario="comentario_en_td_con_el_input">
 					<b>Comentario: </b><br>
@@ -749,11 +739,7 @@ if ($mostrar_input_correo == true && $es_anonimo == 0)
 			<td class="<?= $color_td_CantidadUnidadesContenidoEmpaque;?>">
 				<input type="text" class="form_app_m CantidadUnidadesContenidoEmpaque" name="CantidadUnidadesContenidoEmpaque" data-json='{"tabla":"tbl_rev_expediente_pc", "llave":"<?= $v_tbl_rev_expediente_pc->id ?>", "valor_viejo":"<?= $v_tbl_rev_expediente_pc->CantidadUnidadesContenidoEmpaque; ?>", "campo":"CantidadUnidadesContenidoEmpaque"}' value="<?= $v_tbl_rev_expediente_pc->CantidadUnidadesContenidoEmpaque; ?>">
 				<p class="comentario">
-				<?php foreach ($comentarios_CantidadUnidadesContenidoEmpaque as $k_comentarios_CantidadUnidadesContenidoEmpaque => $v_comentarios_CantidadUnidadesContenidoEmpaque): ?>
-					<?php if ($v_tbl_rev_expediente_pc->id == $v_comentarios_CantidadUnidadesContenidoEmpaque['llave']): ?>
-						<span><?= $v_comentarios_CantidadUnidadesContenidoEmpaque['texto']; ?></span>
-					<?php endif ?>
-				<?php endforeach ?>
+					<?= mostrar_texto_comentarios($comentarios,'CantidadUnidadesContenidoEmpaque', true, $v_tbl_rev_expediente_pc->id); ?>
 				</p>
 				<form tipoComentario="comentario_en_td_con_el_input">
 					<b>Comentario: </b><br>
@@ -773,11 +759,7 @@ if ($mostrar_input_correo == true && $es_anonimo == 0)
 				</select>
 				
 				<p class="comentario">
-				<?php foreach ($comentarios_IdentificadorCondicionEstarRegistradoComoMuestraMedica as $k_comentarios_IdentificadorCondicionEstarRegistradoComoMuestraMedica => $v_comentarios_IdentificadorCondicionEstarRegistradoComoMuestraMedica): ?>
-					<?php if ($v_tbl_rev_expediente_pc->id == $v_comentarios_IdentificadorCondicionEstarRegistradoComoMuestraMedica['llave']): ?>
-						<span><?= $v_comentarios_IdentificadorCondicionEstarRegistradoComoMuestraMedica['texto']; ?></span>
-					<?php endif ?>
-				<?php endforeach ?>
+					<?= mostrar_texto_comentarios($comentarios,'IdentificadorCondicionEstarRegistradoComoMuestraMedica', true, $v_tbl_rev_expediente_pc->id); ?>
 				</p>
 				<form tipoComentario="comentario_en_td_con_el_input">
 					<b>Comentario: </b><br>
@@ -792,11 +774,7 @@ if ($mostrar_input_correo == true && $es_anonimo == 0)
 			<td class="<?= $color_td_DispositivosAsociados; ?>">
 				<input type="text" class="form_app_m DispositivosAsociados" name="DispositivosAsociados" data-json='{"tabla":"tbl_rev_expediente_pc", "llave":"<?= $v_tbl_rev_expediente_pc->id ?>", "valor_viejo":"<?= $v_tbl_rev_expediente_pc->DispositivosAsociados; ?>", "campo":"DispositivosAsociados"}' value="<?= $v_tbl_rev_expediente_pc->DispositivosAsociados; ?>">
 				<p class="comentario">
-				<?php foreach ($comentarios_DispositivosAsociados as $k_comentarios_DispositivosAsociados => $v_comentarios_DispositivosAsociados): ?>
-					<?php if ($v_tbl_rev_expediente_pc->id == $v_comentarios_DispositivosAsociados['llave']): ?>
-						<span><?= $v_comentarios_DispositivosAsociados['texto']; ?></span>
-					<?php endif ?>
-				<?php endforeach ?>
+					<?= mostrar_texto_comentarios($comentarios,'DispositivosAsociados', true, $v_tbl_rev_expediente_pc->id); ?>
 				</p>
 				<form tipoComentario="comentario_en_td_con_el_input">
 					<b>Comentario: </b><br>
@@ -817,11 +795,7 @@ if ($mostrar_input_correo == true && $es_anonimo == 0)
 				</select>
 				
 				<p class="comentario">
-				<?php foreach ($comentarios_IdentificadorMarca as $k_comentarios_IdentificadorMarca => $v_comentarios_IdentificadorMarca): ?>
-					<?php if ($v_tbl_rev_expediente_pc->id == $v_comentarios_IdentificadorMarca['llave']): ?>
-						<span><?= $v_comentarios_IdentificadorMarca['texto']; ?></span>
-					<?php endif ?>
-				<?php endforeach ?>
+					<?= mostrar_texto_comentarios($comentarios,'IdentificadorMarca', true, $v_tbl_rev_expediente_pc->id); ?>
 				</p>
 				<form tipoComentario="comentario_en_td_con_el_input">
 					<b>Comentario: </b><br>
@@ -874,11 +848,7 @@ if ($mostrar_input_correo == true && $es_anonimo == 0)
 			<td class="<?= $color_td_CantidadPrincipioActivoPresentacionComercial;?>">
 				<input type="text" class="form_app_m CantidadPrincipioActivoPresentacionComercial" name="CantidadPrincipioActivoPresentacionComercial" data-json='{"tabla":"tbl_rev_expediente_pc_pa", "llave":"<?= $v_tbl_rev_expediente_pc_pa->id ?>", "valor_viejo":"<?= $v_tbl_rev_expediente_pc_pa->CantidadPrincipioActivoPresentacionComercial; ?>", "campo":"CantidadPrincipioActivoPresentacionComercial"}' value="<?= $v_tbl_rev_expediente_pc_pa->CantidadPrincipioActivoPresentacionComercial; ?>">
 				<p class="comentario">
-				<?php foreach ($comentarios_CantidadPrincipioActivoPresentacionComercial as $k_comentarios_CantidadPrincipioActivoPresentacionComercial => $v_comentarios_CantidadPrincipioActivoPresentacionComercial): ?>
-					<?php if ($v_tbl_rev_expediente_pc_pa->id == $v_comentarios_CantidadPrincipioActivoPresentacionComercial['llave']): ?>
-						<span><?= $v_comentarios_CantidadPrincipioActivoPresentacionComercial['texto']; ?></span>
-					<?php endif ?>
-				<?php endforeach ?>
+					<?= mostrar_texto_comentarios($comentarios,'CantidadPrincipioActivoPresentacionComercial', true, $v_tbl_rev_expediente_pc_pa->id); ?>
 				</p>
 				<form tipoComentario="comentario_en_td_con_el_input">
 					<b>Comentario: </b><br>
@@ -902,18 +872,31 @@ if ($mostrar_input_correo == true && $es_anonimo == 0)
     $(document).ready(function() {
         $('#select_via_administracion').multiselect();
         
-        /*var urlImagenGoogle = "https://ajax.googleapis.com/ajax/services/search/images?v=1.0&q="+$(".nombre_del_producto_invima").val();
+		var urlImagenGoogle = "https://www.googleapis.com/customsearch/v1";
+      	var params 		= {};
+        params.q 		= $(".nombre_del_producto_invima").val(); // search text
+        params.num 		= 3; // integer value range between 1 to 10 including
+        params.start 	= 1; // integer value range between 1 to 101, it is like the offset
+        params.imgSize 	= "medium"; // for image size
+        params.searchType = "image"; // compulsory 
+		// params.fileType = "jpg"; // you can leave these if extension does not matters you
+        params.key 		= "AIzaSyAxuhR-N_z_nqLKuiOUDOJRcF2EfThokaw"; // API_KEY got from https://console.developers.google.com/
+        params.cx 		= "001076089730765291564:1feh9bak7-8"; // cx value is the custom search engine value got from https://cse.google.com/cse(if not created then create it).
+          
+		// var urlImagenGoogle = "https://ajax.googleapis.com/ajax/services/search/images?v=1.0&q="+$(".nombre_del_producto_invima").val();
        	$.ajax({
-		  	type: 'GET',
-		  	contentType: "application/json",
-		  	dataType: 'jsonp',
+			type: 'GET',
+			contentType: "application/json",
+			dataType: 'jsonp',
 			url: urlImagenGoogle,
+			data: params,
 			success: function(respuesta){
-				$(".img-google-1").attr("src", respuesta.responseData.results[0].url);
-				$(".img-google-2").attr("src", respuesta.responseData.results[1].url);
-				$(".img-google-3").attr("src", respuesta.responseData.results[2].url);
+				console.log('peticion');
+				$(".img-google-1").attr("src", respuesta.items[0].link);
+				$(".img-google-2").attr("src", respuesta.items[1].link);
+				$(".img-google-3").attr("src", respuesta.items[2].link);
 			}
-		});*/
+        });
 
         $("input:radio").click(function(){
         	var objeto_actual = $(this); 
