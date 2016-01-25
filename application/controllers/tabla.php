@@ -41,6 +41,12 @@ class Tabla extends CI_Controller {
 				$crud = new grocery_CRUD();
 				//$crud->set_theme('datatables');
 				$crud->set_table($nombre_tabla);
+				// donde 1 es admin, 2 es cordinador...
+				if (reset($this->ion_auth->get_users_groups($this->user->id)->result())->id != 1)
+				{
+					$crud->unset_delete();
+					$crud->unset_edit();
+				}
 				$output = $crud->render();
 				$this->_example_output($output);
 			} catch (Exception $e) {
@@ -51,6 +57,5 @@ class Tabla extends CI_Controller {
 		{
 			redirect('/', 'refresh');
 		}
-
 	}
 }

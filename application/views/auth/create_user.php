@@ -3,7 +3,7 @@
 
 <div id="infoMessage"><?php echo $message;?></div>
 
-<?php echo form_open("auth/create_user");?>
+<?php echo form_open($target);?>
 
       <p>
             <?php echo lang('create_user_fname_label', 'first_name');?> <br />
@@ -49,6 +49,7 @@
       <p>
             <?php echo lang('create_user_password_confirm_label', 'password_confirm');?> <br />
             <?php echo form_input($password_confirm);?>
+            <?php echo form_hidden('tipo', 'register');?>
       </p>
 
 

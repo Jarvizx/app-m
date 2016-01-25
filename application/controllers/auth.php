@@ -94,6 +94,8 @@ class Auth extends CI_Controller {
 			);
 
 			//$this->_render_page('auth/login', $this->data);
+            $this->data['target'] = "auth/login";
+
 			$this->load->view('auth/login', $this->data);
 		}
 	}
@@ -108,7 +110,7 @@ class Auth extends CI_Controller {
 
 		// redirect them to the login page
 		$this->session->set_flashdata('message', $this->ion_auth->messages());
-		redirect('auth/login', 'refresh');
+		redirect('medicamentos/buscador', 'refresh');
 	}
 
 	// change password
@@ -518,6 +520,7 @@ class Auth extends CI_Controller {
                 'type'  => 'password',
                 'value' => $this->form_validation->set_value('password_confirm'),
             );
+            $this->data['target'] = "auth/create_user";
 
             $this->_render_page('auth/create_user', $this->data);
         }

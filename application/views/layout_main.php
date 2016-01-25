@@ -12,6 +12,14 @@
 	<script type="text/javascript" src="/assets/js/jquery.number.js"></script>
 	<script type="text/javascript" src="/assets/js/jquery.dataTables.min.js"></script>
     <script type="text/javascript" src="/assets/js/bootstrap-multiselect.js"></script>
+    <style type="text/css">
+		.img-cimun{
+		    position: absolute;
+		    top: 0;
+		    right: 0;
+		    margin: 1em;
+		}
+	</style>
 </head>
 <body>
 <div class="container-fluid">
@@ -20,8 +28,9 @@
 			
 			<h1 class="page-header">
 				Estándar en Medicamentos.
-				<small>version alpha 0.1</small>
+				<small>version alpha 0.2</small>
 			</h1>
+			<img class="img-cimun" src="/assets/images/LogoCIMUN.png" width="230">
 		</div>
 		<?php if ( $this->ion_auth->logged_in()): ?>	
 			<div class="col-md-2">	
@@ -57,13 +66,15 @@
 					</li>
 				</ul>
 			</div>
+			<?php $width_div = '10'; ?>
+		<?php else: ?>
+			<?php $width_div = '12'; ?>
 		<?php endif ?>
-		<div class="col-md-10">
-			<!--content dinamic-->
+				<!--content dinamic-->
 			
-			<?php echo $content_for_layout; ?>
-
-		</div>
+			<div class="col-md-<?=$width_div;?>">
+				<?php echo $content_for_layout; ?>
+			</div>
 	</div><!-- close row -->
 </div><!-- close <div class="container-fluid"> -->
 <script type="text/javascript">

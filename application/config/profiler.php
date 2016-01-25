@@ -11,7 +11,7 @@
 |
 */
 
-
-
 /* End of file profiler.php */
 /* Location: ./application/config/profiler.php */
+
+$config['query_toggle_count'] = '50';

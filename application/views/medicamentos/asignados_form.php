@@ -1,12 +1,13 @@
 <?php 
 //echo '<br>mostrar_input_correo '.$mostrar_input_correo;
 //echo '<br>es_anonimo '.$es_anonimo;
-if ($mostrar_input_correo == true && $es_anonimo == 0) 
+/*if ($mostrar_input_correo == true && $es_anonimo == 0) 
 {
 	// Si no es usuario anomino y tampoco tiene algun correo por get, cargo esta vista
-	$this->layout->view('medicamentos/inscribir_correo',null);
+	redirec('medicamentos/buscador');
+	// $this->layout->view('medicamentos/inscribir_correo',null);
 	exit();
-}
+}*/
 
 /* 
 	funcion mostrar_texto_comentarios, por cada campo del formulario se consulta si tiene un comentario
@@ -43,8 +44,7 @@ if ($mostrar_input_correo == true && $es_anonimo == 0)
 	<img class="img-google-2 img-thum">
 	<img class="img-google-3 img-thum">
 </div>
-<pre>
-</pre>
+<br>
 <table class="table">
 	<tbody>
 		<tr>
@@ -103,7 +103,7 @@ if ($mostrar_input_correo == true && $es_anonimo == 0)
 				Forma Comercializacion
 			</th>
 			<?php 
-				foreach ($tbl_referencia_identificador->result_array() as $k_tbl_referencia => $v_tbl_referencia)
+				foreach ($parametros_tbl_referencia['IdentificadorFormaComercializacion'] as $k_tbl_referencia => $v_tbl_referencia)
 				{
 					if ($valores_tbl_rev_expedientes->IdentificadorFormaComercializacion == $v_tbl_referencia['codigo']) 
 					{
@@ -154,7 +154,7 @@ if ($mostrar_input_correo == true && $es_anonimo == 0)
 			</th>
 			<?php 
 
-				foreach ($tbl_referencia_ffm->result_array() as $k_tbl_referencia => $v_tbl_referencia)
+				foreach ($parametros_tbl_referencia['FFM'] as $k_tbl_referencia => $v_tbl_referencia)
 				{
 					if ($valores_tbl_rev_expedientes->CodigoFormaFarmaceutica == $v_tbl_referencia['codigo']) 
 					{
@@ -220,7 +220,7 @@ if ($mostrar_input_correo == true && $es_anonimo == 0)
 			 		// Robin arregla esto!!!
 					foreach ($CodigoViaAdministracion as $k_CodigoViaAdministracion => $v_CodigoViaAdministracion)
 					{
-						foreach ($tbl_referencia_vad->result_array() as $k_tbl_referencia_vad => $v_tbl_referencia_vad)
+						foreach ($parametros_tbl_referencia['VAD'] as $k_tbl_referencia_vad => $v_tbl_referencia_vad)
 						{
 							if (($v_CodigoViaAdministracion * 1) == $v_tbl_referencia_vad['codigo']) 
 							{
@@ -294,7 +294,7 @@ if ($mostrar_input_correo == true && $es_anonimo == 0)
 				<td>
 					<?php 
 						$coincide_nombre_codigo = false;
-						foreach ($tbl_referencia_dci->result_array() as $k_tbl_referencia_dci => $v_tbl_referencia_dci)
+						foreach ($parametros_tbl_referencia['DCI'] as $k_tbl_referencia_dci => $v_tbl_referencia_dci)
 						{
 							if ($v_tbl_rev_expediente_pa->NombrePrincipioActivo == $v_tbl_referencia_dci['nombre_codigo']) 
 								{
@@ -337,7 +337,7 @@ if ($mostrar_input_correo == true && $es_anonimo == 0)
 					<select class="form_app_m" name="IdentificadorTipoConcentracionEstandarizada" data-json='{"tabla":"tbl_rev_expediente_pa", "llave":"<?= $v_tbl_rev_expediente_pa->id ?>", "valor_viejo":"<?= $v_tbl_rev_expediente_pa->IdentificadorTipoConcentracionEstandarizada; ?>", "campo":"IdentificadorTipoConcentracionEstandarizada"}'>
 						<option value="">Seleccione una opción</option>
 						<?php 
-							foreach ($tbl_referencia_tepcyum->result_array() as $k_tbl_referencia => $v_tbl_referencia)
+							foreach ($parametros_tbl_referencia['TipoEstandarParaCantidadYUnidadMedida'] as $k_tbl_referencia => $v_tbl_referencia)
 							{
 								if ($v_tbl_rev_expediente_pa->IdentificadorTipoConcentracionEstandarizada == $v_tbl_referencia['codigo']) 
 								{
@@ -381,7 +381,7 @@ if ($mostrar_input_correo == true && $es_anonimo == 0)
 					<select class="form_app_m" name="CodigoUnidadMedidaEstandarizadaPrincipioActivo" data-json='{"tabla":"tbl_rev_expediente_pa", "llave":"<?= $v_tbl_rev_expediente_pa->id ?>", "valor_viejo":"<?= $v_tbl_rev_expediente_pa->CodigoUnidadMedidaEstandarizadaPrincipioActivo; ?>", "campo":"CodigoUnidadMedidaEstandarizadaPrincipioActivo"}'>
 						<option value="">Seleccione una opción</option>
 						<?php 
-							foreach ($tbl_referencia_umm->result_array() as $k_tbl_referencia => $v_tbl_referencia)
+							foreach ($parametros_tbl_referencia['UMM'] as $k_tbl_referencia => $v_tbl_referencia)
 							{
 								if ($v_tbl_rev_expediente_pa->CodigoUnidadMedidaEstandarizadaPrincipioActivo == $v_tbl_referencia['codigo']) 
 								{
@@ -425,7 +425,7 @@ if ($mostrar_input_correo == true && $es_anonimo == 0)
 					<select class="form_app_m" name="CodigoUnidadMedidaEstandarizadaMedicamentoPrincipioActivo" data-json='{"tabla":"tbl_rev_expediente_pa", "llave":"<?= $v_tbl_rev_expediente_pa->id ?>", "valor_viejo":"<?= $v_tbl_rev_expediente_pa->CodigoUnidadMedidaEstandarizadaMedicamentoPrincipioActivo; ?>", "campo":"CodigoUnidadMedidaEstandarizadaMedicamentoPrincipioActivo"}'>
 						<option value="">Seleccione una opción</option>
 						<?php 
-							foreach ($tbl_referencia_umm->result_array() as $k_tbl_referencia => $v_tbl_referencia)
+							foreach ($parametros_tbl_referencia['UMM'] as $k_tbl_referencia => $v_tbl_referencia)
 							{
 								if ($v_tbl_rev_expediente_pa->CodigoUnidadMedidaEstandarizadaMedicamentoPrincipioActivo == $v_tbl_referencia['codigo']) 
 								{
@@ -483,7 +483,7 @@ if ($mostrar_input_correo == true && $es_anonimo == 0)
 				// aqui comparo los valores de la tabla, para colocar algun color, verde de coincide y rojo si no. Por cada <td>
 
 				# CodigoUnidadContenido
-				foreach ($tbl_referencia_upr->result_array() as $k_tbl_referencia => $v_tbl_referencia)
+				foreach ($parametros_tbl_referencia['UPR'] as $k_tbl_referencia => $v_tbl_referencia)
 				{
 					if ($v_tbl_rev_expediente_pc->CodigoUnidadContenido == $v_tbl_referencia['codigo']) 
 					{
@@ -498,7 +498,7 @@ if ($mostrar_input_correo == true && $es_anonimo == 0)
 				}
 
 				# CodigoUnidadCapacidad
-				foreach ($tbl_referencia_umm->result_array() as $k_tbl_referencia => $v_tbl_referencia)
+				foreach ($parametros_tbl_referencia['UMM'] as $k_tbl_referencia => $v_tbl_referencia)
 				{
 					if ($v_tbl_rev_expediente_pc->CodigoUnidadCapacidad == $v_tbl_referencia['codigo']) 
 					{
@@ -513,7 +513,7 @@ if ($mostrar_input_correo == true && $es_anonimo == 0)
 				}
 
 				# CodigoEmpaque
-				foreach ($tbl_referencia_upr->result_array() as $k_tbl_referencia => $v_tbl_referencia)
+				foreach ($parametros_tbl_referencia['UPR'] as $k_tbl_referencia => $v_tbl_referencia)
 				{
 					if ($v_tbl_rev_expediente_pc->CodigoEmpaque == $v_tbl_referencia['codigo']) 
 					{
@@ -528,7 +528,7 @@ if ($mostrar_input_correo == true && $es_anonimo == 0)
 				}
 
 				# IdentificadorCondicionEstarRegistradoComoMuestraMedica
-				foreach ($tbl_referencia_mm->result_array() as $k_tbl_referencia => $v_tbl_referencia)
+				foreach ($parametros_tbl_referencia['IndicadorMuestraMedica_old'] as $k_tbl_referencia => $v_tbl_referencia)
 				{
 					if ($v_tbl_rev_expediente_pc->IdentificadorCondicionEstarRegistradoComoMuestraMedica == $v_tbl_referencia['codigo']) 
 					{
@@ -542,10 +542,11 @@ if ($mostrar_input_correo == true && $es_anonimo == 0)
 					}
 				}
 
+
 				# IdentificadorMarca, Nuevo 19 enero, dispositivo
-				if ( $tbl_referencia_identificadorMarca->num_rows() > 0 ) 
+				if ( count($parametros_tbl_referencia['IdentificadorMarca']) > 0 ) 
 				{
-					foreach ($tbl_referencia_identificadorMarca->result_array() as $k_tbl_referencia => $v_tbl_referencia) 
+					foreach ($parametros_tbl_referencia['IdentificadorMarca'] as $k_tbl_referencia => $v_tbl_referencia) 
 					{
 						if ($v_tbl_rev_expediente_pc->IdentificadorMarca == $v_tbl_referencia['codigo']) 
 						{
@@ -864,7 +865,10 @@ if ($mostrar_input_correo == true && $es_anonimo == 0)
 	</tbody>
 </table>
 <br> 	 	 
-<button class="btn btn-danger expediente_terminado" type="button">Terminado</button>
+
+<?php if ( $this->ion_auth->logged_in()): ?>	
+	<button class="btn btn-danger expediente_terminado" type="button">Terminado</button>
+<?php endif ?>
 
 <hr>
 <!-- Initialize the plugin: -->
@@ -884,7 +888,7 @@ if ($mostrar_input_correo == true && $es_anonimo == 0)
         params.cx 		= "001076089730765291564:1feh9bak7-8"; // cx value is the custom search engine value got from https://cse.google.com/cse(if not created then create it).
           
 		// var urlImagenGoogle = "https://ajax.googleapis.com/ajax/services/search/images?v=1.0&q="+$(".nombre_del_producto_invima").val();
-       	$.ajax({
+       	/*$.ajax({
 			type: 'GET',
 			contentType: "application/json",
 			dataType: 'jsonp',
@@ -896,7 +900,7 @@ if ($mostrar_input_correo == true && $es_anonimo == 0)
 				$(".img-google-2").attr("src", respuesta.items[1].link);
 				$(".img-google-3").attr("src", respuesta.items[2].link);
 			}
-        });
+        });*/
 
         $("input:radio").click(function(){
         	var objeto_actual = $(this); 

@@ -3,7 +3,7 @@
 
 <div id="infoMessage"><?php echo $message;?></div>
 
-<?php echo form_open("auth/login");?>
+<?php echo form_open($target);?>
 
   <p>
     <?php echo lang('login_identity_label', 'identity');?>
@@ -18,6 +18,8 @@
   <p>
     <?php echo lang('login_remember_label', 'remember');?>
     <?php echo form_checkbox('remember', '1', FALSE, 'id="remember"');?>
+    <?php echo form_hidden('tipo', 'login');?>
+
   </p>
 
 

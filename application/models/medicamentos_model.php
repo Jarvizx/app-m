@@ -16,6 +16,7 @@ class Medicamentos_model extends CI_Model
     protected $tbl_rev_expediente_pc;
     protected $tbl_rev_expediente_pc_pa;
     protected $tbl_invima_pc_texto;
+    protected $vws_listado;
 
 	public function __construct()
 	{
@@ -35,6 +36,7 @@ class Medicamentos_model extends CI_Model
         $this->tbl_rev_expediente_pc = 'tbl_rev_expediente_pc';
         $this->tbl_rev_expediente_pc_pa = 'tbl_rev_expediente_pc_pa';
         $this->tbl_invima_pc_texto = 'tbl_invima_pc_texto';
+        $this->vws_listado = 'temp_tbl_listado';
 	    date_default_timezone_set('America/Bogota');
 	}
 
@@ -112,9 +114,19 @@ class Medicamentos_model extends CI_Model
 		return $this->db->get_where($this->tbl_rev_expedientes, $parametros);
     }
 
+    public function consultar_tbl_referencia_wherein($parametros = array())
+    {
+        $this->db->select('codigo, nombre_codigo, propiedad');
+        $this->db->where_in(key($parametros),$parametros['propiedad']);
+        $this->db->order_by('nombre_codigo', 'ASC');
+        $resultados_tbl_referencia = $this->db->get($this->tbl_referencia);
+        // echo "SQL: ".$this->db->last_query();
+        return $resultados_tbl_referencia->result_array();
+
+    }
     public function consultar_tbl_referencia($parametros = array())
     {
-		$this->db->select('codigo, nombre_codigo');
+		$this->db->select('codigo, nombre_codigo', 'propiedad');
 		return $this->db->order_by('nombre_codigo', 'ASC')->get_where($this->tbl_referencia, $parametros);
     }
 
@@ -140,14 +152,14 @@ class Medicamentos_model extends CI_Model
     }
 
     # consultar historial de comentarios del expediente de una vista...
-    public function consultar_historial_comentario_x_campo($expediente)
+    /*public function consultar_historial_comentario_x_campo($expediente)
     {
     	if ( ! empty($expediente)) 
     	{
             $this->db->select('texto');
     		return $this->db->get_where($this->vws_consolidado_edicion_agrupado, $expediente);
     	}
-    }
+    }*/
 
     # consultar historial de comentarios del expediente de una tabla/ legacy!
     public function consultar_historial_comentarios_tabla($expediente)
@@ -247,8 +259,29 @@ class Medicamentos_model extends CI_Model
     }
 
     # consultar_expedientes para el buscador
-    public function consultar_expedientes()
+    public function consultar_vws_listado($parametros = null, $texto_limite = null)
     {
-        return 0;
+        $sql = "SELECT *
+                FROM temp_tbl_listado
+                WHERE (concat_ws('-',NumeroExpediente,texto) 
+                LIKE '%".$parametros."%')
+                ORDER BY NumeroExpediente
+                LIMIT $texto_limite";
+        $data = $this->db->query($sql);
+        return $data->result();
+                echo "SQL".$this->db->last_query();
+        //return $this->db->get_where($this->vws_listado, $parametros, $limit, $offset);
+    }
+
+    public function numero_de_filas_vws_listado($parametros = null)
+    {
+        
+        $sql = "SELECT count(*) as total
+                FROM temp_tbl_listado
+                WHERE (concat_ws('-',NumeroExpediente,texto) 
+                LIKE '%".$parametros."%')
+                ORDER BY NumeroExpediente";
+        $data = $this->db->query($sql);
+        return $data->row();
     }
 }
