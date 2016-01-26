@@ -3,6 +3,7 @@
 		<?php $this->load->view('auth/login', $vars_login); ?>
 	</div>
 	<div class="col-md-6">
+		<br>
 		<?php $this->load->view('auth/create_user', $vars_register); ?>
 		
  		<?php if( ! empty($expediente)): ?>

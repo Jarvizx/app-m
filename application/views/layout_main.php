@@ -30,7 +30,9 @@
 				Estándar en Medicamentos.
 				<small>version alpha 0.2</small>
 			</h1>
-			<img class="img-cimun" src="/assets/images/LogoCIMUN.png" width="230">
+			<a href="/medicamentos/buscador">				
+				<img class="img-cimun" src="/assets/images/LogoCIMUN.png" width="230">
+			</a>
 		</div>
 		<?php if ( $this->ion_auth->logged_in()): ?>	
 			<div class="col-md-2">	
@@ -39,31 +41,41 @@
 					<p>Hola <?php echo $this->user->first_name; ?>,</p>
 				<?php endif ?>
 				<ul class="nav nav-pills nav-stacked" style="">
-					<li>
-						<a href="/">Inicio</a>
-					</li>
-					<?php // donde 1 es admin, 2 es cordinador  y 3 el digitador 
-							if(reset($this->ion_auth->get_users_groups($this->user->id)->result())->id == 1
-						  	|| reset($this->ion_auth->get_users_groups($this->user->id)->result())->id == 2): ?>
-					<li>
-						<a href="/medicamentos/asignar">Asignar Datos</a>
-					</li>
-					<li>
-						<a href="/medicamentos/consolidado">Consolidado</a>
-					</li>
-					<li>
-						<a href="/auth">Usuarios</a>
-					</li>
+						<li>
+							<a href="/medicamentos/buscador">Inicio</a>
+						</li>
+					<?php $id_grupo_usuario = (array) reset($this->ion_auth->get_users_groups($this->user->id)->result());
+					// donde 1 es admin, 2 es ministerio, 3 el coordinador, 4 digitador, 5 externo
+					if(in_array($id_grupo_usuario['id'], array(1,2))): ?>
+						<li>
+							<a href="/medicamentos/asignar">Asignar Datos</a>
+						</li>
+						<li>
+							<a href="/medicamentos/consolidado">Consolidado</a>
+						</li>
+						<li>
+							<a href="/auth">Usuarios</a>
+						</li>
+						<li>
+							<a href="/medicamentos/asignados_guardados">Datos Guardados </a>
+						</li>
+						<li>
+							<a href="/medicamentos/asignados">Datos Asignados *</a>
+						</li>	
+					<?php elseif(in_array($id_grupo_usuario['id'], array(1,2,3,4))): ?>
+						<li>
+							<a href="/medicamentos/asignados_guardados">Datos Guardados </a>
+						</li>
+						<li>
+							<a href="/medicamentos/asignados">Datos Asignados *</a>
+						</li>
 					<?php endif ?>
-					<li>
-						<a href="/medicamentos/asignados">Datos Asignados *</a>
-					</li>
-					<li>
-						<a href="/medicamentos/asignados_guardados">Datos Guardados </a>
-					</li>
-					<li>
-						<a href="/auth/logout">Cerrar</a>
-					</li>
+						<li>
+							<a href="/medicamentos/buscador">Buscar Expediente </a>
+						</li>
+						<li>
+							<a href="/auth/logout">Cerrar</a>
+						</li>
 				</ul>
 			</div>
 			<?php $width_div = '10'; ?>

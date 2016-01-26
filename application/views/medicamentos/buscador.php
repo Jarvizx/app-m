@@ -4,6 +4,14 @@
         margin: 0 auto;
     }
 </style>
+
+<?php if ( ! empty($this->session->flashdata('message'))): ?>
+    <div class="alert alert-success" role="alert">
+        <?php echo $this->session->flashdata('message')?>
+    </div>
+<?php endif ?>
+
+
 <form method="GET">
     <div class="input-group div-buscador">
         <input type="text" class="form-control" name="parametro" placeholder="Buscar">

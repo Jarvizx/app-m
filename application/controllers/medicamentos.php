@@ -33,7 +33,7 @@ class Medicamentos extends CI_Controller {
 
 	public function index()
 	{
-		redirect('medicamentos/buscador');
+		redirect('medicamentos/buscador', 'refresh');
 		//$this->buscador();
 	}
 
@@ -419,6 +419,7 @@ class Medicamentos extends CI_Controller {
 		$datos["expedientes"] 	= $this->medicamentos_model->consultar_vws_listado($parametro, $texto_limite);
 
 		// la vista
+
 		$this->layout->view('medicamentos/buscador', $datos);
 		
 	}
@@ -558,18 +559,10 @@ class Medicamentos extends CI_Controller {
         {
             // check to see if we are creating the user
             // redirect them back to the admin page
-            $this->session->set_flashdata('message', $this->ion_auth->messages());
-            // aqui podemos crear las variables de session
-			$this->ion_auth->login($this->input->post('email'), $this->input->post('password'), TRUE);
-			// este redirect deberia ir al expediente
-			if ( ! empty($expediente))
-			{
-				redirect('medicamentos/expediente/'.$expediente);
-			}
-			else
-			{	
-				redirect('medicamentos/buscador');
-			}
+            $this->session->set_flashdata('message', $this->ion_auth->messages());;
+            // aqui no podemos crear las variables de session, por que se debe activar la cuenta por correo
+			// $this->ion_auth->login($this->input->post('email'), $this->input->post('password'), TRUE);
+			redirect('medicamentos/buscador', 'refresh');
         }
         else
         {

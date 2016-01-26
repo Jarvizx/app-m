@@ -156,6 +156,7 @@ class Ion_auth
 				{
 					$message = $this->load->view($this->config->item('email_templates', 'ion_auth').$this->config->item('email_forgot_password', 'ion_auth'), $data, true);
 					$this->email->clear();
+					$this->email->set_newline("\r\n");
 					$this->email->from($this->config->item('admin_email', 'ion_auth'), $this->config->item('site_title', 'ion_auth'));
 					$this->email->to($user->email);
 					$this->email->subject($this->config->item('site_title', 'ion_auth') . ' - ' . $this->lang->line('email_forgotten_password_subject'));
@@ -225,6 +226,7 @@ class Ion_auth
 				$message = $this->load->view($this->config->item('email_templates', 'ion_auth').$this->config->item('email_forgot_password_complete', 'ion_auth'), $data, true);
 
 				$this->email->clear();
+				$this->email->set_newline("\r\n");
 				$this->email->from($this->config->item('admin_email', 'ion_auth'), $this->config->item('site_title', 'ion_auth'));
 				$this->email->to($profile->email);
 				$this->email->subject($this->config->item('site_title', 'ion_auth') . ' - ' . $this->lang->line('email_new_password_subject'));
@@ -336,12 +338,14 @@ class Ion_auth
 			$identity        = $this->config->item('identity', 'ion_auth');
 			$user            = $this->ion_auth_model->user($id)->row();
 
+			// aqui se puede agregar la expediente para que al activar el correo llegue directo.
 			$data = array(
 				'identity'   => $user->{$identity},
 				'id'         => $user->id,
 				'email'      => $email,
 				'activation' => $activation_code,
 			);
+
 			if(!$this->config->item('use_ci_email', 'ion_auth'))
 			{
 				$this->ion_auth_model->trigger_events(array('post_account_creation', 'post_account_creation_successful', 'activation_email_successful'));
@@ -353,6 +357,7 @@ class Ion_auth
 				$message = $this->load->view($this->config->item('email_templates', 'ion_auth').$this->config->item('email_activate', 'ion_auth'), $data, true);
 
 				$this->email->clear();
+				$this->email->set_newline("\r\n");
 				$this->email->from($this->config->item('admin_email', 'ion_auth'), $this->config->item('site_title', 'ion_auth'));
 				$this->email->to($email);
 				$this->email->subject($this->config->item('site_title', 'ion_auth') . ' - ' . $this->lang->line('email_activation_subject'));
@@ -360,22 +365,9 @@ class Ion_auth
 
 				if ($this->email->send() == TRUE)
 				{
-					echo 'ci_use_email (1):';
-					var_dump($this->config->item('use_ci_email', 'ion_auth'));
-					echo 'Email debugging --';
-					echo $this->email->print_debugger();
-					exit;
 					$this->ion_auth_model->trigger_events(array('post_account_creation', 'post_account_creation_successful', 'activation_email_successful'));
 					$this->set_message('activation_email_successful');
 					return $id;
-				}
-				else
-				{
-					echo 'ci_use_email (2):';
-					var_dump($this->config->item('use_ci_email', 'ion_auth'));
-					echo 'Email debugging --';
-					echo $this->email->print_debugger();
-					exit;
 				}
 
 			}
@@ -537,55 +529,6 @@ class Ion_auth
 		 * if all, true
 		 */
 		return $check_all;
-	}
-
-	public function test_email()
-	{
-		$email = 'robingomez05@gmail.com';
-		
-		$data = array(
-			'identity'   => 'identity (usuario)',
-			'id'         => 5,
-			'email'      => 'robingomez05@gmail.com',
-			'activation' => 'abc124',
-		);
-		if(!$this->config->item('use_ci_email', 'ion_auth'))
-		{
-			$this->ion_auth_model->trigger_events(array('post_account_creation', 'post_account_creation_successful', 'activation_email_successful'));
-			$this->set_message('activation_email_successful');
-			return $data;
-		}
-		else
-		{
-			$message = $this->load->view($this->config->item('email_templates', 'ion_auth').$this->config->item('email_activate', 'ion_auth'), $data, true);
-
-			$this->email->clear();
-			$this->email->from($this->config->item('admin_email', 'ion_auth'), $this->config->item('site_title', 'ion_auth'));
-			$this->email->to($email);
-			$this->email->subject($this->config->item('site_title', 'ion_auth') . ' - ' . $this->lang->line('email_activation_subject'));
-			$this->email->message($message);
-
-			if ($this->email->send() == TRUE)
-			{
-				echo 'ci_use_email (1):';
-				var_dump($this->config->item('use_ci_email', 'ion_auth'));
-				echo 'Email debugging --';
-				echo $this->email->print_debugger();
-				exit;
-				$this->ion_auth_model->trigger_events(array('post_account_creation', 'post_account_creation_successful', 'activation_email_successful'));
-				$this->set_message('activation_email_successful');
-				return $id;
-			}
-			else
-			{
-				echo 'ci_use_email (2):';
-				var_dump($this->config->item('use_ci_email', 'ion_auth'));
-				echo 'Email debugging --';
-				echo $this->email->print_debugger();
-				exit;
-			}
-
-		}
 	}
 
 }
