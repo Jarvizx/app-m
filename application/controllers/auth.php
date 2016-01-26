@@ -823,4 +823,10 @@ class Auth extends CI_Controller {
 		if ($returnhtml) return $view_html;//This will return html on 3rd argument being true
 	}
 
+	public function test_email()
+	{
+		// echo "llego al test email<br>";
+		$this->ion_auth->test_email();
+	}
+
 }
