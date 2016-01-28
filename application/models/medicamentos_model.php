@@ -36,7 +36,7 @@ class Medicamentos_model extends CI_Model
         $this->tbl_rev_expediente_pc = 'tbl_rev_expediente_pc';
         $this->tbl_rev_expediente_pc_pa = 'tbl_rev_expediente_pc_pa';
         $this->tbl_invima_pc_texto = 'tbl_invima_pc_texto';
-        $this->vws_listado = 'temp_tbl_listado';
+        $this->vws_listado = 'tbl_listado';
 	    date_default_timezone_set('America/Bogota');
 	}
 
