@@ -148,6 +148,7 @@ class Medicamentos_model extends CI_Model
         if ( ! empty($expediente)) 
         {
             return $this->db->get_where($this->vws_consolidado_edicion_agrupado, $expediente);
+            // echo "SQL: " . $this->db->last_query();
         }
     }
 

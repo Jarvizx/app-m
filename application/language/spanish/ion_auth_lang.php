@@ -36,7 +36,7 @@ $lang['activate_successful'] 		  	     = 'Cuenta activada con éxito';
 $lang['activate_unsuccessful'] 		 	     = 'No se ha podido activar la cuenta';
 $lang['deactivate_successful'] 		  	     = 'Cuenta desactivada con éxito';
 $lang['deactivate_unsuccessful'] 	  	     = 'No se ha podido desactivar la cuenta';
-$lang['activation_email_successful'] 	  	 = 'Email de activación enviado';
+$lang['activation_email_successful'] 	  	 = 'Se ha enviado un correo para activar su cuenta. Si no lo recibe, comprueba que no este en la carpeta de correo no deseado.';
 $lang['activation_email_unsuccessful']   	 = 'No se ha podido enviar el email de activación';
 
 // Login / Logout

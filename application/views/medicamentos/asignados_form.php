@@ -1,23 +1,21 @@
 <?php 
-//echo '<br>mostrar_input_correo '.$mostrar_input_correo;
-//echo '<br>es_anonimo '.$es_anonimo;
-/*if ($mostrar_input_correo == true && $es_anonimo == 0) 
-{
-	// Si no es usuario anomino y tampoco tiene algun correo por get, cargo esta vista
-	redirec('medicamentos/buscador');
-	// $this->layout->view('medicamentos/inscribir_correo',null);
-	exit();
-}*/
-
-/* 
-	funcion mostrar_texto_comentarios, por cada campo del formulario se consulta si tiene un comentario
-	$comentarios 			array
-	$nombre_campo 			string
-	$es_array_multiple		bool
-	$llave					int
-*/
-	function mostrar_texto_comentarios($comentarios, $nombre_campo, $es_array_multiple = false, $llave)
+	
+	// defino globales que necesito en las funciones de esta vista
+	$GLOBALS['comentarios'] 	= $comentarios;
+	$GLOBALS['idGrupoUsuario'] 	= $grupoUsuario['id'];
+	
+	// valores que necesito en el formulario
+	$valores_tbl_rev_expedientes 		= $tbl_rev_expedientes->row();
+	$valores_tbl_invima_medicamento 	= $tbl_invima_medicamento->row();
+	/* 
+		funcion mostrar_texto_comentarios(), por cada campo del formulario se consulta si tiene un comentario
+		$nombre_campo 			string
+		$es_array_multiple		bool
+		$llave					int
+	*/
+	function mostrar_texto_comentarios($nombre_campo, $es_array_multiple = false, $llave)
 	{
+		$comentarios = $GLOBALS['comentarios'];
 		if ( ! empty($comentarios[$nombre_campo])) 
 		{
 			if ($es_array_multiple) 
@@ -36,9 +34,38 @@
 			}
 		}
 	}
+
+	/*
+		funcion formulario_comentarios(), en cada input, existe un mini-formulario
+		$tipoComentario 		string
+		$clase                 	string (opcional) 
+	*/
+	function formulario_comentarios($tipoComentario, $clase)
+	{
+		$formuario = sprintf('<form tipoComentario="%s" data-comentario=\'{"clase": "%s"}\'>', $tipoComentario, $clase);
+		$formuario .= '<b>Comentario: </b><br>';
+		$formuario .= '<textarea rows="1" cols="40" class="form-control" name="comentario"></textarea><br>';
+		$formuario .= '<input type="radio" name="estado_revision" value="Ok"> Ok ';
+		
+		// donde 1 es admin, 2 es ministerio, 3 el coordinador, 4 digitador, 5 externo
+		if (in_array($GLOBALS['idGrupoUsuario'], array(1,2,3,4))) 
+		{		
+			// los usuarios administrador, coordinador, ministerio y digitador, tienen esta opcion
+			$formuario .= '<input type="radio" name="estado_revision" value="Rev. Lab"> Rev. Lab ';
+			$formuario .= '<input type="radio" name="estado_revision" value="Rev. Super"> Rev. Super ';
+			$formuario .= '<input type="radio" name="estado_revision" value="Pendiente"> Pendiente ';
+		}
+		else
+		{
+			// los usuarios externos y de laboratorio solo tiene esta opcion
+			$formuario .= '<input type="radio" name="estado_revision" value="Comentario"> Comentario ';	
+		}
+		
+		$formuario .= '</form>';
+
+		return $formuario;
+	}
 ?>
-<?php $valores_tbl_rev_expedientes = $tbl_rev_expedientes->row(); ?>
-<?php $valores_tbl_invima_medicamento = $tbl_invima_medicamento->row(); ?>
 <div class="img-expediente">
 	<img class="img-google-1 img-thum">
 	<img class="img-google-2 img-thum">
@@ -83,18 +110,11 @@
 			 	<input type="hidden" class="nombre_del_producto_invima" value="<?= $valores_tbl_invima_medicamento->nombre_del_producto; ?>">
 			 	<hr>
 			 	<div class="comentario">
-			 		<?= mostrar_texto_comentarios($comentarios,'MarcaSignoDistintivoComercial', false, null); ?>
+			 		<?= mostrar_texto_comentarios('MarcaSignoDistintivoComercial', false, null); ?>
 			 	</div>
 			</td>
 			<td>
-				<form tipoComentario="comentario_en_td_solo" data-comentario='{"clase": "MarcaSignoDistintivoComercial"}'>
-					<b>Comentario: </b><br>
-					<textarea rows="1" cols="40" class="form-control" name="comentario"></textarea><br>
-					<input class="r_nombre_del_producto_invima" type="radio" name="estado_revision" value="Ok"> Ok 
-					<input class="r_nombre_del_producto_invima" type="radio" name="estado_revision" value="Rev. Lab"> Rev. Lab 
-					<input class="r_nombre_del_producto_invima" type="radio" name="estado_revision" value="Rev. Super"> Rev. Super 
-					<input class="r_nombre_del_producto_invima" type="radio" name="estado_revision" value="Pendiente"> Pendiente 					
-				</form>
+				<?= formulario_comentarios('comentario_en_td_solo', 'MarcaSignoDistintivoComercial');?>
 			</td>
 		</tr>
 		<!---->
@@ -133,19 +153,11 @@
 				<input type="hidden" class="IdentificadorFormaComercializacion" data-json='{"tabla":"tbl_rev_expedientes", "llave":"<?= $valores_tbl_rev_expedientes->id ?>", "valor_viejo":"<?= $valor_actual_IdentificadorFormaComercializacion; ?>", "campo":"IdentificadorFormaComercializacion"}' value='{"tabla":"tbl_rev_expedientes", "llave":"<?= $valores_tbl_rev_expedientes->id ?>", "valor_viejo":"<?= $valor_actual_IdentificadorFormaComercializacion; ?>", "campo":"IdentificadorFormaComercializacion"}'>
 				<hr>
 				<div class="comentario">
-			 		<?= mostrar_texto_comentarios($comentarios,'IdentificadorFormaComercializacion', false, null); ?>
+			 		<?= mostrar_texto_comentarios('IdentificadorFormaComercializacion', false, null); ?>
 				</div>
 			</td>
 			<td>
-				<?php //echo $valores_tbl_invima_medicamento->generico; ?>
-				<form tipoComentario="comentario_en_td_solo" data-comentario='{"clase": "IdentificadorFormaComercializacion"}'>
-					<textarea rows="1" cols="40" class="form-control" name="comentario"></textarea><br>
-					<input type="radio" name="estado_revision" value="Ok"> Ok 
-					<input type="radio" name="estado_revision" value="Rev. Lab"> Rev. Lab 
-					<input type="radio" name="estado_revision" value="Rev. Super"> Rev. Super 
-					<input type="radio" name="estado_revision" value="Pendiente"> Pendiente 					
-				</form>
-			</td>
+				<?= formulario_comentarios('comentario_en_td_solo', 'IdentificadorFormaComercializacion');?>
 		</tr>
 		<!---->
 		<tr>
@@ -192,18 +204,11 @@
 				<b>Invima: </b><?php echo $valores_tbl_invima_medicamento->forma_farmaceutica; ?>
 				<hr>
 				<div class="comentario">
-			 		<?= mostrar_texto_comentarios($comentarios,'CodigoFormaFarmaceutica', false, null); ?>
+			 		<?= mostrar_texto_comentarios('CodigoFormaFarmaceutica', false, null); ?>
 				</div>
 			</td>
 			<td>
-				<form tipoComentario="comentario_en_td_solo" data-comentario='{"clase": "CodigoFormaFarmaceutica"}'>
-					<b>Comentario: </b><br>
-					<textarea rows="1" cols="40" class="form-control" name="comentario"></textarea><br>
-					<input type="radio" name="estado_revision" value="Ok"> Ok 
-					<input type="radio" name="estado_revision" value="Rev. Lab"> Rev. Lab 
-					<input type="radio" name="estado_revision" value="Rev. Super"> Rev. Super 
-					<input type="radio" name="estado_revision" value="Pendiente"> Pendiente 					
-				</form>
+				<?= formulario_comentarios('comentario_en_td_solo', 'CodigoFormaFarmaceutica');?>
 			</td>
 		</tr>
 		<!---->
@@ -258,18 +263,11 @@
 				<b>Invima: </b><?php echo $valores_tbl_invima_medicamento->ViasAdministracion; ?>
 				<hr>
 				<div class="comentario">
-			 		<?= mostrar_texto_comentarios($comentarios,'CodigoViaAdministracion', false, null); ?>
+			 		<?= mostrar_texto_comentarios('CodigoViaAdministracion', false, null); ?>
 				</div>
 			</td>
 			<td>
-				<form tipoComentario="comentario_en_td_solo" data-comentario='{"clase": "codigo_via_administracion"}'>
-					<b>Comentario: </b><br>
-					<textarea rows="1" cols="40" class="form-control" name="comentario"></textarea><br>
-					<input type="radio" name="estado_revision" value="Ok"> Ok 
-					<input type="radio" name="estado_revision" value="Rev. Lab"> Rev. Lab 
-					<input type="radio" name="estado_revision" value="Rev. Super"> Rev. Super 
-					<input type="radio" name="estado_revision" value="Pendiente"> Pendiente 					
-				</form>
+				<?= formulario_comentarios('comentario_en_td_solo', 'codigo_via_administracion');?>
 			</td>
 		</tr>
 	</tbody>
@@ -322,16 +320,9 @@
 						<?php endforeach ?> 
 					</select>
 					<p class="comentario">
-					<?= mostrar_texto_comentarios($comentarios,'NombrePrincipioActivo', true, $v_tbl_rev_expediente_pa->id); ?>	
+						<?= mostrar_texto_comentarios('NombrePrincipioActivo', true, $v_tbl_rev_expediente_pa->id); ?>	
 					</p>
-					<form tipoComentario="comentario_en_td_con_el_input">
-						<b>Comentario: </b><br>
-						<textarea rows="1" cols="40" class="form-control" name="comentario"></textarea><br>
-						<input type="radio" name="estado_revision" value="Ok"> Ok 
-						<input type="radio" name="estado_revision" value="Rev. Lab"> Rev. Lab 
-						<input type="radio" name="estado_revision" value="Rev. Super"> Rev. Super 
-						<input type="radio" name="estado_revision" value="Pendiente"> Pendiente 						
-					</form>
+					<?= formulario_comentarios('comentario_en_td_con_el_input', null);?>					
 				</td>
 				<td>
 					<select class="form_app_m" name="IdentificadorTipoConcentracionEstandarizada" data-json='{"tabla":"tbl_rev_expediente_pa", "llave":"<?= $v_tbl_rev_expediente_pa->id ?>", "valor_viejo":"<?= $v_tbl_rev_expediente_pa->IdentificadorTipoConcentracionEstandarizada; ?>", "campo":"IdentificadorTipoConcentracionEstandarizada"}'>
@@ -352,30 +343,17 @@
 						?>
 					</select>
 					<p class="comentario">
-					<?= mostrar_texto_comentarios($comentarios,'IdentificadorTipoConcentracionEstandarizada', true, $v_tbl_rev_expediente_pa->id); ?>	
+						<?= mostrar_texto_comentarios('IdentificadorTipoConcentracionEstandarizada', true, $v_tbl_rev_expediente_pa->id); ?>	
 					</p>
-					<form tipoComentario="comentario_en_td_con_el_input">
-						<b>Comentario: </b><br>
-						<textarea rows="1" cols="40" class="form-control" name="comentario"></textarea><br>
-						<input type="radio" name="estado_revision" value="Ok"> Ok 
-						<input type="radio" name="estado_revision" value="Rev. Lab"> Rev. Lab 
-						<input type="radio" name="estado_revision" value="Rev. Super"> Rev. Super 
-						<input type="radio" name="estado_revision" value="Pendiente"> Pendiente 						
-					</form>
+					<?= formulario_comentarios('comentario_en_td_con_el_input', null);?>
 				</td>
 				<td>
 					<input type="text" class="form_app_m CantidadEstandarizadaPrincipioActivo" name="CantidadEstandarizadaPrincipioActivo" data-json='{"tabla":"tbl_rev_expediente_pa", "llave":"<?= $v_tbl_rev_expediente_pa->id ?>", "valor_viejo":"<?= $v_tbl_rev_expediente_pa->CantidadEstandarizadaPrincipioActivo; ?>", "campo":"CantidadEstandarizadaPrincipioActivo"}' value="<?= $v_tbl_rev_expediente_pa->CantidadEstandarizadaPrincipioActivo; ?>">
 					<p class="comentario">
-					<?= mostrar_texto_comentarios($comentarios,'CantidadEstandarizadaPrincipioActivo', true, $v_tbl_rev_expediente_pa->id); ?>	
+					<?= mostrar_texto_comentarios('CantidadEstandarizadaPrincipioActivo', true, $v_tbl_rev_expediente_pa->id); ?>	
 					</p>
-					<form tipoComentario="comentario_en_td_con_el_input">
-						<b>Comentario: </b><br>
-						<textarea rows="1" cols="40" class="form-control" name="comentario"></textarea><br>
-						<input type="radio" name="estado_revision" value="Ok"> Ok 
-						<input type="radio" name="estado_revision" value="Rev. Lab"> Rev. Lab 
-						<input type="radio" name="estado_revision" value="Rev. Super"> Rev. Super 
-						<input type="radio" name="estado_revision" value="Pendiente"> Pendiente 						
-					</form>
+					<?= formulario_comentarios('comentario_en_td_con_el_input', null);?>
+					
 				</td>
 				<td>
 					<select class="form_app_m" name="CodigoUnidadMedidaEstandarizadaPrincipioActivo" data-json='{"tabla":"tbl_rev_expediente_pa", "llave":"<?= $v_tbl_rev_expediente_pa->id ?>", "valor_viejo":"<?= $v_tbl_rev_expediente_pa->CodigoUnidadMedidaEstandarizadaPrincipioActivo; ?>", "campo":"CodigoUnidadMedidaEstandarizadaPrincipioActivo"}'>
@@ -396,30 +374,17 @@
 						?>
 					</select>
 					<p class="comentario">
-					<?= mostrar_texto_comentarios($comentarios,'CodigoUnidadMedidaEstandarizadaPrincipioActivo', true, $v_tbl_rev_expediente_pa->id); ?>	
+						<?= mostrar_texto_comentarios('CodigoUnidadMedidaEstandarizadaPrincipioActivo', true, $v_tbl_rev_expediente_pa->id); ?>	
 					</p>
-					<form tipoComentario="comentario_en_td_con_el_input">
-						<b>Comentario: </b><br>
-						<textarea rows="1" cols="40" class="form-control" name="comentario"></textarea><br>
-						<input type="radio" name="estado_revision" value="Ok"> Ok 
-						<input type="radio" name="estado_revision" value="Rev. Lab"> Rev. Lab 
-						<input type="radio" name="estado_revision" value="Rev. Super"> Rev. Super 
-						<input type="radio" name="estado_revision" value="Pendiente"> Pendiente 						
-					</form>
+					<?= formulario_comentarios('comentario_en_td_con_el_input', null);?>
 				</td>
 				<td>
 					<input type="text" class="form_app_m CantidadEstandarizadaMedicamentoContenidoPrincipioActivo" name="CantidadEstandarizadaMedicamentoContenidoPrincipioActivo" data-json='{"tabla":"tbl_rev_expediente_pa", "llave":"<?= $v_tbl_rev_expediente_pa->id ?>", "valor_viejo":"<?= $v_tbl_rev_expediente_pa->CantidadEstandarizadaMedicamentoContenidoPrincipioActivo; ?>", "campo":"CantidadEstandarizadaMedicamentoContenidoPrincipioActivo"}' value="<?= $v_tbl_rev_expediente_pa->CantidadEstandarizadaMedicamentoContenidoPrincipioActivo; ?>">
 					<p class="comentario">
-					<?= mostrar_texto_comentarios($comentarios,'CantidadEstandarizadaMedicamentoContenidoPrincipioActivo', true, $v_tbl_rev_expediente_pa->id); ?>	
+					<?= mostrar_texto_comentarios('CantidadEstandarizadaMedicamentoContenidoPrincipioActivo', true, $v_tbl_rev_expediente_pa->id); ?>	
 					</p>
-					<form tipoComentario="comentario_en_td_con_el_input">
-						<b>Comentario: </b><br>
-						<textarea rows="1" cols="40" class="form-control" name="comentario"></textarea><br>
-						<input type="radio" name="estado_revision" value="Ok"> Ok 
-						<input type="radio" name="estado_revision" value="Rev. Lab"> Rev. Lab 
-						<input type="radio" name="estado_revision" value="Rev. Super"> Rev. Super 
-						<input type="radio" name="estado_revision" value="Pendiente"> Pendiente 						
-					</form>
+					<?= formulario_comentarios('comentario_en_td_con_el_input', null);?>
+					
 				</td>
 				<td>
 					<select class="form_app_m" name="CodigoUnidadMedidaEstandarizadaMedicamentoPrincipioActivo" data-json='{"tabla":"tbl_rev_expediente_pa", "llave":"<?= $v_tbl_rev_expediente_pa->id ?>", "valor_viejo":"<?= $v_tbl_rev_expediente_pa->CodigoUnidadMedidaEstandarizadaMedicamentoPrincipioActivo; ?>", "campo":"CodigoUnidadMedidaEstandarizadaMedicamentoPrincipioActivo"}'>
@@ -440,16 +405,9 @@
 						?>
 					</select>
 					<p class="comentario">
-					<?= mostrar_texto_comentarios($comentarios,'CodigoUnidadMedidaEstandarizadaMedicamentoPrincipioActivo', true, $v_tbl_rev_expediente_pa->id); ?>	
+						<?= mostrar_texto_comentarios('CodigoUnidadMedidaEstandarizadaMedicamentoPrincipioActivo', true, $v_tbl_rev_expediente_pa->id); ?>	
 					</p>
-					<form tipoComentario="comentario_en_td_con_el_input">
-						<b>Comentario: </b><br>
-						<textarea rows="1" cols="40" class="form-control" name="comentario"></textarea><br>
-						<input type="radio" name="estado_revision" value="Ok"> Ok 
-						<input type="radio" name="estado_revision" value="Rev. Lab"> Rev. Lab 
-						<input type="radio" name="estado_revision" value="Rev. Super"> Rev. Super 
-						<input type="radio" name="estado_revision" value="Pendiente"> Pendiente 						
-					</form>
+					<?= formulario_comentarios('comentario_en_td_con_el_input', null);?>
 				</td>
 			</tr>
 		<?php endforeach ?>
@@ -672,30 +630,18 @@
 				</select>
 				
 				<p class="comentario">
-					<?= mostrar_texto_comentarios($comentarios,'CodigoUnidadContenido', true, $v_tbl_rev_expediente_pc->id); ?>
+					<?= mostrar_texto_comentarios('CodigoUnidadContenido', true, $v_tbl_rev_expediente_pc->id); ?>
 				</p>
-				<form tipoComentario="comentario_en_td_con_el_input">
-					<b>Comentario: </b><br>
-					<textarea rows="1" cols="40" class="form-control" name="comentario"></textarea><br>
-					<input type="radio" name="estado_revision" value="Ok"> Ok 
-					<input type="radio" name="estado_revision" value="Rev. Lab"> Rev. Lab 
-					<input type="radio" name="estado_revision" value="Rev. Super"> Rev. Super 
-					<input type="radio" name="estado_revision" value="Pendiente"> Pendiente 					
-				</form>
+					<?= formulario_comentarios('comentario_en_td_con_el_input', null);?>
+				
 			</td>
 			<td class="<?= $color_td_CapacidadUnidadContenido; ?>">
 				<input type="text" class="form_app_m CapacidadUnidadContenido" name="CapacidadUnidadContenido" data-json='{"tabla":"tbl_rev_expediente_pc", "llave":"<?= $v_tbl_rev_expediente_pc->id ?>", "valor_viejo":"<?= $v_tbl_rev_expediente_pc->CapacidadUnidadContenido; ?>", "campo":"CapacidadUnidadContenido"}' value="<?= $v_tbl_rev_expediente_pc->CapacidadUnidadContenido; ?>">
 				<p class="comentario">
-					<?= mostrar_texto_comentarios($comentarios,'CapacidadUnidadContenido', true, $v_tbl_rev_expediente_pc->id); ?>
+					<?= mostrar_texto_comentarios('CapacidadUnidadContenido', true, $v_tbl_rev_expediente_pc->id); ?>
 				</p>
-				<form tipoComentario="comentario_en_td_con_el_input">
-					<b>Comentario: </b><br>
-					<textarea rows="1" cols="40" class="form-control" name="comentario"></textarea><br>
-					<input type="radio" name="estado_revision" value="Ok"> Ok 
-					<input type="radio" name="estado_revision" value="Rev. Lab"> Rev. Lab 
-					<input type="radio" name="estado_revision" value="Rev. Super"> Rev. Super 
-					<input type="radio" name="estado_revision" value="Pendiente"> Pendiente 					
-				</form>
+					<?= formulario_comentarios('comentario_en_td_con_el_input', null);?>
+				
 			</td>
 			<td class="<?= $color_td_CodigoUnidadCapacidad;?>">
 				<select class="form_app_m" name="CodigoUnidadCapacidad" data-json='{"tabla":"tbl_rev_expediente_pc", "llave":"<?= $v_tbl_rev_expediente_pc->id ?>", "valor_viejo":"<?= $v_tbl_rev_expediente_pc->CodigoUnidadCapacidad; ?>", "campo":"CodigoUnidadCapacidad"}'>
@@ -706,16 +652,10 @@
 				</select>
 				
 				<p class="comentario">
-					<?= mostrar_texto_comentarios($comentarios,'CodigoUnidadCapacidad', true, $v_tbl_rev_expediente_pc->id); ?>
+					<?= mostrar_texto_comentarios('CodigoUnidadCapacidad', true, $v_tbl_rev_expediente_pc->id); ?>
 				</p>
-				<form tipoComentario="comentario_en_td_con_el_input">
-					<b>Comentario: </b><br>
-					<textarea rows="1" cols="40" class="form-control" name="comentario"></textarea><br>
-					<input type="radio" name="estado_revision" value="Ok"> Ok 
-					<input type="radio" name="estado_revision" value="Rev. Lab"> Rev. Lab 
-					<input type="radio" name="estado_revision" value="Rev. Super"> Rev. Super 
-					<input type="radio" name="estado_revision" value="Pendiente"> Pendiente 					
-				</form>
+					<?= formulario_comentarios('comentario_en_td_con_el_input', null);?>
+				
 			</td>
 			<td class="<?= $color_td_CodigoEmpaque;?>">
 				<select class="form_app_m" name="CodigoEmpaque" data-json='{"tabla":"tbl_rev_expediente_pc", "llave":"<?= $v_tbl_rev_expediente_pc->id ?>", "valor_viejo":"<?= $v_tbl_rev_expediente_pc->CodigoEmpaque; ?>", "campo":"CodigoEmpaque"}'>
@@ -726,30 +666,18 @@
 				</select>
 				
 				<p class="comentario">
-					<?= mostrar_texto_comentarios($comentarios,'CodigoEmpaque', true, $v_tbl_rev_expediente_pc->id); ?>
+					<?= mostrar_texto_comentarios('CodigoEmpaque', true, $v_tbl_rev_expediente_pc->id); ?>
 				</p>
-				<form tipoComentario="comentario_en_td_con_el_input">
-					<b>Comentario: </b><br>
-					<textarea rows="1" cols="40" class="form-control" name="comentario"></textarea><br>
-					<input type="radio" name="estado_revision" value="Ok"> Ok 
-					<input type="radio" name="estado_revision" value="Rev. Lab"> Rev. Lab 
-					<input type="radio" name="estado_revision" value="Rev. Super"> Rev. Super 
-					<input type="radio" name="estado_revision" value="Pendiente"> Pendiente 					
-				</form>
+					<?= formulario_comentarios('comentario_en_td_con_el_input', null);?>
+				
 			</td>
 			<td class="<?= $color_td_CantidadUnidadesContenidoEmpaque;?>">
 				<input type="text" class="form_app_m CantidadUnidadesContenidoEmpaque" name="CantidadUnidadesContenidoEmpaque" data-json='{"tabla":"tbl_rev_expediente_pc", "llave":"<?= $v_tbl_rev_expediente_pc->id ?>", "valor_viejo":"<?= $v_tbl_rev_expediente_pc->CantidadUnidadesContenidoEmpaque; ?>", "campo":"CantidadUnidadesContenidoEmpaque"}' value="<?= $v_tbl_rev_expediente_pc->CantidadUnidadesContenidoEmpaque; ?>">
 				<p class="comentario">
-					<?= mostrar_texto_comentarios($comentarios,'CantidadUnidadesContenidoEmpaque', true, $v_tbl_rev_expediente_pc->id); ?>
+					<?= mostrar_texto_comentarios('CantidadUnidadesContenidoEmpaque', true, $v_tbl_rev_expediente_pc->id); ?>
 				</p>
-				<form tipoComentario="comentario_en_td_con_el_input">
-					<b>Comentario: </b><br>
-					<textarea rows="1" cols="40" class="form-control" name="comentario"></textarea><br>
-					<input type="radio" name="estado_revision" value="Ok"> Ok 
-					<input type="radio" name="estado_revision" value="Rev. Lab"> Rev. Lab 
-					<input type="radio" name="estado_revision" value="Rev. Super"> Rev. Super 
-					<input type="radio" name="estado_revision" value="Pendiente"> Pendiente 					
-				</form>
+					<?= formulario_comentarios('comentario_en_td_con_el_input', null);?>
+				
 			</td>
 			<td class="<?= $color_td_IdentificadorCondicionEstarRegistradoComoMuestraMedica;?>">
 				<select class="form_app_m" name="IdentificadorCondicionEstarRegistradoComoMuestraMedica" data-json='{"tabla":"tbl_rev_expediente_pc", "llave":"<?= $v_tbl_rev_expediente_pc->id ?>", "valor_viejo":"<?= $v_tbl_rev_expediente_pc->IdentificadorCondicionEstarRegistradoComoMuestraMedica; ?>", "campo":"IdentificadorCondicionEstarRegistradoComoMuestraMedica"}'>
@@ -760,31 +688,19 @@
 				</select>
 				
 				<p class="comentario">
-					<?= mostrar_texto_comentarios($comentarios,'IdentificadorCondicionEstarRegistradoComoMuestraMedica', true, $v_tbl_rev_expediente_pc->id); ?>
+					<?= mostrar_texto_comentarios('IdentificadorCondicionEstarRegistradoComoMuestraMedica', true, $v_tbl_rev_expediente_pc->id); ?>
 				</p>
-				<form tipoComentario="comentario_en_td_con_el_input">
-					<b>Comentario: </b><br>
-					<textarea rows="1" cols="40" class="form-control" name="comentario"></textarea><br>
-					<input type="radio" name="estado_revision" value="Ok"> Ok 
-					<input type="radio" name="estado_revision" value="Rev. Lab"> Rev. Lab 
-					<input type="radio" name="estado_revision" value="Rev. Super"> Rev. Super 
-					<input type="radio" name="estado_revision" value="Pendiente"> Pendiente 					
-				</form>
+					<?= formulario_comentarios('comentario_en_td_con_el_input', null);?>
+				
 			</td>
 			<!-- Nuevo 19 enero, dispositivo -->
 			<td class="<?= $color_td_DispositivosAsociados; ?>">
 				<input type="text" class="form_app_m DispositivosAsociados" name="DispositivosAsociados" data-json='{"tabla":"tbl_rev_expediente_pc", "llave":"<?= $v_tbl_rev_expediente_pc->id ?>", "valor_viejo":"<?= $v_tbl_rev_expediente_pc->DispositivosAsociados; ?>", "campo":"DispositivosAsociados"}' value="<?= $v_tbl_rev_expediente_pc->DispositivosAsociados; ?>">
 				<p class="comentario">
-					<?= mostrar_texto_comentarios($comentarios,'DispositivosAsociados', true, $v_tbl_rev_expediente_pc->id); ?>
+					<?= mostrar_texto_comentarios('DispositivosAsociados', true, $v_tbl_rev_expediente_pc->id); ?>
 				</p>
-				<form tipoComentario="comentario_en_td_con_el_input">
-					<b>Comentario: </b><br>
-					<textarea rows="1" cols="40" class="form-control" name="comentario"></textarea><br>
-					<input type="radio" name="estado_revision" value="Ok"> Ok 
-					<input type="radio" name="estado_revision" value="Rev. Lab"> Rev. Lab 
-					<input type="radio" name="estado_revision" value="Rev. Super"> Rev. Super 
-					<input type="radio" name="estado_revision" value="Pendiente"> Pendiente 					
-				</form>
+					<?= formulario_comentarios('comentario_en_td_con_el_input', null);?>
+				
 			</td>
 			<!-- IdentificadorMarca -->
 			<td class="<?= $color_td_IdentificadorMarca;?>">
@@ -796,16 +712,10 @@
 				</select>
 				
 				<p class="comentario">
-					<?= mostrar_texto_comentarios($comentarios,'IdentificadorMarca', true, $v_tbl_rev_expediente_pc->id); ?>
+					<?= mostrar_texto_comentarios('IdentificadorMarca', true, $v_tbl_rev_expediente_pc->id); ?>
 				</p>
-				<form tipoComentario="comentario_en_td_con_el_input">
-					<b>Comentario: </b><br>
-					<textarea rows="1" cols="40" class="form-control" name="comentario"></textarea><br>
-					<input type="radio" name="estado_revision" value="Ok"> Ok 
-					<input type="radio" name="estado_revision" value="Rev. Lab"> Rev. Lab 
-					<input type="radio" name="estado_revision" value="Rev. Super"> Rev. Super 
-					<input type="radio" name="estado_revision" value="Pendiente"> Pendiente 					
-				</form>
+					<?= formulario_comentarios('comentario_en_td_con_el_input', null);?>
+				
 			</td>
 			<!-- /19 enero -->
 
@@ -849,16 +759,10 @@
 			<td class="<?= $color_td_CantidadPrincipioActivoPresentacionComercial;?>">
 				<input type="text" class="form_app_m CantidadPrincipioActivoPresentacionComercial" name="CantidadPrincipioActivoPresentacionComercial" data-json='{"tabla":"tbl_rev_expediente_pc_pa", "llave":"<?= $v_tbl_rev_expediente_pc_pa->id ?>", "valor_viejo":"<?= $v_tbl_rev_expediente_pc_pa->CantidadPrincipioActivoPresentacionComercial; ?>", "campo":"CantidadPrincipioActivoPresentacionComercial"}' value="<?= $v_tbl_rev_expediente_pc_pa->CantidadPrincipioActivoPresentacionComercial; ?>">
 				<p class="comentario">
-					<?= mostrar_texto_comentarios($comentarios,'CantidadPrincipioActivoPresentacionComercial', true, $v_tbl_rev_expediente_pc_pa->id); ?>
+					<?= mostrar_texto_comentarios('CantidadPrincipioActivoPresentacionComercial', true, $v_tbl_rev_expediente_pc_pa->id); ?>
 				</p>
-				<form tipoComentario="comentario_en_td_con_el_input">
-					<b>Comentario: </b><br>
-					<textarea rows="1" cols="40" class="form-control" name="comentario"></textarea><br>
-					<input type="radio" name="estado_revision" value="Ok"> Ok 
-					<input type="radio" name="estado_revision" value="Rev. Lab"> Rev. Lab 
-					<input type="radio" name="estado_revision" value="Rev. Super"> Rev. Super 
-					<input type="radio" name="estado_revision" value="Pendiente"> Pendiente 					
-				</form>
+					<?= formulario_comentarios('comentario_en_td_con_el_input', null);?>
+				
 			</td>
 		</tr>
 		<?php endforeach ?>
@@ -1140,5 +1044,8 @@
 	    top: 1em;
 	    right: 1em;
 	    width: 2.5em;
+	}
+	td > b{
+	    margin-right: 0.2em;
 	}
 </style>

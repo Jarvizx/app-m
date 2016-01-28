@@ -9,3 +9,7 @@ no_commit/a.php
 application/config/email.php
 
 no_commit/Tareas.txt
+
+application/config/ion_auth.php
+
+*.DS_Store

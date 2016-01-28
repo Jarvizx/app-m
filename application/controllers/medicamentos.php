@@ -124,10 +124,12 @@ class Medicamentos extends CI_Controller {
 			if ( ! $this->ion_auth->logged_in() && empty($this->correo_usuario_externo))
 			{
 				$datos['mostrar_input_correo'] = true;
+				$datos['grupoUsuario']['id'] = 0;
 			}
 			else
 			{
 				$datos['mostrar_input_correo'] = false;
+				$datos['grupoUsuario'] = (array) reset($this->ion_auth->get_users_groups($this->user->id)->result());
 			}
 			$datos['es_anonimo'] = $es_anonimo;
 
@@ -206,6 +208,7 @@ class Medicamentos extends CI_Controller {
 					$datos['comentarios'][$v_comentarios->campo][] = $v_comentarios;
 				}
 
+
 				$this->layout->view('medicamentos/asignados_form',$datos);
 			}
 			else
@@ -259,9 +262,9 @@ class Medicamentos extends CI_Controller {
 			}
 			else
 			{
-				$usuario = 5; // id usuario externo 
-				$nivel 	 = 5; // id grupo usuario externo
-				$nombre_nivel = 'externo'; // id grupo usuario externo
+				$usuario = 29; // id usuario anonimo
+				$nivel 	 = 6; // id grupo usuario anonimo
+				$nombre_nivel = 'anonimo'; // id grupo usuario anonimo
 			}
 
 			$decode_valores_json = $this->input->post('valores_JSON');
@@ -329,9 +332,9 @@ class Medicamentos extends CI_Controller {
 			}
 			else
 			{
-				$usuario = 5; // id usuario externo 
-				$nivel 	 = 5; // id grupo usuario externo
-				$nombre_nivel = 'externo'; // id grupo usuario externo
+				$usuario = 29; // id usuario anonimo
+				$nivel 	 = 6; // id grupo usuario anonimo
+				$nombre_nivel = 'anonimo'; // id grupo usuario externo
 			}
 
 			$comentario_por_guardar = array(
@@ -350,7 +353,7 @@ class Medicamentos extends CI_Controller {
 
 			$id_ultimo_comentario = $this->medicamentos_model->guardar_tbl_comentarios($comentario_por_guardar);
 			$comentario = $this->medicamentos_model->consultar_historial_comentarios(array(
-				'expediente' => $this->input->post('expediente'), 
+				'llave' => $this->input->post('llave'), 
 				'campo' 	 => $this->input->post('campo')
 			))->row();
 			// select * from vws_consolidado_edicion_agrupado where campo = 'MarcaSignoDistintivoComercial' and expediente = 2202
@@ -624,50 +627,5 @@ class Medicamentos extends CI_Controller {
             return $this->data;
         }
     }
-
-	public function enviar_correo()
-	{
-		if (! empty($this->input->post('correo'))) 
-		{
-			/*$this->load->library('email');
-
-            $subject = 'This is a test';
-            $message = '<p>This message has been sent for testing purposes.</p>';
-
-            // Get full html:
-            $body =
-			'<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-			<html xmlns="http://www.w3.org/1999/xhtml">
-			<head>
-			    <meta http-equiv="Content-Type" content="text/html; charset='.strtolower(config_item('charset')).'" />
-			    <title>'.html_escape($subject).'</title>
-			    <style type="text/css">
-			        body {
-			            font-family: Arial, Verdana, Helvetica, sans-serif;
-			            font-size: 16px;
-			        }
-			    </style>
-			</head>
-			<body>
-			'.$message.'
-			</body>
-			</html>';
-            // Also, for getting full html you may use the following internal method:
-            //$body = $this->email->full_html($subject, $message);
-
-            $result = $this->email
-                ->from('robingomez05@gmail.com')
-                ->to('robinson.buitrago@cibercolegios.com')
-                ->subject($subject)
-                ->message($body)
-                ->send();
-
-            var_dump($result);
-            echo '<br />';
-            echo $this->email->print_debugger();
-
-            exit;*/
-		}
-	}
 
 }
