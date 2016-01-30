@@ -33,7 +33,7 @@ a {
 a:hover {
 	text-decoration: underline;
 }
-input.sort_ajax {
+input.inline_edit {
     font-size: 16px;
     margin: 0.5em;
 }

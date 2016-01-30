@@ -31,6 +31,7 @@
 			<td width='<?php echo $column_width?>%' class='<?php if(isset($order_by[0]) &&  $column->field_name == $order_by[0]){?>sorted<?php }?>'>
 				<div class='text-left'>
 				<?php $valor = $row->{$column->field_name} != '' ? $row->{$column->field_name} : '&nbsp;' ; ?></div>
+				<input type="text" class="inline_edit" value="<?= $valor;?>" onchange="inline_edit(this.value, <?=$row->primary_key;?>,'<?=$column->field_name;?>')">
 			</td>
 			<?php }?>
 			<?php if(!$unset_delete || !$unset_edit || !$unset_read || !empty($actions)){?>
