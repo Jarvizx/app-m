@@ -29,28 +29,32 @@ class Tabla extends CI_Controller {
 
 	public function index($nombre_tabla = null)
 	{
-		if ( ! empty($nombre_tabla))
+		$this->is_login();
+		
+		$id_grupo_usuario = (array) reset($this->ion_auth->get_users_groups($this->user->id)->result());
+		// donde 1 es admin, 2 es ministerio, 3 el coordinador, 4 digitador, 5 externo			
+		if(in_array($id_grupo_usuario['id'], array(1,2,3,4)))
 		{
-			// cualquier usuario logeado puede acceder
-			$this->is_login();
-
-			// correr el procedimiento almacenado
-			$this->load->model('tabla_model');
-			$this->tabla_model->correr_procedimiento_almacenado($nombre_tabla);
-			try {
-				$crud = new grocery_CRUD();
-				//$crud->set_theme('datatables');
-				$crud->set_table($nombre_tabla);
-				// donde 1 es admin, 2 es cordinador...
-				if (reset($this->ion_auth->get_users_groups($this->user->id)->result())->id != 1)
-				{
+			if ( ! empty($nombre_tabla))
+			{
+				// correr el procedimiento almacenado
+				$this->load->model('tabla_model');
+				$this->tabla_model->correr_procedimiento_almacenado($nombre_tabla);
+				try {
+					$crud = new grocery_CRUD();
+					$crud->set_theme('flexigrid-inline-edit');
+					$crud->set_table($nombre_tabla);
+					// $crud->unset_edit();
 					$crud->unset_delete();
-					$crud->unset_edit();
+					$output = $crud->render();
+					$this->_example_output($output);
+				} catch (Exception $e) {
+					echo "el nombre de tabla no es valida";
 				}
-				$output = $crud->render();
-				$this->_example_output($output);
-			} catch (Exception $e) {
-				echo "el nombre de tabla no es valida";
+			}
+			else
+			{
+				redirect('/', 'refresh');
 			}
 		}
 		else

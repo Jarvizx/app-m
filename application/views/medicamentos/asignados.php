@@ -1,7 +1,10 @@
+
+<a class="btn btn-info" href="/medicamentos/en_cola"> Expedientes En Cola</a>
+
 <table id="tabla_asignados" class="table">
 	<thead>
 		<tr>
-			<th># expediente</th>
+			<th># Expediente</th>
 			<th>Estado</th>
 			<!--<th>Nombre</th>-->
 			<!--<th>Usuario asignado</th>-->

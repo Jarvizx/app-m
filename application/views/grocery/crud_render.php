@@ -9,9 +9,19 @@ foreach($css_files as $file): ?>
 <?php foreach($js_files as $file): ?>
 	<script src="<?php echo $file; ?>"></script>
 <?php endforeach; ?>
+<script type="text/javascript">
+	function inline_edit(value,id,columna)
+	{
+		// http://www.grocerycrud.com/forums/topic/2179-perform-inline-editing/#entry10008
+		var data = 'id='+id+'&'+columna+'='+value;
+		var urlUpdate = window.location.pathname+'/update/' + id;
+		$.post(urlUpdate, data, function(data){
+			$('#crud_page').trigger('change');
+		}, 'html');
+	}
+</script>
 <style type='text/css'>
-body
-{
+body {
 	font-family: Arial;
 	font-size: 14px;
 }
@@ -20,9 +30,12 @@ a {
     text-decoration: none;
     font-size: 14px;
 }
-a:hover
-{
+a:hover {
 	text-decoration: underline;
+}
+input.sort_ajax {
+    font-size: 16px;
+    margin: 0.5em;
 }
 </style>
 </head>
@@ -30,6 +43,6 @@ a:hover
 	<div style='height:20px;'></div>  
     <div>
 		<?php echo $output; ?>
-    </div>
+    </div>	
 </body>
 </html>

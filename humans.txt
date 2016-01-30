@@ -1,0 +1,34 @@
+﻿/* LICENSE */
+
+	The MIT License (MIT)
+
+/* TEAM */
+
+	Chef: Oscar Cañón
+	Twitter: @Oscar_Canon_l
+	From: Bogota, Colombia
+
+	Developer: Robinson Buitrago
+	Twitter: @jarvizx
+	From: Bogota, Colombia
+
+	Apoyo BackEnd: Hugo Castellanos
+	From: Bogota, Colombia
+
+
+/* THANKS */
+
+	Universidad Nacional de Colombia
+	Web: http://unal.edu.co/
+	Twitter: @UNColombia
+	From: Colombia
+		
+
+/* SITE */
+
+	Last update: 2015/01/29
+	Language: Español
+	Doctype: HTML5
+	IDE: Sublime Text 3
+	Server: AWS, EC2
+	GitHub: https://github.com/Jarvizx/app-m 
