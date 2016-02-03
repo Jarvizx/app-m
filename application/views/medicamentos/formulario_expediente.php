@@ -770,8 +770,11 @@
 </table>
 <br> 	 	 
 
-<?php if ( $this->ion_auth->logged_in()): ?>	
-	<button class="btn btn-danger expediente_terminado" type="button">Terminado</button>
+<?php if ( $this->ion_auth->logged_in()): ?>
+	<?php if (in_array($GLOBALS['idGrupoUsuario'], array(1,2,3,4))): ?>
+		<!-- // donde 1 es admin, 2 es ministerio, 3 el coordinador, 4 digitador, 5 externo  -->
+		<button class="btn btn-danger expediente_terminado" type="button">Siguiente Asignado</button>
+	<?php endif ?>
 <?php endif ?>
 
 <hr>
@@ -779,6 +782,15 @@
 <script type="text/javascript">
     $(document).ready(function() {
         $('#select_via_administracion').multiselect();
+
+        /*
+		realizar la busqueda, lleva buen tiempo, son 8760 valores que tiene ese select 
+        $('.NombrePrincipioActivo').multiselect({
+            enableFiltering: true,
+            enableFullValueFiltering: true
+            // enableCaseInsensitiveFiltering: true
+        });*/
+
         
 		var urlImagenGoogle = "https://www.googleapis.com/customsearch/v1";
       	var params 		= {};
@@ -806,6 +818,7 @@
 			}
         });*/
 
+        // ajax comentarios
         $("input:radio").click(function(){
         	var objeto_actual = $(this); 
     		if(objeto_actual.attr('name') == "estado_revision")
@@ -894,12 +907,21 @@
 				data: { expediente : $(".NumeroExpediente").val() }
 			}).done(function(respuesta){
 				var url_host = window.location.origin;
-				var url_parametros = '/medicamentos/expediente/'+respuesta;
 				$(".img-preload").hide();
+				console.log('respuesta: ', respuesta);
+				if (respuesta > 0)
+				{
+					var url_parametros = '/medicamentos/expediente/'+respuesta;
+				} 
+				else
+				{
+					var url_parametros = '/medicamentos/asignados';
+				}
 				window.location.replace(url_host + url_parametros);
 			});
 		});
 
+		// ajax valores de cada input
 		$(".form_app_m").change(function(e){
 			var objeto_actual = $(this);
 			var valorJSON;

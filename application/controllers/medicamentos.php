@@ -208,8 +208,20 @@ class Medicamentos extends CI_Controller {
 					$datos['comentarios'][$v_comentarios->campo][] = $v_comentarios;
 				}
 
+				// cambio el estado (esta_en_revision) 0 ó NULL por 1 en tbl_asignacion 
+				if ($this->ion_auth->logged_in())
+				{
+					// donde 1 es admin, 2 es ministerio, 3 el coordinador, 4 digitador, 5 externo
+					if (in_array($datos['grupoUsuario']['id'], array(1,2,3,4))) 
+					{
+						$actualizar_esta_en_revision = array(
+							'esta_en_revision'	=> 1
+						);
+						$this->medicamentos_model->actualizar_tbl_asignacion($expediente, $actualizar_esta_en_revision);
+					}
+				}
 
-				$this->layout->view('medicamentos/asignados_form',$datos);
+				$this->layout->view('medicamentos/formulario_expediente',$datos);
 			}
 			else
 			{
@@ -282,6 +294,7 @@ class Medicamentos extends CI_Controller {
 
 			// creo un array de la(s) tabla(s)
 			$tablas_por_insertar = explode(',', str_replace(' ', '', $datos_por_guardar['tabla']));
+			// por defecto sienpre se agrega esta columna 
 			$tablas_por_insertar[] = 'tbl_control_cambios';
 
 			$contador_permisos = 0;
@@ -290,6 +303,7 @@ class Medicamentos extends CI_Controller {
 				$datos_tbl_permisos_tablas[$k_tablas_por_insertar] = $this->medicamentos_model->consultar_tbl_permisos_tablas(array('tabla' => $v_tablas_por_insertar))->row();
 				if ( ! empty($datos_tbl_permisos_tablas[$k_tablas_por_insertar])) 
 				{
+					// ! pendiente, agregar en la tabla permisos, el usuario anonimo para la tabla control de cambios.
 					// solo actualizar
 					$update_datos_tbl_permisos_tablas[$contador_permisos] = explode(',', str_replace(' ', '', $datos_tbl_permisos_tablas[$k_tablas_por_insertar]->actualizar));
 					if (in_array($nombre_nivel, $update_datos_tbl_permisos_tablas[$contador_permisos])) 
@@ -299,6 +313,7 @@ class Medicamentos extends CI_Controller {
 						// caso especial para la tabla control de cambios
 						if ($v_tablas_por_insertar == 'tbl_control_cambios')
 						{
+							$this->cambiar_estado_expediente_por_laboratorio($this->input->post('expediente'));
 							$id_ultimo_registro = $this->medicamentos_model->guardar_expediente_asignado_tbl_control_cambios($datos_por_guardar);
 						}
 						else
@@ -352,6 +367,11 @@ class Medicamentos extends CI_Controller {
 
 
 			$id_ultimo_comentario = $this->medicamentos_model->guardar_tbl_comentarios($comentario_por_guardar);
+
+			$this->cambiar_estado_expediente_por_laboratorio($this->input->post('expediente'));
+			// SI ES LABORATORIO
+				// CAMBIO SU ESTADO EXPEDIENTE ($EXPEDIENTE)
+
 			$comentario = $this->medicamentos_model->consultar_historial_comentarios(array(
 				'llave' => $this->input->post('llave'), 
 				'campo' 	 => $this->input->post('campo')
@@ -362,20 +382,107 @@ class Medicamentos extends CI_Controller {
 		}
 	}
 
+	// si un laboratorio, agrega un conentario o modifica un valor, se cambia el estado del expediente por En Cola
+	public function cambiar_estado_expediente_por_laboratorio($expediente)
+	{
+	  	if ( ! empty($expediente) && $this->ion_auth->logged_in())
+	  	{
+	  		$id_rol_usuario = (array) reset($this->ion_auth->get_users_groups($this->user->id)->result());
+	  		// id rol laboratorio
+	  		if ($id_rol_usuario['id'] == 5) 
+	  		{
+	  			$datos_expediente = array(
+					'fecha_realizado' 	=> date('Y-m-d H:i:s'),
+					'estado'			=> 'En Cola'
+				);
+				$this->medicamentos_model->actualizar_tbl_asignacion($expediente, $datos_expediente);
+	  		}
+	  	}
+
+	}
+
 	public function expediente_terminado()
 	{
 		if ( $this->ion_auth->logged_in())
 		{
 			if ($_POST) 
 			{
+
+				// aqui consulto si es un expediente En Cola,
+				// si es en cola
+				// consulto el siguiente en cola
+				// el redirect es para el siguiente en cola
+				// si no, al siguiente asignado
+				$expediente = $this->input->post('expediente');
+				// $expediente = 2203;
+				
+				$parametros_busqueda_en_cola = array(
+					'expediente'=> $expediente,
+					'estado'	=> 'En Cola'
+				);
+				$esta_en_cola = $this->medicamentos_model->consultar_asignacion($parametros_busqueda_en_cola,1,0);
+				
 				$datos_expediente = array(
 					'fecha_realizado' 	=> date('Y-m-d H:i:s'),
-					'estado'			=> 'Terminado'
+					'estado'			=> 'Terminado',
+					'esta_en_revision'	=> 0
 				);
-				$this->medicamentos_model->guardar_expediente_terminado($this->input->post('expediente'), $datos_expediente);
-				echo $this->medicamentos_model->consultar_siguiente_expediente(array('id_usuario' => $this->user->id))->row()->expediente;
+				$this->medicamentos_model->actualizar_tbl_asignacion($expediente, $datos_expediente);
+				
+
+				if ($esta_en_cola->num_rows() > 0) 
+				{
+					# consulto siguiente expediente en cola
+					$consultar_proximo_expediente_en_cola = $this->medicamentos_model->consultar_siguiente_expediente_en_cola();
+					if ($consultar_proximo_expediente_en_cola->num_rows() > 0) 
+					{
+						$resultados_proximo_expediente_en_cola = $consultar_proximo_expediente_en_cola->row();
+						$proximo_expediente = $resultados_proximo_expediente_en_cola->expediente;
+					}
+					else
+					{
+						// aqui el js, valida. y si llega a este else, lo redirecciona a la pagina de asignacion
+						$proximo_expediente = 0;
+						// $proximo_expediente = $this->medicamentos_model->consultar_siguiente_expediente(array('id_usuario' => $this->user->id))->row()->expediente;
+					}
+				}
+				else
+				{
+					# 
+					$proximo_expediente = $this->medicamentos_model->consultar_siguiente_expediente(array('id_usuario' => $this->user->id))->row()->expediente;
+				}
+
+
+				// queda que al momento de entrar al experiente cambie el esta de estar en revision
+				// y terminar esta funcion
+				echo $proximo_expediente;
 			}
 		}
+	}
+
+	public function en_cola()
+	{
+		$this->is_login();
+
+		$registro_por_pagina 	= $this->uri->segment(4);
+		$registros 				= (!empty($registro_por_pagina)) ? $registro_por_pagina : 100; 
+		$config['base_url'] 	= base_url().'medicamentos/en_cola//'; 
+		$config['total_rows'] 	= $this->medicamentos_model->contar_expedientes_en_cola()->total;
+		$config['per_page'] 	= $registros; //Número de registros mostrados por páginas
+        $config['num_links'] 	= 10; //Número de links mostrados en la paginación
+ 		$config['first_link'] 	= 'Primera';
+		$config['last_link'] 	= 'Última';
+        $config["uri_segment"] 	= 3;//el segmento de la paginación
+		$config['next_link'] 	= 'Siguiente';
+		$config['prev_link'] 	= 'Anterior';
+		$this->pagination->initialize($config); //inicializamos la paginación
+		
+		$texto_limite 			= ( ! empty($registro_por_pagina)) ? $registro_por_pagina.','.$config['per_page'] : $config['per_page'];
+		$datos["lista_en_cola"] = $this->medicamentos_model->consultar_lista_expediente_en_cola($texto_limite)->result();
+		// la vista
+		// $this->layout->view('medicamentos/asignados',$datos);
+		$this->layout->view('medicamentos/en_cola',$datos);
+		
 	}
 
 	public function asignados_guardados()

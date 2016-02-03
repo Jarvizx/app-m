@@ -215,6 +215,42 @@ class Medicamentos_model extends CI_Model
     	}
     }
 
+    public function consultar_siguiente_expediente_en_cola()
+    {
+        $sql = "SELECT * 
+                FROM ".$this->tbl_asignacion."
+                WHERE estado = 'En Cola'
+                AND (esta_en_revision = 0
+                OR esta_en_revision IS NULL)
+                ORDER BY id ASC
+                LIMIT 0,1";
+        
+        return  $this->db->query($sql);
+    }
+    public function contar_expedientes_en_cola()
+    {
+        $sql = "SELECT count(*) as total 
+                FROM ".$this->tbl_asignacion."
+                WHERE estado = 'En Cola'
+                AND (esta_en_revision = 0
+                OR esta_en_revision IS NULL)";
+        
+        $data = $this->db->query($sql);
+        return $data->row();
+    }
+
+    public function consultar_lista_expediente_en_cola($texto_limite)
+    {
+        $sql = "SELECT * 
+                FROM ".$this->tbl_asignacion."
+                WHERE estado = 'En Cola'
+                AND (esta_en_revision = 0
+                OR esta_en_revision IS NULL)
+                LIMIT $texto_limite";
+        
+        return $this->db->query($sql);
+    }
+
     # guardar comentario
     public function guardar_tbl_comentarios($datos)
     {
@@ -224,7 +260,7 @@ class Medicamentos_model extends CI_Model
     }
 
     # guardar expediente terminado, 
-    public function guardar_expediente_terminado($expediente, $datos_tabla)
+    public function actualizar_tbl_asignacion($expediente, $datos_tabla)
     {
     	if ($expediente) 
     	{
@@ -263,22 +299,22 @@ class Medicamentos_model extends CI_Model
     public function consultar_vws_listado($parametros = null, $texto_limite = null)
     {
         $sql = "SELECT *
-                FROM temp_tbl_listado
+                FROM ".$this->vws_listado."
                 WHERE (concat_ws('-',NumeroExpediente,texto) 
                 LIKE '%".$parametros."%')
                 ORDER BY NumeroExpediente
                 LIMIT $texto_limite";
         $data = $this->db->query($sql);
         return $data->result();
-                echo "SQL".$this->db->last_query();
-        //return $this->db->get_where($this->vws_listado, $parametros, $limit, $offset);
+        // echo "SQL".$this->db->last_query();
+        // return $this->db->get_where($this->vws_listado, $parametros, $limit, $offset);
     }
 
     public function numero_de_filas_vws_listado($parametros = null)
     {
         
         $sql = "SELECT count(*) as total
-                FROM temp_tbl_listado
+                FROM ".$this->vws_listado."
                 WHERE (concat_ws('-',NumeroExpediente,texto) 
                 LIKE '%".$parametros."%')
                 ORDER BY NumeroExpediente";
