@@ -196,11 +196,12 @@ class Medicamentos extends CI_Controller {
 				# presentación comercial principio activo
 				$datos['tbl_rev_expediente_pc_pa'] = $this->medicamentos_model->consultar_tbl_rev_expediente_pc_pa($parametro_expediente);
 
+				# nueva consulta del invima
+				// $datos['tbl_invima'] = $this->medicamentos_model->consulta_tbl_invima(array('expediente'=>$expediente));
+
 				// 1 sola consulta para los comentarios
 				
-				$comentarios = $this->medicamentos_model->consultar_historial_comentarios(array(
-					'expediente' => $expediente, 
-				))->result();
+				$comentarios = $this->medicamentos_model->consultar_historial_comentarios($expediente)->result();
 				
 				$datos['comentarios'] = null;
 				foreach ($comentarios as $k_comentarios => $v_comentarios) 
@@ -372,7 +373,7 @@ class Medicamentos extends CI_Controller {
 			// SI ES LABORATORIO
 				// CAMBIO SU ESTADO EXPEDIENTE ($EXPEDIENTE)
 
-			$comentario = $this->medicamentos_model->consultar_historial_comentarios(array(
+			$comentario = $this->medicamentos_model->consultar_historial_comentarios_x_campo(array(
 				'llave' => $this->input->post('llave'), 
 				'campo' 	 => $this->input->post('campo')
 			))->row();

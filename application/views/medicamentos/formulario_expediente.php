@@ -272,12 +272,14 @@
 		</tr>
 	</tbody>
 </table>
+<!-- Invima -->
 <div class="<?= $tbl_invima_pa_homologado_texto->row()->coincidencia; ?>">
 	<?= $tbl_invima_pa_homologado_texto->row()->texto;?>
 </div>
 <table class="table">
 	<thead>
 		<tr>
+			<th>Invima (new)</th>
 			<th>Principio <br> Activo</th>
 			<th>Tipo <br> Concentracion </th>
 			<th>Cantidad<br>Principio<br>Activo</th>
@@ -289,6 +291,9 @@
 	<tbody>
 		<?php foreach ($tbl_rev_expediente_pa->result() as $k_tbl_rev_expediente_pa => $v_tbl_rev_expediente_pa): ?>
 			<tr>
+				<td>
+					Resultado Invima (new)
+				</td>
 				<td>
 					<?php 
 						$coincide_nombre_codigo = false;
@@ -413,11 +418,13 @@
 		<?php endforeach ?>
 	</tbody>
 </table>
+<!-- /Invima -->
 <!--presentacion comercial -->
 <h3>Presentación Comercial</h3>
 <table class="table">
 	<thead>
 		<tr>
+			<th>Invima (new)</th>
 			<th>CUM</th>
 			<th>U.Contenido</th>
 			<th>Capacidad</th>
@@ -618,6 +625,9 @@
 			</td>
 		</tr>
 		<tr>
+			<td>
+				Invima (new )
+			</td>
 			<td class="<?= $color_td_CodigoUnidadContenido; ?>">
 				<?= $v_tbl_rev_expediente_pc->NumeroConsecutivoCUMPresentacionComercial; ?>
 			</td>

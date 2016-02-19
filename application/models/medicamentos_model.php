@@ -10,12 +10,13 @@ class Medicamentos_model extends CI_Model
 	protected $tbl_control_cambios;
 	protected $tbl_permisos_tablas;
 	protected $tbl_comentarios;
-	protected $vws_consolidado_edicion_agrupado;//vista
+	//protected $vws_consolidado_edicion_agrupado;//vista
 	protected $tbl_invima_pa_homologado_texto;//vista
 	protected $vws_siguiente_expediente;//vista
     protected $tbl_rev_expediente_pc;
     protected $tbl_rev_expediente_pc_pa;
     protected $tbl_invima_pc_texto;
+    // protected $tbl_invima;
     protected $vws_listado;
 
 	public function __construct()
@@ -30,12 +31,13 @@ class Medicamentos_model extends CI_Model
 		$this->tbl_control_cambios = 'tbl_control_cambios';
 		$this->tbl_permisos_tablas = 'tbl_permisos_tablas';
 		$this->tbl_comentarios = 'tbl_comentarios';
-		$this->vws_consolidado_edicion_agrupado = 'vws_consolidado_edicion_agrupado';//vista
+		//$this->vws_consolidado_edicion_agrupado = 'vws_consolidado_edicion_agrupado';//vista
 		$this->tbl_invima_pa_homologado_texto = 'tbl_invima_pa_homologado_texto';//vista
 		$this->vws_siguiente_expediente = 'vws_siguiente_expediente';//vista
         $this->tbl_rev_expediente_pc = 'tbl_rev_expediente_pc';
         $this->tbl_rev_expediente_pc_pa = 'tbl_rev_expediente_pc_pa';
         $this->tbl_invima_pc_texto = 'tbl_invima_pc_texto';
+        // $this->tbl_invima = 'tbl_invima';
         $this->vws_listado = 'tbl_listado';
 	    date_default_timezone_set('America/Bogota');
 	}
@@ -134,33 +136,147 @@ class Medicamentos_model extends CI_Model
 
     public function consultar_tbl_invima_medicamento($parametros = array())
     {
-		return $this->db->get_where($this->tbl_invima_medicamento, $parametros);
+        return $this->db->get_where($this->tbl_invima_medicamento, $parametros);
     }
+
+    # nueva consulta invima
+    /*public function consultar_tbl_invima($parametros = array())
+    {
+		return $this->db->get_where($this->tbl_invima, $parametros);
+    }*/
 
     public function consultar_tbl_rev_expediente_pa($parametros = array())
     {
     	return $this->db->get_where($this->tbl_rev_expediente_pa, $parametros);
     }
 
-    # consultar historial de comentarios del expediente de una vista
+    # consultar historial de comentarios con dos parametros
+    // $parametros['llave'] string
+    // $parametros['campo'] string
+    // la vista tarda mucho tiempo en retornar los datos consultar, por eso se utiliza este query 
+    public function consultar_historial_comentarios_x_campo($parametros)
+    {
+        if ( ! empty($parametros)) 
+        {
+            $sql = "SELECT 
+                    `t1`.`tabla`      AS `tabla`,
+                    `t1`.`campo`      AS `campo`,
+                    `t1`.`llave`      AS `llave`,
+                    `t1`.`expediente` AS `expediente`,
+                    GROUP_CONCAT(DISTINCT `t1`.`Texto` ORDER BY `t1`.`fecha_registro` DESC SEPARATOR '</br>') AS `texto`
+                    FROM
+                    (SELECT 
+                        t1.tabla AS tabla,
+                        t1.campo AS campo,
+                        t1.expediente AS expediente,t1.llave AS llave,
+                        t1.fecha_registro
+                        AS fecha_registro,
+
+                        CONCAT('<i>',t1.fecha_registro,IF(ISNULL(t1.nombre_usuario_externo),
+                            CONCAT('(',t3.description,':',t2.first_name,LEFT(t2.last_name,1),')'),
+                            CONCAT('[',t1.nombre_usuario_externo,']') 
+                            ),'</i>',
+
+                        IF(ISNULL(trv.nombre_codigo),
+                            t1.valor_viejo,CONCAT('{',t1.valor_viejo,'}',trv.nombre_codigo)) ,'->',IF(ISNULL(trn.nombre_codigo),t1.valor_nuevo,
+                            CONCAT('{',t1.valor_nuevo,'}',trn.nombre_codigo)) ) 
+
+                        AS texto 
+
+                        FROM ((((tbl_control_cambios t1 
+                        LEFT JOIN users t2 ON((t1.usuario = t2.id))) 
+                        LEFT JOIN groups t3 ON((t1.nivel = t3.id)))
+                        LEFT JOIN tbl_p_codificacion_rev trv ON t1.campo  = trv.campo AND t1.valor_viejo  = trv.codigo) 
+                        LEFT JOIN tbl_p_codificacion_rev trn ON t1.campo = trn.campo AND t1.valor_nuevo  = trn.codigo) 
+
+                        WHERE t1.llave = '".$parametros['llave']."'
+                        and t1.campo = '".$parametros['campo']."'
+
+                        UNION 
+
+                        SELECT 
+                        t1.tabla AS tabla,t1.campo AS campo,t1.expediente AS expediente,t1.llave AS llave,t1.fecha_registro AS fecha_registro,
+
+
+                        CONCAT('<i>',t1.fecha_registro,'(',t3.description,':',t2.first_name,LEFT(t2.last_name,1),')</i> <b>',t1.estado_revision ,'</b> ',
+                            t1.comentario )
+
+                        AS texto 
+
+                        FROM ((tbl_comentarios t1 
+                            LEFT JOIN users t2 ON((t1.usuario = t2.id))) 
+                        LEFT JOIN groups t3 ON((t1.nivel = t3.id)))
+
+                        WHERE t1.llave = '".$parametros['llave']."'
+                        and t1.campo = '".$parametros['campo']."'
+                    ) t1
+                    GROUP BY `t1`.`tabla`,`t1`.`campo`,`t1`.`expediente`,`t1`.`llave`";
+            return $this->db->query($sql);
+        }
+    }
+
+    # consultar historial de comentarios con el # de expediente (int)
+    // la vista tarda mucho tiempo en retornar los datos consultar, por eso se utiliza este query 
     public function consultar_historial_comentarios($expediente)
     {
         if ( ! empty($expediente)) 
         {
-            return $this->db->get_where($this->vws_consolidado_edicion_agrupado, $expediente);
+            $sql = "SELECT 
+                    `t1`.`tabla`      AS `tabla`,
+                    `t1`.`campo`      AS `campo`,
+                    `t1`.`llave`      AS `llave`,
+                    `t1`.`expediente` AS `expediente`,
+                    GROUP_CONCAT(DISTINCT `t1`.`Texto` ORDER BY `t1`.`fecha_registro` DESC SEPARATOR '</br>') AS `texto`
+                    FROM
+                    (SELECT 
+                        t1.tabla AS tabla,
+                        t1.campo AS campo,
+                        t1.expediente AS expediente,t1.llave AS llave,
+                        t1.fecha_registro
+                        AS fecha_registro,
+
+                        CONCAT('<i>',t1.fecha_registro,IF(ISNULL(t1.nombre_usuario_externo),
+                            CONCAT('(',t3.description,':',t2.first_name,LEFT(t2.last_name,1),')'),
+                            CONCAT('[',t1.nombre_usuario_externo,']') 
+                            ),'</i>',
+
+                        IF(ISNULL(trv.nombre_codigo),
+                            t1.valor_viejo,CONCAT('{',t1.valor_viejo,'}',trv.nombre_codigo)) ,'->',IF(ISNULL(trn.nombre_codigo),t1.valor_nuevo,
+                            CONCAT('{',t1.valor_nuevo,'}',trn.nombre_codigo)) ) 
+
+                        AS texto 
+
+                        FROM ((((tbl_control_cambios t1 
+                        LEFT JOIN users t2 ON((t1.usuario = t2.id))) 
+                        LEFT JOIN groups t3 ON((t1.nivel = t3.id)))
+                        LEFT JOIN tbl_p_codificacion_rev trv ON t1.campo  = trv.campo AND t1.valor_viejo  = trv.codigo) 
+                        LEFT JOIN tbl_p_codificacion_rev trn ON t1.campo = trn.campo AND t1.valor_nuevo  = trn.codigo) 
+
+                        WHERE t1.expediente  = $expediente
+
+                        UNION 
+
+                        SELECT 
+                        t1.tabla AS tabla,t1.campo AS campo,t1.expediente AS expediente,t1.llave AS llave,t1.fecha_registro AS fecha_registro,
+
+
+                        CONCAT('<i>',t1.fecha_registro,'(',t3.description,':',t2.first_name,LEFT(t2.last_name,1),')</i> <b>',t1.estado_revision ,'</b> ',
+                            t1.comentario )
+
+                        AS texto 
+
+                        FROM ((tbl_comentarios t1 
+                            LEFT JOIN users t2 ON((t1.usuario = t2.id))) 
+                        LEFT JOIN groups t3 ON((t1.nivel = t3.id)))
+
+                        WHERE t1.expediente  = $expediente
+                    ) t1
+                    GROUP BY `t1`.`tabla`,`t1`.`campo`,`t1`.`expediente`,`t1`.`llave`";
+            
+            return $this->db->query($sql);
             // echo "SQL: " . $this->db->last_query();
         }
     }
-
-    # consultar historial de comentarios del expediente de una vista...
-    /*public function consultar_historial_comentario_x_campo($expediente)
-    {
-    	if ( ! empty($expediente)) 
-    	{
-            $this->db->select('texto');
-    		return $this->db->get_where($this->vws_consolidado_edicion_agrupado, $expediente);
-    	}
-    }*/
 
     # consultar historial de comentarios del expediente de una tabla/ legacy!
     public function consultar_historial_comentarios_tabla($expediente)
