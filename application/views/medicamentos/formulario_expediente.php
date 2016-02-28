@@ -218,45 +218,22 @@
 			</th>
 			<td>
 			 	<?php //echo $valores_tbl_rev_expedientes->CodigoViaAdministracion; ?> 
-			 	<?php $CodigoViaAdministracion = explode("&", $valores_tbl_rev_expedientes->CodigoViaAdministracion); ?> 
 			 	<?php 
-			 		$i = 0;
-			 		$nuevo_array_codigo_via_administracion = array();
-			 		// Robin arregla esto!!!
+			 		$CodigoViaAdministracion = explode("&", $valores_tbl_rev_expedientes->CodigoViaAdministracion); 
 					foreach ($CodigoViaAdministracion as $k_CodigoViaAdministracion => $v_CodigoViaAdministracion)
 					{
 						foreach ($parametros_tbl_referencia['VAD'] as $k_tbl_referencia_vad => $v_tbl_referencia_vad)
 						{
 							if (($v_CodigoViaAdministracion * 1) == $v_tbl_referencia_vad['codigo']) 
 							{
-								$nuevo_array_codigo_via_administracion[$k_tbl_referencia_vad]['codigo'] = $v_tbl_referencia_vad['codigo'];
-								$nuevo_array_codigo_via_administracion[$k_tbl_referencia_vad]['nombre_codigo'] = $v_tbl_referencia_vad['nombre_codigo'];
-								$nuevo_array_codigo_via_administracion[$k_tbl_referencia_vad]['selected'] = true;
-							}
-							else
-							{
-								if ( ! empty($nuevo_array_codigo_via_administracion[$k_tbl_referencia_vad]['selected']))
-								{	
-									if ($nuevo_array_codigo_via_administracion[$k_tbl_referencia_vad]['selected'] != true) 
-									{
-										$nuevo_array_codigo_via_administracion[$k_tbl_referencia_vad]['codigo'] = $v_tbl_referencia_vad['codigo'];
-										$nuevo_array_codigo_via_administracion[$k_tbl_referencia_vad]['nombre_codigo'] = $v_tbl_referencia_vad['nombre_codigo'];
-										$nuevo_array_codigo_via_administracion[$k_tbl_referencia_vad]['selected'] = false;
-									}
-								}
-								else
-								{
-									$nuevo_array_codigo_via_administracion[$k_tbl_referencia_vad]['codigo'] = $v_tbl_referencia_vad['codigo'];
-									$nuevo_array_codigo_via_administracion[$k_tbl_referencia_vad]['nombre_codigo'] = $v_tbl_referencia_vad['nombre_codigo'];
-									$nuevo_array_codigo_via_administracion[$k_tbl_referencia_vad]['selected'] = false;
-								}
+								$parametros_tbl_referencia['VAD'][$k_tbl_referencia_vad]['selected'] = true;
 							}
 						}
 					}
 			 	 ?>
 				<select id="select_via_administracion" name="codigo_via_administracion" class="form_app_m codigo_via_administracion" multiple="multiple" data-json='{"tabla":"tbl_rev_expedientes", "llave":"<?= $valores_tbl_rev_expedientes->id; ?>", "valor_viejo":"<?= $valores_tbl_rev_expedientes->CodigoViaAdministracion; ?>", "campo":"CodigoViaAdministracion"}'>
-				 	<?php foreach ($nuevo_array_codigo_via_administracion as $k_nuevo_array_codigo_via_administracion => $v_nuevo_array_codigo_via_administracion): ?>
-    					<option value="<?= $v_nuevo_array_codigo_via_administracion['codigo']?>" <?php echo ($v_nuevo_array_codigo_via_administracion['selected']) ? "selected" : "" ; ?>><?= $v_nuevo_array_codigo_via_administracion['nombre_codigo']?></option>
+				 	<?php foreach ($parametros_tbl_referencia['VAD'] as $k_nuevo_array_codigo_via_administracion => $v_nuevo_array_codigo_via_administracion): ?>
+    					<option value="<?= $v_nuevo_array_codigo_via_administracion['codigo']?>" <?php echo ( ! empty($v_nuevo_array_codigo_via_administracion['selected'])) ? "selected" : "" ; ?>><?= $v_nuevo_array_codigo_via_administracion['nombre_codigo']?></option>
 				 	<?php endforeach ?>
 				</select>
 				<br>
@@ -279,7 +256,7 @@
 <table class="table">
 	<thead>
 		<tr>
-			<th>Invima (new)</th>
+			<th>Invima</th>
 			<th>Principio <br> Activo</th>
 			<th>Tipo <br> Concentracion </th>
 			<th>Cantidad<br>Principio<br>Activo</th>
@@ -288,11 +265,43 @@
 			<th>U.</th>
 		</tr>
 	</thead>
-	<tbody>
+	<tbody class="contenedor-tr-pa">	 		
+		<?php $tbl_invima_pa_lista_alerta = $tbl_invima_pa; ?>
 		<?php foreach ($tbl_rev_expediente_pa->result() as $k_tbl_rev_expediente_pa => $v_tbl_rev_expediente_pa): ?>
 			<tr>
 				<td>
-					Resultado Invima (new)
+					<!--
+						si un p.a. de la tabla tbl_invima_pa, teniendo el # de expediente y NO esta utilizado. Debemos mostrar una Alerta
+					-->
+					<?php 
+				 		$principio_activoExplode = explode("&", $v_tbl_rev_expediente_pa->principio_activo);
+
+				 		$tbl_invima_pa_lista = array();
+				 		$tbl_invima_pa_lista = $tbl_invima_pa;
+						foreach ($principio_activoExplode as $k_principio_activoExplode => $v_principio_activoExplode)
+						{
+							foreach ($tbl_invima_pa_lista as $k_tbl_invima_pa_lista => $v_tbl_invima_pa_lista)
+							{
+								if ($v_principio_activoExplode == $v_tbl_invima_pa_lista['principio_activo']) 
+								{
+									$tbl_invima_pa_lista[$k_tbl_invima_pa_lista]['selected'] = true;
+									$tbl_invima_pa_lista_alerta[$k_tbl_invima_pa_lista]['selected'] = true;
+								}
+							}
+						}
+
+				 	?>
+
+					<select class="form_app_m principio_activo select_tbl_invima_pa_lista" name="principio_activo" multiple="multiple" data-json='{"tabla":"tbl_rev_expediente_pa", "llave":"<?= $v_tbl_rev_expediente_pa->id ?>", "valor_viejo":"<?=$v_tbl_rev_expediente_pa->principio_activo;?>", "campo":"principio_activo"}'>
+					 	<?php foreach ($tbl_invima_pa_lista as $k_tbl_invima_pa_lista => $v_tbl_invima_pa_lista): ?>
+	    					<option value="<?= $v_tbl_invima_pa_lista['principio_activo']?>" <?php echo ( ! empty($v_tbl_invima_pa_lista['selected'])) ? "selected" : "" ; ?>><?= $v_tbl_invima_pa_lista['principio_activo']?></option>
+					 	<?php endforeach ?>
+					</select>
+					<p class="comentario">
+						<?= mostrar_texto_comentarios('principio_activo', true, $v_tbl_rev_expediente_pa->id); ?>	
+					</p>
+					<?= formulario_comentarios('comentario_en_td_con_el_input', null);?>
+
 				</td>
 				<td>
 					<?php 
@@ -300,15 +309,18 @@
 						foreach ($parametros_tbl_referencia['DCI'] as $k_tbl_referencia_dci => $v_tbl_referencia_dci)
 						{
 							if ($v_tbl_rev_expediente_pa->NombrePrincipioActivo == $v_tbl_referencia_dci['nombre_codigo']) 
-								{
-									$select_NombrePrincipioActivo[] = sprintf('<option value="%s" selected> %s </option>', $v_tbl_referencia_dci['nombre_codigo'], $v_tbl_referencia_dci['nombre_codigo']);
-									//$valor_actual_CodigoFormaFarmaceutica = $valores_tbl_rev_expedientes->CodigoFormaFarmaceutica;
-									$coincide_nombre_codigo = true;
-								}
-								else
-								{
-									$select_NombrePrincipioActivo[] = sprintf('<option value="%s"> %s </option>', $v_tbl_referencia_dci['nombre_codigo'], $v_tbl_referencia_dci['nombre_codigo']);
-								}
+							{
+								$select_NombrePrincipioActivo[] = sprintf('<option value="%s" selected> %s </option>', $v_tbl_referencia_dci['nombre_codigo'], $v_tbl_referencia_dci['nombre_codigo']);
+								//$valor_actual_CodigoFormaFarmaceutica = $valores_tbl_rev_expedientes->CodigoFormaFarmaceutica;
+								$coincide_nombre_codigo = true;
+							}
+							else
+							{
+								$select_NombrePrincipioActivo[] = sprintf('<option value="%s"> %s </option>', $v_tbl_referencia_dci['nombre_codigo'], $v_tbl_referencia_dci['nombre_codigo']);
+							}
+
+							$select_NombrePrincipioActivoLimpio[] = sprintf('<option value="%s"> %s </option>', $v_tbl_referencia_dci['nombre_codigo'], $v_tbl_referencia_dci['nombre_codigo']);
+
 						} 
 					?>
 					<input type="hidden" nombre-tbl-rev-expediente-pa="<?= $v_tbl_rev_expediente_pa->NombrePrincipioActivo; ?>">
@@ -320,6 +332,7 @@
 					<!--no estoy seguro, pero si no coincide, el select coge el primer valor-->
 					<!-- Este select consume MUCHA! memoria, se incremento de 128M a 512M -->
 					<select class="form_app_m NombrePrincipioActivo" name="NombrePrincipioActivo" data-json='{"tabla":"tbl_rev_expediente_pa", "llave":"<?= $v_tbl_rev_expediente_pa->id ?>", "valor_viejo":"<?= $v_tbl_rev_expediente_pa->NombrePrincipioActivo; ?>", "campo":"NombrePrincipioActivo"}' >
+						<option value="">Seleccione una opción</option>
 						<?php foreach ($select_NombrePrincipioActivo as $k_select_NombrePrincipioActivo => $v_select_NombrePrincipioActivo): ?>
 							 	<?= $v_select_NombrePrincipioActivo; ?>
 						<?php endforeach ?> 
@@ -344,6 +357,8 @@
 								{
 									echo sprintf('<option value="%s"> %s </option>', $v_tbl_referencia['codigo'], $v_tbl_referencia['nombre_codigo']);
 								}
+
+								$select_IdentificadorTipoConcentracionEstandarizadaLimpio[] = sprintf('<option value="%s"> %s </option>', $v_tbl_referencia['codigo'], $v_tbl_referencia['nombre_codigo']);;
 							}
 						?>
 					</select>
@@ -358,7 +373,6 @@
 					<?= mostrar_texto_comentarios('CantidadEstandarizadaPrincipioActivo', true, $v_tbl_rev_expediente_pa->id); ?>	
 					</p>
 					<?= formulario_comentarios('comentario_en_td_con_el_input', null);?>
-					
 				</td>
 				<td>
 					<select class="form_app_m" name="CodigoUnidadMedidaEstandarizadaPrincipioActivo" data-json='{"tabla":"tbl_rev_expediente_pa", "llave":"<?= $v_tbl_rev_expediente_pa->id ?>", "valor_viejo":"<?= $v_tbl_rev_expediente_pa->CodigoUnidadMedidaEstandarizadaPrincipioActivo; ?>", "campo":"CodigoUnidadMedidaEstandarizadaPrincipioActivo"}'>
@@ -375,6 +389,8 @@
 								{
 									echo sprintf('<option value="%s"> %s </option>', $v_tbl_referencia['codigo'], $v_tbl_referencia['nombre_codigo']);
 								}
+
+								$select_CodigoUnidadMedidaEstandarizadaPrincipioActivoLimpio[] = sprintf('<option value="%s"> %s </option>', $v_tbl_referencia['codigo'], $v_tbl_referencia['nombre_codigo']);
 							}
 						?>
 					</select>
@@ -406,6 +422,7 @@
 								{
 									echo sprintf('<option value="%s"> %s </option>', $v_tbl_referencia['codigo'], $v_tbl_referencia['nombre_codigo']);
 								}
+								$select_CodigoUnidadMedidaEstandarizadaMedicamentoPrincipioActivoLimpio[] = sprintf('<option value="%s"> %s </option>', $v_tbl_referencia['codigo'], $v_tbl_referencia['nombre_codigo']);
 							}
 						?>
 					</select>
@@ -417,7 +434,114 @@
 			</tr>
 		<?php endforeach ?>
 	</tbody>
+	<tfoot class="hidden">
+		<tr>
+			<td>
+				<?php 
+					$pa_sin_seleccionar = NULL;
+					foreach ($tbl_invima_pa_lista_alerta as $k_tbl_invima_pa_lista_alerta => $v_tbl_invima_pa_lista_alerta) 
+					{
+						if (isset($v_tbl_invima_pa_lista_alerta['selected']) == false) 
+						{
+							$pa_sin_seleccionar .= $v_tbl_invima_pa_lista_alerta['principio_activo'].'&';
+						}
+					}
+				?>
+				<input type="text" class="tbl_invima_pa_lista_alerta" value="<?= $pa_sin_seleccionar;?>"></input>
+			</td>
+		</tr>
+	</tfoot>
 </table>
+<table class="contenedor-formato-tr-dinamico-pa hidden">
+	<tbody>	
+		<tr class="tr-clonado-pa">
+			<td>
+				<select class="form_app_m principio_activo select_tbl_invima_pa_lista" name="principio_activo" multiple="multiple" data-json='{"tabla":"tbl_rev_expediente_pa", "llave":"", "valor_viejo":"<?=$v_tbl_rev_expediente_pa->principio_activo;?>", "campo":"principio_activo"}'>
+				 	<?php foreach ($tbl_invima_pa_lista as $k_tbl_invima_pa_lista => $v_tbl_invima_pa_lista): ?>
+						<option value="<?= $v_tbl_invima_pa_lista['principio_activo']?>"><?= $v_tbl_invima_pa_lista['principio_activo']?></option>
+				 	<?php endforeach ?>
+				</select>
+				<p class="comentario"></p>
+				<?= formulario_comentarios('comentario_en_td_con_el_input', null);?>
+			</td>
+			<td>
+				<select class="form_app_m NombrePrincipioActivo" name="NombrePrincipioActivo" data-json='{"tabla":"tbl_rev_expediente_pa", "llave":"", "valor_viejo":"", "campo":"NombrePrincipioActivo"}' >
+					<option value="">Seleccione una opción</option>	
+					<?php foreach ($select_NombrePrincipioActivoLimpio as $k_select_NombrePrincipioActivoLimpio => $v_select_NombrePrincipioActivoLimpio): ?>
+						<?= $v_select_NombrePrincipioActivoLimpio; ?>
+					<?php endforeach ?> 
+				</select>
+				<p class="comentario"></p>
+				<?= formulario_comentarios('comentario_en_td_con_el_input', null);?>
+			</td>
+			<td>
+				<select class="form_app_m" name="IdentificadorTipoConcentracionEstandarizada" data-json='{"tabla":"tbl_rev_expediente_pa", "llave":"", "valor_viejo":"", "campo":"IdentificadorTipoConcentracionEstandarizada"}'>
+					<option value="">Seleccione una opción</option>
+					<?php foreach ($select_IdentificadorTipoConcentracionEstandarizadaLimpio as $k_select_IdentificadorTipoConcentracionEstandarizadaLimpio => $v_select_IdentificadorTipoConcentracionEstandarizadaLimpio): ?>
+						<?= $v_select_IdentificadorTipoConcentracionEstandarizadaLimpio; ?>
+					<?php endforeach ?> 
+				</select>
+				<p class="comentario"></p>
+				<?= formulario_comentarios('comentario_en_td_con_el_input', null);?>
+			</td>
+			<td>
+				<input type="text" class="form_app_m CantidadEstandarizadaPrincipioActivo" name="CantidadEstandarizadaPrincipioActivo" data-json='{"tabla":"tbl_rev_expediente_pa", "llave":"", "valor_viejo":"", "campo":"CantidadEstandarizadaPrincipioActivo"}' value="">
+				<p class="comentario"></p>
+				<?= formulario_comentarios('comentario_en_td_con_el_input', null);?>
+			</td>
+			<td>
+				<select class="form_app_m" name="CodigoUnidadMedidaEstandarizadaPrincipioActivo" data-json='{"tabla":"tbl_rev_expediente_pa", "llave":"", "valor_viejo":"", "campo":"CodigoUnidadMedidaEstandarizadaPrincipioActivo"}'>
+					<option value="">Seleccione una opción</option>
+					<?php foreach ($select_CodigoUnidadMedidaEstandarizadaPrincipioActivoLimpio as $k_select_CodigoUnidadMedidaEstandarizadaPrincipioActivoLimpio => $v_select_CodigoUnidadMedidaEstandarizadaPrincipioActivoLimpio): ?>
+						<?= $v_select_CodigoUnidadMedidaEstandarizadaPrincipioActivoLimpio; ?>
+					<?php endforeach ?> 
+				</select>
+				<p class="comentario"></p>
+				<?= formulario_comentarios('comentario_en_td_con_el_input', null);?>
+			</td>
+			<td>
+				<input type="text" class="form_app_m CantidadEstandarizadaMedicamentoContenidoPrincipioActivo" name="CantidadEstandarizadaMedicamentoContenidoPrincipioActivo" data-json='{"tabla":"tbl_rev_expediente_pa", "llave":"", "valor_viejo":"", "campo":"CantidadEstandarizadaMedicamentoContenidoPrincipioActivo"}' value="">
+				<p class="comentario"></p>
+				<?= formulario_comentarios('comentario_en_td_con_el_input', null);?>
+			</td>
+			<td>
+				<select class="form_app_m" name="CodigoUnidadMedidaEstandarizadaMedicamentoPrincipioActivo" data-json='{"tabla":"tbl_rev_expediente_pa", "llave":"", "valor_viejo":"", "campo":"CodigoUnidadMedidaEstandarizadaMedicamentoPrincipioActivo"}'>
+					<option value="">Seleccione una opción</option>
+					<?php foreach ($select_CodigoUnidadMedidaEstandarizadaMedicamentoPrincipioActivoLimpio as $k_select_CodigoUnidadMedidaEstandarizadaMedicamentoPrincipioActivoLimpio => $v_select_CodigoUnidadMedidaEstandarizadaMedicamentoPrincipioActivoLimpio): ?>
+						<?= $v_select_CodigoUnidadMedidaEstandarizadaMedicamentoPrincipioActivoLimpio; ?>
+					<?php endforeach ?> 
+				</select>
+				<p class="comentario"></p>
+				<?= formulario_comentarios('comentario_en_td_con_el_input', null);?>
+			</td>
+			<td>
+				<button class="btn btn-danger quitar-tr-pa">Quitar Fila</button>
+			</td>
+		</tr>
+	</tbody>
+</table>
+<!--
+		! el id es cuando selecciona el principio activo para guardar (llave)
+
+		primero copio el td que esta oculto con los valores del select por defecto, y solo le agrego una clase para diferenciarlo
+		despues de que seleccionen un principio activo (como primer paso) se envia a la tabla para que guarde, (aun no se si por campo o toda la tr)
+
+
+		! recordar llenar los campos del JSON en estos Campos
+-->
+<!-- Esta TR esta oculta y se clona para otro registro de invima -->
+
+<!-- /Esta TR esta oculta y se clona para otro registro de invima -->
+<?php if ( $this->ion_auth->logged_in()): ?>
+	<?php if (in_array($GLOBALS['idGrupoUsuario'], array(1,2,3,4))): ?>
+		<div class="opciones_formulario_pa">
+			<div class="formulario_pa_alerta"></div>
+			<button class="agregar-tr-pa btn btn-success">Agregar Otra Fila</button> 
+			<span>Al agregar una nueva fila, recuerde primero seleccionar un principio activo para que los demás campos se guarden. </span>
+		</div>
+	<?php endif ?>
+<?php endif ?>
+
 <!-- /Invima -->
 <!--presentacion comercial -->
 <h3>Presentación Comercial</h3>
@@ -792,7 +916,11 @@
 <script type="text/javascript">
     $(document).ready(function() {
         $('#select_via_administracion').multiselect();
-
+        $('.select_tbl_invima_pa_lista').multiselect();
+        if ($('.tbl_invima_pa_lista_alerta').val().length > 0) 
+        {
+        	$(".formulario_pa_alerta").html('<p class="bg-danger lead">Existe un principio activo que no esta seleccionado del Invima</p>');
+        }
         /*
 		realizar la busqueda, lleva buen tiempo, son 8760 valores que tiene ese select 
         $('.NombrePrincipioActivo').multiselect({
@@ -829,7 +957,8 @@
         });*/
 
         // ajax comentarios
-        $("input:radio").click(function(){
+
+        $("body").on("click", "input:radio", function(){
         	var objeto_actual = $(this); 
     		if(objeto_actual.attr('name') == "estado_revision")
     		{
@@ -839,9 +968,20 @@
     			// cada if tiene un ajax, por que segun la ubicacion del comentario se agregara tambien la respuesta asincronica
     			if (tipoForm == 'comentario_en_td_con_el_input') 
     			{
-    				var valorJSON_campo_fomulario = objeto_actual.parent().prev().prev().data("json");
+					var valorJSON_campo_fomulario;
+					// existe un select multiple, que crea una posicion entre el select y los comentarios, por eso esta validacion
+    				if (typeof objeto_actual.parent().prev().prev().data("json") == "undefined") 
+    				{
+    					valorJSON_campo_fomulario = objeto_actual.parent().prev().prev().prev().data("json");
+    				} 
+    				else 
+    				{
+    					valorJSON_campo_fomulario = objeto_actual.parent().prev().prev().data("json");
+    				}
+
 					var valoresComentario = objeto_actual.parent().serializeArray();
 
+					console.log(objeto_actual, ' - ', valorJSON_campo_fomulario , ' - ', objeto_actual.parent().prev().prev());
 					// si el input type=radio es null
 					/*if (typeof valoresComentario[1] == "undefined") 
 					{
@@ -931,8 +1071,30 @@
 			});
 		});
 
+		function actualizar_llave_pa(principio_activo)
+		{
+			$(".tr-clonado-pa").each(function(index){
+				var expediente = $(".NumeroExpediente").val();
+				$(this).find('[data-json]').each(function(k){
+					$(this).data("json").llave = expediente+'&'+principio_activo;
+				});
+				// = expediente+'(select_dinamico)_'+index;
+				// console.log(' -> ', $(this).find('[data-json]'));
+			});
+		}
+
+		// Agregar tr dinamico
+		$(".agregar-tr-pa").on('click', function(){
+			$(".contenedor-formato-tr-dinamico-pa").children().children().clone().appendTo(".contenedor-tr-pa");
+			// actualizar_llave_pa();
+		});
+		// Quitar tr dinamico
+		$(".contenedor-tr-pa").on('click', '.quitar-tr-pa', function(){
+			$(this).parent().parent().remove();
+		});
+
 		// ajax valores de cada input
-		$(".form_app_m").change(function(e){
+		$("body").on("change", ".form_app_m", function(e){
 			var objeto_actual = $(this);
 			var valorJSON;
 			var valoresEnvio;
@@ -948,6 +1110,25 @@
 				"campo": 		"MarcaSignoDistintivoComercial"
 			}
 			*/
+
+			if (objeto_actual.parent().parent().hasClass("tr-clonado-pa")) 
+			{
+				if (objeto_actual.hasClass("NombrePrincipioActivo")) 
+				{
+					actualizar_llave_pa(objeto_actual.val());
+					console.log("cumplio!");
+				}
+				if(objeto_actual.data("json").llave.length == 0)
+				{
+					alert('Recuerde primero seleccionar un principio activo para que los demás campos se guarden.');
+					return false;
+				}
+
+			} 
+			console.log(objeto_actual.data("json"));
+
+			//return false;
+
 			switch (objeto_actual.attr("name").toString()) {
 				case 'MarcaSignoDistintivoComercial':
 					valorJSON = objeto_actual.data("json");
@@ -973,6 +1154,7 @@
 						expediente: $(".NumeroExpediente").val()
 					}
 					break;
+				// ESTO MISMO
 				case 'codigo_via_administracion':
 					valorJSON = $('.codigo_via_administracion').data("json");
 					valoresEnvio = {
@@ -980,6 +1162,16 @@
 						valores_JSON: valorJSON,
 						expediente: $(".NumeroExpediente").val()
 					}
+					es_selector_multimple = true;
+					break;
+				case 'principio_activo':
+					valorJSON = objeto_actual.data("json");
+					valoresEnvio = {
+						valor_nuevo: objeto_actual.val().join('&'),
+						valores_JSON: valorJSON,
+						expediente: $(".NumeroExpediente").val()
+					}
+					console.log('llego en el case, como principio_activo ', valoresEnvio);
 					es_selector_multimple = true;
 					break;
 				case 'IdentificadorTipoConcentracionEstandarizada':

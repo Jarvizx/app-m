@@ -97,6 +97,7 @@ class Medicamentos extends CI_Controller {
 
 	public function debug()
 	{
+
 		if ($_POST) 
 		{
 			$id_usuario = $this->input->post('id_usuario');
@@ -197,7 +198,7 @@ class Medicamentos extends CI_Controller {
 				$datos['tbl_rev_expediente_pc_pa'] = $this->medicamentos_model->consultar_tbl_rev_expediente_pc_pa($parametro_expediente);
 
 				# nueva consulta del invima
-				// $datos['tbl_invima'] = $this->medicamentos_model->consulta_tbl_invima(array('expediente'=>$expediente));
+				$datos['tbl_invima_pa'] = $this->medicamentos_model->consultar_tbl_invima_pa(array('expediente'=>$expediente))->result_array();
 
 				// 1 sola consulta para los comentarios
 				
@@ -309,7 +310,7 @@ class Medicamentos extends CI_Controller {
 					$update_datos_tbl_permisos_tablas[$contador_permisos] = explode(',', str_replace(' ', '', $datos_tbl_permisos_tablas[$k_tablas_por_insertar]->actualizar));
 					if (in_array($nombre_nivel, $update_datos_tbl_permisos_tablas[$contador_permisos])) 
 					{
-						echo "actualizo del grupo " . $nombre_nivel . " la tabla " . $v_tablas_por_insertar;
+						echo "actualizo del grupo " . $nombre_nivel . " la tabla " . $v_tablas_por_insertar . ". ";
 
 						// caso especial para la tabla control de cambios
 						if ($v_tablas_por_insertar == 'tbl_control_cambios')
@@ -325,8 +326,28 @@ class Medicamentos extends CI_Controller {
 							$datos_tabla = array(
 								$datos_por_guardar['campo'] => $datos_por_guardar['valor_nuevo']
 							);
-							// ($id = null, $nombre_tabla = null, $datos_tabla = array())
+							
+							// Esto se cumple es mas para las filas nuevas que se agregen
+							if ($v_tablas_por_insertar == 'tbl_rev_expediente_pa') 
+							{
+								$expediente = explode("&",$id_registro);
+
+								$parametro_tbl_rev_expediente_pa = array(
+									'id' => $id_registro,
+									'NumeroExpediente' => $expediente[0],
+									'NombrePrincipioActivo' => $expediente[1]
+								);
+
+								$resultado_tbl_rev_expediente_pa = $this->medicamentos_model->consultar_tbl_rev_expediente_pa($parametro_tbl_rev_expediente_pa);
+								
+								if ($resultado_tbl_rev_expediente_pa->num_rows() == 0) 
+								{
+									$this->medicamentos_model->guardar_tbl_rev_expediente_pa($parametro_tbl_rev_expediente_pa);
+								}
+							}
+
 							$this->medicamentos_model->actualizar_expediente_tabla_fuente($id_registro, $nombre_tabla, $datos_tabla);
+
 						}
 
 					}

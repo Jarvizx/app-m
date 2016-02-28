@@ -16,7 +16,7 @@ class Medicamentos_model extends CI_Model
     protected $tbl_rev_expediente_pc;
     protected $tbl_rev_expediente_pc_pa;
     protected $tbl_invima_pc_texto;
-    // protected $tbl_invima;
+    protected $tbl_invima_pa;
     protected $vws_listado;
 
 	public function __construct()
@@ -37,7 +37,7 @@ class Medicamentos_model extends CI_Model
         $this->tbl_rev_expediente_pc = 'tbl_rev_expediente_pc';
         $this->tbl_rev_expediente_pc_pa = 'tbl_rev_expediente_pc_pa';
         $this->tbl_invima_pc_texto = 'tbl_invima_pc_texto';
-        // $this->tbl_invima = 'tbl_invima';
+        $this->tbl_invima_pa = 'tbl_invima_pa';
         $this->vws_listado = 'tbl_listado';
 	    date_default_timezone_set('America/Bogota');
 	}
@@ -140,16 +140,21 @@ class Medicamentos_model extends CI_Model
     }
 
     # nueva consulta invima
-    /*public function consultar_tbl_invima($parametros = array())
+    public function consultar_tbl_invima_pa($parametros = array())
     {
-		return $this->db->get_where($this->tbl_invima, $parametros);
-    }*/
+        return $this->db->get_where($this->tbl_invima_pa, $parametros);
+    }
+
 
     public function consultar_tbl_rev_expediente_pa($parametros = array())
     {
-    	return $this->db->get_where($this->tbl_rev_expediente_pa, $parametros);
+        return $this->db->get_where($this->tbl_rev_expediente_pa, $parametros);
     }
 
+    public function guardar_tbl_rev_expediente_pa($parametros = array())
+    {
+        $this->db->insert($this->tbl_rev_expediente_pa, $parametros);
+    }
     # consultar historial de comentarios con dos parametros
     // $parametros['llave'] string
     // $parametros['campo'] string
@@ -315,7 +320,7 @@ class Medicamentos_model extends CI_Model
     	{
 			$this->db->where('id', $id);
 			$this->db->update($nombre_tabla, $datos_tabla);
-			//echo "SQL : " . $this->db->last_query();
+			// echo "SQL : " . $this->db->last_query();
 			return $this->db->affected_rows();
     	}
     }
